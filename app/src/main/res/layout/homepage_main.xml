@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="@dimen/dangan_left_margin"
+    android:layout_marginRight="@dimen/dangan_right_margin"
+    android:orientation="vertical">
+
+    <!--app:point_layout="center" 指定小圆点位置（center或者right）-->
+    <com.kcode.autoscrollviewpager.view.AutoScrollViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="@dimen/dangan_right_margin"
+        app:point_layout="center">
+    </com.kcode.autoscrollviewpager.view.AutoScrollViewPager>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dangan_right_margin"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/homepage_text_chitang"
+                android:textSize="@dimen/title_size"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:src="@drawable/chitanggaikuang" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/homepage_text_dangan"
+                android:textSize="@dimen/title_size"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:src="@drawable/danganguanli" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/homepage_text_tianjiadangan"
+                android:textSize="@dimen/title_size"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:layout_gravity="center"
+                android:src="@drawable/tianjiadangan" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/homepage_text_qrcode"
+                android:textSize="@dimen/title_size"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:src="@drawable/erweimashenqing" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

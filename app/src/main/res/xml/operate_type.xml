@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+    <map linked="true">
+        <entry key="1">消毒</entry>
+        <entry key="2">投苗</entry>
+        <entry key="3">喂食</entry>
+        <entry key="4">捕捞</entry>
+        <entry key="5">检测</entry>
+        <entry key="6">放水</entry>
+    </map>
+</resources>

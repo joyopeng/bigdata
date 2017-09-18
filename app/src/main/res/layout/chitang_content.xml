@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/dangan_left_margin"
+    android:layout_marginRight="@dimen/dangan_right_margin"
+    >
+    <!--头部-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/base_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/skyblue"
+        android:navigationContentDescription="back">
+
+        <ImageView
+            android:id="@+id/base_nav_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dangan_left_margin"
+            android:paddingRight="@dimen/dangan_right_margin"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/base_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/chitang_addpage_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/base_nav_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/dangan_right_margin"
+            android:background="@color/colorAccent"
+            android:clickable="true"
+            android:textColor="@color/colorWhite"
+            android:visibility="visible" />
+    </android.support.v7.widget.Toolbar>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/chitangaddressmap"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_namelabel"
+            android:textSize="@dimen/label_size"
+            />
+
+        <EditText
+            android:id="@+id/chitang_addpage_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_namehint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_addresslabel"
+            android:textSize="@dimen/label_size"
+            />
+
+        <EditText
+            android:id="@+id/chitang_addpage_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="池塘地址" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_arealabel"
+            android:textSize="@dimen/label_size"
+            />
+
+        <EditText
+            android:id="@+id/chitang_addpage_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_areahint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_owenerlabel"
+            android:textSize="@dimen/label_size"
+            />
+
+        <EditText
+            android:id="@+id/chitang_addpage_owener"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_owenerhint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_owenerphonelabel"
+            android:textSize="@dimen/label_size"
+            />
+
+        <EditText
+            android:id="@+id/chitang_addpage_owenerphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_owenerphonehint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_owenerphonelabel"
+            android:textSize="@dimen/label_size"
+            />
+
+        <EditText
+            android:id="@+id/chitang_addpage_discription_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chitang_addpage_discription_hint" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/joyopeng/project/bigdata/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/joyopeng/project/bigdata/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_531f8eeeef2ca02d7255085d89319f36965228c8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/joyopeng/project/bigdata/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="1d1cf6a16aaa22db3aaa423bf76b3b39f94144ae">
+        <dex dex="/home/joyopeng/project/bigdata/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_74c6e6ec6381c193a60747c9f48b182a2ea62b75/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/joyopeng/project/bigdata/app/libs/BaiduLBS_Android.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="949a22fce389cc3513c09245a3509bfa59e4e7ae">
+        <dex dex="/home/joyopeng/project/bigdata/app/build/intermediates/transforms/dex/debug/folders/1000/2/BaiduLBS_Android_11fcfa6abb6ab97f473d7d4e6af4a335c0549b0d/classes.dex" />
+    </item>
+
+</items>
