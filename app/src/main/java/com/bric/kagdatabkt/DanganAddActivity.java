@@ -1,14 +1,10 @@
 package com.bric.kagdatabkt;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,7 +29,7 @@ public class DanganAddActivity extends FragmentActivity {
     private String title;
 
     private TextView document_item1_label;
-    private TextView document_item1_edit;
+    private EditText document_item1_edit;
     private ImageView document_item1_arrow;
     private TextView document_item2_label;
     private EditText document_item2_edit;
@@ -86,7 +82,7 @@ public class DanganAddActivity extends FragmentActivity {
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
 
         document_item1_label = (TextView) findViewById(R.id.document_item1_label);
-        document_item1_edit = (TextView) findViewById(R.id.document_item1_edit);
+        document_item1_edit = (EditText) findViewById(R.id.document_item1_edit);
         document_item1_arrow = (ImageView) findViewById(R.id.document_item1_arrow);
         document_item2_label = (TextView) findViewById(R.id.document_item2_label);
         document_item2_edit = (EditText) findViewById(R.id.document_item2_edit);
@@ -163,7 +159,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item1_label.setText(R.string.label_chitang_xiaodudate);
 //        document_item1_edit.setEnabled(false);
 //        document_item1_edit.setHint("2017.07.13");
-//        document_item1_edit.setBackgroundResource(0);
+        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_xiaoduchi);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
@@ -185,7 +181,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item1_label.setText(R.string.label_chitang_toumiaodate);
 //        document_item1_edit.setEnabled(false);
 //        document_item1_edit.setHint("2017.07.13");
-//        document_item1_edit.setBackgroundResource(0);
+        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_source);
 //        document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
@@ -208,7 +204,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item1_label.setText(R.string.label_chitang_weishidate);
 //        document_item1_edit.setEnabled(false);
 //        document_item1_edit.setHint("2017.07.13");
-//        document_item1_edit.setBackgroundResource(0);
+        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_weishichi);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
@@ -280,12 +276,13 @@ public class DanganAddActivity extends FragmentActivity {
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_fangshuichi);
         document_item3_label.setVisibility(View.GONE);
-        document_item3_edit.setEnabled(false);
-        document_item3_edit.setBackgroundResource(0);
-        document_item3_edit.setHint(R.string.hint_chitang_xiaodushiji);
-        document_item4_label.setText(R.string.label_chitang_xiaoduyongliang);
-        document_item4_edit.setBackgroundResource(0);
-        document_item4_edit.setHint(R.string.hint_chitang_xiaoduyongliang);
+        document_item3_edit.setVisibility(View.GONE);
+//        document_item3_edit.setBackgroundResource(0);
+//        document_item3_edit.setHint(R.string.hint_chitang_xiaodushiji);
+        document_item3_arrow.setVisibility(View.GONE);
+        document_item4_label.setVisibility(View.GONE);
+        document_item4_edit.setVisibility(View.GONE);
+//        document_item4_edit.setHint(R.string.hint_chitang_xiaoduyongliang);
         document_item4_arrow.setVisibility(View.GONE);
         document_item5_label.setVisibility(View.GONE);
         document_item5_edit.setVisibility(View.GONE);
@@ -305,6 +302,7 @@ public class DanganAddActivity extends FragmentActivity {
         });
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             ArrayList<String> paths = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);

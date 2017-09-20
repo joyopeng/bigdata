@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginLeft="@dimen/dangan_left_margin"
     android:layout_marginRight="@dimen/dangan_right_margin"
-    >
+    android:orientation="vertical">
     <!--头部-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/base_tool_bar"
@@ -48,7 +47,7 @@
     <com.baidu.mapapi.map.MapView
         android:id="@+id/chitangaddressmap"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,8 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/chitang_addpage_namelabel"
-            android:textSize="@dimen/label_size"
-            />
+            android:textSize="@dimen/label_size" />
 
         <EditText
             android:id="@+id/chitang_addpage_name"
@@ -76,8 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/chitang_addpage_addresslabel"
-            android:textSize="@dimen/label_size"
-            />
+            android:textSize="@dimen/label_size" />
 
         <EditText
             android:id="@+id/chitang_addpage_address"
@@ -94,8 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/chitang_addpage_arealabel"
-            android:textSize="@dimen/label_size"
-            />
+            android:textSize="@dimen/label_size" />
 
         <EditText
             android:id="@+id/chitang_addpage_area"
@@ -112,8 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/chitang_addpage_owenerlabel"
-            android:textSize="@dimen/label_size"
-            />
+            android:textSize="@dimen/label_size" />
 
         <EditText
             android:id="@+id/chitang_addpage_owener"
@@ -130,8 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/chitang_addpage_owenerphonelabel"
-            android:textSize="@dimen/label_size"
-            />
+            android:textSize="@dimen/label_size" />
 
         <EditText
             android:id="@+id/chitang_addpage_owenerphone"
@@ -147,9 +141,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/chitang_addpage_owenerphonelabel"
-            android:textSize="@dimen/label_size"
-            />
+            android:text="@string/chitang_addpage_discription_label"
+            android:textSize="@dimen/label_size" />
 
         <EditText
             android:id="@+id/chitang_addpage_discription_label"
@@ -157,4 +150,11 @@
             android:layout_height="wrap_content"
             android:text="@string/chitang_addpage_discription_hint" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/addchitang_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/skyblue"
+        android:text="@string/title_add" />
 </LinearLayout>

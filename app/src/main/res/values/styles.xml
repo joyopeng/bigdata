@@ -33,6 +33,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/aliceblue</item>
+        <item name="windowActionBar">false</item>
     </style>
 
     <style name="TimePickerDialog" parent="android:style/Theme.Dialog">
@@ -40,6 +43,6 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/colorBlack</item>
+        <item name="android:windowBackground">@color/aliceblue</item>
     </style>
 </resources>

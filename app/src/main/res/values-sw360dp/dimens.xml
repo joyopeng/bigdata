@@ -6,9 +6,6 @@
     <dimen name="dangan_right_margin">12dp</dimen>
     <dimen name="dangan_preview_img_height">90dp</dimen>
     <dimen name="dangan_preview_img_wide">90dp</dimen>
-    <dimen name="dangan_label_width">120dp</dimen>
-    <dimen name="dangan_item_top_margin">2dp</dimen>
-    <dimen name="dangan_item_top_big_margin">12dp</dimen>
     <!-- 字体size值 -->
     <dimen name="text_size_tabhost">24sp</dimen>
     <dimen name="label_size">18sp</dimen>

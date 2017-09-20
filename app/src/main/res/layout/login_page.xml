@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:gravity="center_horizontal"
+        android:text="相城区农业局水产养殖管理系统"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/login_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/input_phone_icon"
+        android:hint="@string/login_page_hint_phonenumber"
+        android:inputType="number"
+        android:textColor="@color/color_item_bg"
+        android:textColorHint="@color/colorWhite" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
+        android:src="@drawable/divide_line" />
+
+    <EditText
+        android:id="@+id/login_password_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
+        android:drawableLeft="@drawable/input_password_icon"
+        android:hint="@string/login_page_hint_password"
+        android:textColor="@color/color_item_bg"
+        android:textColorHint="@color/colorWhite" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
+        android:src="@drawable/divide_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/login_forgetpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/login_page_text_forgetpassword"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/login_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/login_page_text_register"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
+        android:layout_marginTop="15dp"
+        android:background="@color/skyblue"
+        android:text="@string/login_page_button_login"
+        android:textColor="@color/colorWhite" />
+</LinearLayout>

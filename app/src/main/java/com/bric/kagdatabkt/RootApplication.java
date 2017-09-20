@@ -2,6 +2,8 @@ package com.bric.kagdatabkt;
 
 import android.app.Application;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -16,6 +18,7 @@ public class RootApplication extends Application {
         JPushInterface.setDebugMode(true);//正式版的时候设置false，关闭调试
         JPushInterface.init(this);
         JPushInterface.onResume(this);
+        SDKInitializer.initialize(this);
     }
 
 }

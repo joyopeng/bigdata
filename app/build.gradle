@@ -12,14 +12,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : "com.bric.kagdatabkt",
+                JPUSH_PKGNAME: "com.bric.kagdatabkt",
                 JPUSH_APPKEY : "6f5a6e1b4e0c70a1ed82cb38", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
     }
     buildTypes {
@@ -61,12 +61,15 @@ dependencies {
     })
     compile(name: 'photopicker-release', ext: 'aar')
     compile(name: 'autoScrollViewPager-release', ext: 'aar')
+    // 此处以JPush 3.0.3 版本为例。
+    // 此处以JCore 1.1.1 版本为例。
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
     compile 'com.squareup.picasso:picasso:2.3.2'
-    compile 'cn.jiguang.sdk:jpush:3.0.3'  // 此处以JPush 3.0.3 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.1'  // 此处以JCore 1.1.1 版本为例。
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'cn.jiguang.sdk:jpush:3.0.3'
+    compile 'cn.jiguang.sdk:jcore:1.1.1'
     testCompile 'junit:junit:4.12'
 }

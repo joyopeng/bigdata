@@ -131,6 +131,25 @@
     <string name="setting_label_get_qrcode">申请二维码</string>
     <string name="setting_label_clear_cache">清除缓存</string>
 
+    <!-- 个人信息-企业-->
+    <string name="setting_label_qiye_name">企业名称</string>
+    <string name="setting_hint_qiye_name">填写企业名称</string>
+    <string name="setting_label_qiye_zizhi">企业资质</string>
+    <string name="setting_hint_qiye_zizhi">填写企业资质</string>
+    <string name="setting_label_qiye_jianjie">企业简介</string>
+    <string name="setting_hint_qiye_jianjie">填写企业简介</string>
+    <string name="setting_label_qiye_yingyezhizhao">营业执照</string>
+    <string name="setting_hint_qiye_yingyezhizhao">上传营业执照照片</string>
+    <string name="setting_label_qiye_yingyerongyu">企业荣誉</string>
+    <string name="setting_hint_qiye_yingyerongyu">上传企业荣誉照片</string>
+
+    <!--登录页面 -->
+    <string name="login_page_hint_phonenumber">输入您的手机号</string>
+    <string name="login_page_hint_password">输入登录密码(6位数字,字母或字符)</string>
+    <string name="login_page_text_forgetpassword">忘记密码?</string>
+    <string name="login_page_text_register">注册</string>
+    <string name="login_page_button_login">安全登录</string>
+
     <!--时间选择器-->
     <string name="cancle">取消</string>
     <string name="title">请选择时间</string>
@@ -145,4 +164,5 @@
     <string name="current_date">当前日期</string>
     <string name="select_time">选择时间</string>
     <string name="current_time">当前时间</string>
+    <string name="title_activity_qiyexinxi_add">QiyexinxiAdd</string>
 </resources>

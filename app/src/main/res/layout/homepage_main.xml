@@ -26,15 +26,16 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:orientation="horizontal"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:text="@string/homepage_text_chitang"
+                android:gravity="center_vertical"
                 android:textSize="@dimen/title_size"
                 />
 
@@ -43,12 +44,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
                 android:layout_marginRight="@dimen/dangan_right_margin"
+                android:layout_gravity="center"
                 android:src="@drawable/chitanggaikuang" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <TextView
@@ -64,10 +66,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dangan_right_margin"
                 android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:layout_gravity="center"
                 android:src="@drawable/danganguanli" />
         </LinearLayout>
     </LinearLayout>
-
+   <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:src="@drawable/divide_line"
+       />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +85,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <TextView

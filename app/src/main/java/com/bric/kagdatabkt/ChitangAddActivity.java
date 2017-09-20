@@ -18,6 +18,7 @@ import com.bric.kagdatabkt.utils.LocationService;
 
 public class ChitangAddActivity extends AppCompatActivity {
 
+    private static final String TAG = ChitangAddActivity.class.getSimpleName();
     private MapView mMapView;
     private RelativeLayout rootview;
     private LocationService locationService;
@@ -33,7 +34,6 @@ public class ChitangAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.chitang_content);
         mMapView = (MapView) findViewById(R.id.chitangaddressmap);
         initView();
@@ -178,7 +178,7 @@ public class ChitangAddActivity extends AppCompatActivity {
                     sb.append("\ndescribe : ");
                     sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
                 }
-                Log.v("aaaa", sb.toString());
+                Log.v(TAG, sb.toString());
             }
         }
 
