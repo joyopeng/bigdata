@@ -69,7 +69,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        >
 
         <TextView
             android:id="@+id/setting_label_qiye_zizhi"
@@ -93,7 +95,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+        >
 
         <TextView
             android:id="@+id/setting_label_qiye_jianjie"
@@ -117,7 +121,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dangan_item_top_big_margin">
 
         <TextView
             android:id="@+id/setting_label_qiye_yingyezhizhao"
@@ -188,7 +193,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/setting_label_qiye_yingyerongyu"

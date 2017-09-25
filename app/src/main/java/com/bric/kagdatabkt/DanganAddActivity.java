@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bric.kagdatabkt.utils.CommonConstField;
@@ -28,18 +30,24 @@ public class DanganAddActivity extends FragmentActivity {
     private TextView base_toolbar_title;
     private String title;
 
+    private RelativeLayout document_item1;
     private TextView document_item1_label;
     private EditText document_item1_edit;
     private ImageView document_item1_arrow;
+    private RelativeLayout document_item2;
     private TextView document_item2_label;
     private EditText document_item2_edit;
     private ImageView document_item2_arrow;
+    private Button take_picture;
+    private RelativeLayout document_item3;
     private TextView document_item3_label;
     private EditText document_item3_edit;
     private ImageView document_item3_arrow;
+    private RelativeLayout document_item4;
     private TextView document_item4_label;
     private EditText document_item4_edit;
     private ImageView document_item4_arrow;
+    private RelativeLayout document_item5;
     private TextView document_item5_label;
     private EditText document_item5_edit;
     private ImageView document_item5_arrow;
@@ -75,24 +83,30 @@ public class DanganAddActivity extends FragmentActivity {
         time = sdf.format(new Date());
         date = time.split(" ")[0];
         //设置当前显示的日期
-        document_item1_edit.setText(date);
+        document_item1_edit.setHint(date);
     }
 
     private void initView() {
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
 
+        document_item1 = (RelativeLayout) findViewById(R.id.document_item1);
         document_item1_label = (TextView) findViewById(R.id.document_item1_label);
         document_item1_edit = (EditText) findViewById(R.id.document_item1_edit);
         document_item1_arrow = (ImageView) findViewById(R.id.document_item1_arrow);
+        document_item2 = (RelativeLayout) findViewById(R.id.document_item2);
         document_item2_label = (TextView) findViewById(R.id.document_item2_label);
         document_item2_edit = (EditText) findViewById(R.id.document_item2_edit);
         document_item2_arrow = (ImageView) findViewById(R.id.document_item2_arrow);
+        take_picture = (Button) findViewById(R.id.take_picture);
+        document_item3 = (RelativeLayout) findViewById(R.id.document_item3);
         document_item3_label = (TextView) findViewById(R.id.document_item3_label);
         document_item3_edit = (EditText) findViewById(R.id.document_item3_edit);
         document_item3_arrow = (ImageView) findViewById(R.id.document_item3_arrow);
+        document_item4 = (RelativeLayout) findViewById(R.id.document_item4);
         document_item4_label = (TextView) findViewById(R.id.document_item4_label);
         document_item4_edit = (EditText) findViewById(R.id.document_item4_edit);
         document_item4_arrow = (ImageView) findViewById(R.id.document_item4_arrow);
+        document_item5 = (RelativeLayout) findViewById(R.id.document_item5);
         document_item5_label = (TextView) findViewById(R.id.document_item5_label);
         document_item5_edit = (EditText) findViewById(R.id.document_item5_edit);
         document_item5_arrow = (ImageView) findViewById(R.id.document_item5_arrow);
@@ -157,17 +171,12 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setXiaoduprop() {
         document_item1_label.setText(R.string.label_chitang_xiaodudate);
-//        document_item1_edit.setEnabled(false);
-//        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_xiaoduchi);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_xiaoduchi);
-        document_item3_label.setText(R.string.label_chitang_xiaodushiji);
-        document_item3_edit.setEnabled(false);
-        document_item3_edit.setBackgroundResource(0);
-        document_item3_edit.setHint(R.string.hint_chitang_xiaodushiji);
+        document_item3.setVisibility(View.GONE);
         document_item4_label.setText(R.string.label_chitang_xiaoduyongliang);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_xiaoduyongliang);
@@ -179,11 +188,8 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setToumiaoprop() {
         document_item1_label.setText(R.string.label_chitang_toumiaodate);
-//        document_item1_edit.setEnabled(false);
-//        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_source);
-//        document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_source);
         document_item2_arrow.setVisibility(View.GONE);
@@ -202,87 +208,72 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setWeishiprop() {
         document_item1_label.setText(R.string.label_chitang_weishidate);
-//        document_item1_edit.setEnabled(false);
-//        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_weishichi);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_weishichi);
         document_item3_label.setText(R.string.label_chitang_weishisiliao);
-//        document_item3_edit.setEnabled(false);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_weishisiliao);
         document_item3_arrow.setVisibility(View.GONE);
+        take_picture.setVisibility(View.VISIBLE);
         document_item4_label.setText(R.string.label_chitang_weishigoumaishang);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_weishigoumaishang);
         document_item4_arrow.setVisibility(View.GONE);
         document_item5_label.setText(R.string.label_chitang_weishiamount);
         document_item5_edit.setHint(R.string.hint_chitang_weishiamount);
+        document_item5_edit.setBackgroundResource(0);
         document_item5_arrow.setVisibility(View.GONE);
     }
 
     private void setBulaoprop() {
         document_item1_label.setText(R.string.label_chitang_pulaodate);
-//        document_item1_edit.setEnabled(false);
-//        document_item1_edit.setHint("2017.07.13");
-//        document_item1_edit.setBackgroundResource(0);
-        document_item2_label.setText(R.string.label_chitang_pulaochi);
+        document_item1_edit.setBackgroundResource(0);
+        document_item2_label.setText(R.string.label_chitang_pulaocatogery);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
-        document_item2_edit.setHint(R.string.hint_chitang_pulaochi);
-        document_item3_label.setText(R.string.label_chitang_pulaocatogery);
-        document_item3_edit.setEnabled(false);
-        document_item3_edit.setBackgroundResource(0);
-        document_item3_edit.setHint(R.string.hint_chitang_pulaocatogery);
+        document_item2_edit.setHint(R.string.hint_chitang_pulaocatogery);
+        document_item3.setVisibility(View.GONE);
         document_item4_label.setText(R.string.label_chitang_pulaoamount);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_pulaoamount);
         document_item4_arrow.setVisibility(View.GONE);
-        document_item5_label.setVisibility(View.GONE);
-        document_item5_edit.setVisibility(View.GONE);
-        document_item5_arrow.setVisibility(View.GONE);
+        document_item5.setVisibility(View.GONE);
     }
 
     private void setJianceprop() {
         document_item1_label.setText(R.string.label_chitang_jiancedate);
-//        document_item1_edit.setEnabled(false);
-//        document_item1_edit.setHint("2017.07.13");
-//        document_item1_edit.setBackgroundResource(0);
+        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_jianceid);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_xiaoduchi);
-        document_item3_label.setText(R.string.label_chitang_jiancejieguo);
-        document_item3_edit.setEnabled(false);
+        document_item3_label.setText(R.string.label_chitang_jiancexiangmu);
         document_item3_edit.setBackgroundResource(0);
-        document_item3_edit.setVisibility(View.GONE);
-        document_item4_label.setVisibility(View.GONE);
-        document_item4_edit.setVisibility(View.GONE);
-        document_item4_arrow.setVisibility(View.GONE);
-        document_item5_label.setVisibility(View.GONE);
-        document_item5_edit.setVisibility(View.GONE);
+        document_item3_edit.setHint(R.string.hint_chitang_jiancexiangmu);
+        document_item4_label.setText(R.string.label_chitang_jiancejieguo);
+        document_item4_edit.setHint(R.string.hint_chitang_jiancejieguo);
+        document_item4_edit.setBackgroundResource(0);
+        document_item5_label.setText("检测单位");
+        document_item5_edit.setBackgroundResource(0);
+        document_item5_edit.setHint("请输入检测单位名称");
         document_item5_arrow.setVisibility(View.GONE);
     }
 
     private void setFangshuiprop() {
         document_item1_label.setText(R.string.label_chitang_fangshuidate);
-//        document_item1_edit.setEnabled(false);
-//        document_item1_edit.setHint("2017.07.13");
-//        document_item1_edit.setBackgroundResource(0);
+        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_fangshuichi);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_fangshuichi);
         document_item3_label.setVisibility(View.GONE);
         document_item3_edit.setVisibility(View.GONE);
-//        document_item3_edit.setBackgroundResource(0);
-//        document_item3_edit.setHint(R.string.hint_chitang_xiaodushiji);
         document_item3_arrow.setVisibility(View.GONE);
         document_item4_label.setVisibility(View.GONE);
         document_item4_edit.setVisibility(View.GONE);
-//        document_item4_edit.setHint(R.string.hint_chitang_xiaoduyongliang);
         document_item4_arrow.setVisibility(View.GONE);
         document_item5_label.setVisibility(View.GONE);
         document_item5_edit.setVisibility(View.GONE);

@@ -46,7 +46,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="MQek46thvTXySOEe3rG5uMDOMLeYqdhd" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,7 +62,7 @@
         <activity
             android:name=".ChitangAddActivity"
             android:label="@string/title_activity_chitang_add"
-            android:theme="@style/AppTheme" />
+            />
 <!--
         <receiver
             android:name=".PushReceiver"

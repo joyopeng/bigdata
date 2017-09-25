@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/dangan_left_margin"
-    android:layout_marginRight="@dimen/dangan_right_margin"
     android:orientation="vertical">
     <!--头部-->
     <android.support.v7.widget.Toolbar
@@ -47,15 +45,22 @@
     <com.baidu.mapapi.map.MapView
         android:id="@+id/chitangaddressmap"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="180dp"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/dangan_left_margin"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+        android:background="@color/colorWhite"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
             android:text="@string/chitang_addpage_namelabel"
             android:textSize="@dimen/label_size" />
 
@@ -68,11 +73,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        android:background="@color/colorWhite"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
             android:text="@string/chitang_addpage_addresslabel"
             android:textSize="@dimen/label_size" />
 
@@ -85,11 +94,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        android:background="@color/colorWhite"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
             android:text="@string/chitang_addpage_arealabel"
             android:textSize="@dimen/label_size" />
 
@@ -102,11 +115,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        android:background="@color/colorWhite"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
             android:text="@string/chitang_addpage_owenerlabel"
             android:textSize="@dimen/label_size" />
 
@@ -119,11 +136,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        android:background="@color/colorWhite"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
             android:text="@string/chitang_addpage_owenerphonelabel"
             android:textSize="@dimen/label_size" />
 
@@ -136,11 +157,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        android:background="@color/colorWhite"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
             android:text="@string/chitang_addpage_discription_label"
             android:textSize="@dimen/label_size" />
 
@@ -155,6 +180,8 @@
         android:id="@+id/addchitang_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
         android:background="@color/skyblue"
         android:text="@string/title_add" />
 </LinearLayout>

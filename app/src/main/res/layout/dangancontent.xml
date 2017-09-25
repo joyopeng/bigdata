@@ -43,6 +43,7 @@
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
+        android:id="@+id/document_item1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_right_margin"
@@ -66,6 +67,7 @@
             android:layout_toRightOf="@id/document_item1_label"
             android:clickable="true"
             android:cursorVisible="false"
+            android:editable="false"
             android:textSize="@dimen/label_size" />
 
         <ImageView
@@ -80,6 +82,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/document_item2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin"
@@ -111,9 +114,20 @@
             android:layout_marginRight="@dimen/dangan_right_margin"
             android:src="@drawable/arrow_chose"
             android:visibility="gone" />
+        <Button
+            android:id="@+id/take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dangan_right_margin"
+            android:text="拍照按钮"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/document_item3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin"
@@ -146,6 +160,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/document_item4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin"
@@ -178,6 +193,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/document_item5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin"

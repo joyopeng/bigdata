@@ -10,7 +10,9 @@
     <RelativeLayout
         android:id="@+id/setting_persion_info_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,6 +37,8 @@
         android:id="@+id/setting_login_password_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
         >
 
         <TextView
@@ -59,7 +63,10 @@
     <RelativeLayout
         android:id="@+id/setting_get_qrcode_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,8 +89,11 @@
 
     <RelativeLayout
         android:id="@+id/setting_clear_cache_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -96,4 +106,15 @@
             android:textSize="@dimen/label_size" />
 
     </RelativeLayout>
+    <Button
+        android:id="@+id/loginout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dangan_left_margin"
+        android:layout_marginRight="@dimen/dangan_right_margin"
+        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+        android:text="退出登录"
+        android:textColor="@color/colorWhite"
+        android:background="@color/skyblue"
+        />
 </LinearLayout>

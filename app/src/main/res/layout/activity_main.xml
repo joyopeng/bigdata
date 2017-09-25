@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -57,7 +56,9 @@
             android:id="@+id/tab_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dangan_item_top_margin"
             android:layout_alignParentBottom="true"
+            android:background="@color/colorWhite"
             android:gravity="bottom"
             android:orientation="horizontal">
 

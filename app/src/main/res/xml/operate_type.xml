@@ -2,11 +2,11 @@
 
 <resources>
     <map linked="true">
-        <entry key="1">消毒</entry>
+        <entry key="1">病害防治</entry>
         <entry key="2">投苗</entry>
         <entry key="3">喂食</entry>
         <entry key="4">捕捞</entry>
         <entry key="5">检测</entry>
-        <entry key="6">放水</entry>
+        <entry key="6">日常管理</entry>
     </map>
 </resources>
