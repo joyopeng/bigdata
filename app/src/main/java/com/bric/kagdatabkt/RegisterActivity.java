@@ -2,6 +2,7 @@ package com.bric.kagdatabkt;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,8 @@ import com.bric.kagdatabkt.utils.CommonConstField;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.ResponseBody;
 import rx.Observer;
@@ -31,6 +34,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
+import static android.R.id.input;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -92,7 +97,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                             @Override
                             public void onNext(RegisterResult arg0) {
-                                Log.v(TAG, "" + arg0.message);
+                                if (arg0.data.size() > 0) {
+                                    SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+                                    String access_token = ((RegisterResult.Item) (arg0.data.get(0))).Token.access_token;
+                                    sharedPreferences.edit().putString(CommonConstField.ACCESS_TOKEN, access_token).commit();
+                                    Intent registerintent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    startActivity(registerintent);
+                                }
                             }
                         }
                 );
@@ -100,18 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkInput(String username, String password, String mobile_code) {
-        boolean result = true;
-        return result;
-    }
-
-    private boolean checkPhoneNumber(String phone) {
-        boolean result = true;
-        return result;
-    }
-
     private void showDialog() {
-        if (checkPhoneNumber(phonenumber.getText().toString())) {
+        if (CommonConstField.isMatchered(phonenumber.getText().toString())) {
             final CustomDialog dialog = new CustomDialog(this);
             dialog.show();
         } else {
@@ -235,8 +236,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onNext(ResultEntry arg0) {
-                                        Log.v(TAG, "" + arg0.success);
-                                        Log.v(TAG, arg0.message);
                                         if (arg0.success == 0) {
                                             CustomDialog.this.dismiss();
                                         } else {

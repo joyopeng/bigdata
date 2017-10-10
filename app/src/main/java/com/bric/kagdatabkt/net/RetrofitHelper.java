@@ -64,6 +64,12 @@ public interface RetrofitHelper {
             @Query("password") String password
     );
 
+    @POST("Api4Users/findPasswordStepOne")
+    Observable<ResultEntry> doForgetPassword_1(
+            @Query("username") String username,
+            @Query("mobile_code") String mobile_code
+    );
+
     public class ServiceManager {
         private volatile static ServiceManager serviceManager;
         static final int DEFAULT_CONNECT_TIMEOUT = 6;

@@ -46,9 +46,9 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="MQek46thvTXySOEe3rG5uMDOMLeYqdhd" />
 
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme"
-            >
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,8 +62,7 @@
         <activity android:name=".DanganAddChoseActivity" />
         <activity
             android:name=".ChitangAddActivity"
-            android:label="@string/title_activity_chitang_add"
-             />
+            android:label="@string/title_activity_chitang_add" />
         <!--
                 <receiver
                     android:name=".PushReceiver"
@@ -98,6 +97,11 @@
 
         <activity
             android:name=".RegisterActivity"
+            android:label="@string/title_activity_qiyexinxi_add"
+            android:theme="@style/AppTheme"></activity>
+
+        <activity
+            android:name=".ForgetPasswordActivity"
             android:label="@string/title_activity_qiyexinxi_add"
             android:theme="@style/AppTheme"></activity>
     </application>

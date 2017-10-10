@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
@@ -51,6 +54,14 @@ public class LoginMainActivity extends AppCompatActivity {
                 case R.id.login_button: {
                     String username = login_name_edit.getText().toString();
                     String password = login_password_edit.getText().toString();
+                    if (!CommonConstField.isMatchered(username)) {
+                        Toast.makeText(LoginMainActivity.this,"请输入正确的电话号码",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if(StringUtils.isEmpty(password)){
+                        Toast.makeText(LoginMainActivity.this,"请输入密码",Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     RetrofitHelper.ServiceManager.getBaseService().doLogin(username, password)
                             .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
                             new Observer<RegisterResult>() {
@@ -83,6 +94,8 @@ public class LoginMainActivity extends AppCompatActivity {
                 }
                 break;
                 case R.id.login_forgetpassword: {
+                    Intent registerintent = new Intent(LoginMainActivity.this, ForgetPasswordActivity.class);
+                    startActivity(registerintent);
                 }
                 break;
             }
