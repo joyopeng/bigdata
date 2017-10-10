@@ -2,6 +2,7 @@ package com.bric.kagdatabkt;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -11,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bric.kagdatabkt.utils.CommonConstField;
-import com.bric.kagdatabkt.view.CustomDatePicker;
 import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.foamtrace.photopicker.SelectModel;
 import com.foamtrace.photopicker.intent.PhotoPickerIntent;
@@ -20,6 +21,7 @@ import com.foamtrace.photopicker.intent.PhotoPickerIntent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -58,7 +60,7 @@ public class DanganAddActivity extends FragmentActivity {
     private ImageView preview_img4;
 
     //date picker
-    private CustomDatePicker datePicker;
+    private TimePickerView pvTime;
     private String time;
     private String date;
 
@@ -157,7 +159,7 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setXiaoduprop() {
         document_item1_label.setText(R.string.label_chitang_xiaodudate);
-//        document_item1_edit.setEnabled(false);
+        document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_xiaoduchi);
@@ -179,7 +181,7 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setToumiaoprop() {
         document_item1_label.setText(R.string.label_chitang_toumiaodate);
-//        document_item1_edit.setEnabled(false);
+        document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_source);
@@ -202,7 +204,7 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setWeishiprop() {
         document_item1_label.setText(R.string.label_chitang_weishidate);
-//        document_item1_edit.setEnabled(false);
+        document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_weishichi);
@@ -225,7 +227,7 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setBulaoprop() {
         document_item1_label.setText(R.string.label_chitang_pulaodate);
-//        document_item1_edit.setEnabled(false);
+        document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
 //        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_pulaochi);
@@ -247,7 +249,7 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setJianceprop() {
         document_item1_label.setText(R.string.label_chitang_jiancedate);
-//        document_item1_edit.setEnabled(false);
+        document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
 //        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_jianceid);
@@ -268,7 +270,7 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void setFangshuiprop() {
         document_item1_label.setText(R.string.label_chitang_fangshuidate);
-//        document_item1_edit.setEnabled(false);
+        document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
 //        document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_fangshuichi);
@@ -352,19 +354,39 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void initPicker() {
 
-        /**
-         * 设置年月日
-         */
-        datePicker = new CustomDatePicker(this, "请选择日期", new CustomDatePicker.ResultHandler() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2013, 0, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2019, 11, 28);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
-            public void handle(String time) {
-                document_item1_edit.setText(time.split(" ")[0]);
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+                /*btn_Time.setText(getTime(date));*/
+                EditText btn = (EditText) v;
+                btn.setText(getTime(date));
             }
-        }, "2007-01-01 00:00", time, document_item1_edit.getY() + document_item1_edit.getHeight());
-        datePicker.showSpecificTime(false); //显示时和分
-        datePicker.setIsLoop(false);
-        datePicker.setDayIsLoop(true);
-        datePicker.setMonIsLoop(true);
-        datePicker.show(date);
+        }).isDialog(false).setTitleText("请选择日期")
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("", "", "", "", "", "")
+                .isCenterLabel(false)
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(21)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
+                .build();
+        pvTime.show(document_item1_edit, true);
+    }
+
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
     }
 }

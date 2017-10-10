@@ -1,57 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-    <LinearLayout
+    <!--头部-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/base_tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp"
+        android:background="@color/skyblue"
+        android:navigationContentDescription="back">
+
+        <ImageView
+            android:id="@+id/base_nav_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/back" />
 
         <TextView
+            android:id="@+id/base_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="注册"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/base_nav_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/add_item"
+            android:clickable="true"
+            android:visibility="visible" />
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_right_margin"
+        android:background="@color/colorWhite"
+        >
+
+        <TextView
+            android:layout_width="@dimen/register_label_width"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dangan_left_margin"
+            android:textSize="@dimen/label_size"
             android:text="@string/label_phone" />
-
-        <EditText
-            android:id="@+id/verify_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_phonenumber" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/label_identifying_code" />
 
         <EditText
             android:id="@+id/register_phonenumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_identifying_code" />
+            android:inputType="phone"
+             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        >
 
         <TextView
+            android:layout_width="@dimen/register_label_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
+            android:textSize="@dimen/label_size"
+            android:text="@string/label_identifying_code" />
+
+        <EditText
+            android:id="@+id/verify_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/button_getqrcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/label_phone" />
+            android:background="@color/skyblue"
+            android:text="点击发送"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dangan_item_top_margin"
+        android:background="@color/colorWhite"
+        >
+
+        <TextView
+            android:layout_width="@dimen/register_label_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
+            android:textSize="@dimen/label_size"
+            android:text="@string/label_passwod" />
 
         <EditText
             android:id="@+id/register_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_passwod" />
+            android:inputType="textPassword"
+             />
     </LinearLayout>
 
     <Button

@@ -44,6 +44,7 @@
         android:layout_marginRight="@dimen/dangan_right_margin"
         android:drawableLeft="@drawable/input_password_icon"
         android:hint="@string/login_page_hint_password"
+        android:inputType="textPassword"
         android:textColor="@color/color_item_bg"
         android:textColorHint="@color/colorWhite" />
 

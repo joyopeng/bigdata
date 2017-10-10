@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-
-import com.bric.kagdatabkt.ChitangAddActivity;
 import com.bric.kagdatabkt.MainActivity;
 import com.bric.kagdatabkt.QiyexinxiAdd;
 import com.bric.kagdatabkt.R;

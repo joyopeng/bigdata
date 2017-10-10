@@ -18,4 +18,9 @@ public class CommonConstField {
     public static final int TABHOST_TAB_DANGAN_ID = 3;
     public static final int TABHOST_TAB_SETTING_ID = 2;
 
+    //prefrence
+    public static final String COMMON_PREFRENCE = "common_preference";
+    public static final String LOCATION_CITY = "location_city";
+    public static final String LOCATION_DISTRICT = "location_district";
+    public static final String ACCESS_TOKEN = "access_token";
 }

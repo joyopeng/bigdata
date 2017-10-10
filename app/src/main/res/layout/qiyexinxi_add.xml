@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/setting_label_qiye_name"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dangan_label_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -73,7 +73,7 @@
 
         <TextView
             android:id="@+id/setting_label_qiye_zizhi"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dangan_label_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -97,7 +97,7 @@
 
         <TextView
             android:id="@+id/setting_label_qiye_jianjie"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dangan_label_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -121,7 +121,7 @@
 
         <TextView
             android:id="@+id/setting_label_qiye_yingyezhizhao"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dangan_label_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -192,7 +192,7 @@
 
         <TextView
             android:id="@+id/setting_label_qiye_yingyerongyu"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dangan_label_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

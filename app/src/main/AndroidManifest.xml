@@ -46,7 +46,9 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="MQek46thvTXySOEe3rG5uMDOMLeYqdhd" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,24 +63,24 @@
         <activity
             android:name=".ChitangAddActivity"
             android:label="@string/title_activity_chitang_add"
-            android:theme="@style/AppTheme" />
-<!--
-        <receiver
-            android:name=".PushReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
+             />
+        <!--
+                <receiver
+                    android:name=".PushReceiver"
+                    android:enabled="true"
+                    android:exported="true">
+                    <intent-filter>
+                        <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                        <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                        <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                        <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                        <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                        <action android:name="cn.jpush.android.intent.CONNECTION" />
 
-                <category android:name="com.bric.kagdatabkt" />
-            </intent-filter>
-        </receiver>
--->
+                        <category android:name="com.bric.kagdatabkt" />
+                    </intent-filter>
+                </receiver>
+        -->
         <activity
             android:name=".QiyexinxiAdd"
             android:label="@string/title_activity_qiyexinxi_add"
@@ -93,6 +95,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_qiyexinxi_add"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
