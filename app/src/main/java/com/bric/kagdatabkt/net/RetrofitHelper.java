@@ -2,6 +2,8 @@ package com.bric.kagdatabkt.net;
 
 import android.util.Log;
 
+import com.bric.kagdatabkt.entry.ImageResult;
+import com.bric.kagdatabkt.entry.QiyeResult;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
 import com.google.gson.GsonBuilder;
@@ -11,13 +13,16 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -26,8 +31,12 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -70,12 +79,51 @@ public interface RetrofitHelper {
             @Query("mobile_code") String mobile_code
     );
 
+    @POST("Api4Users/findPasswordStepTwo")
+    Observable<ResultEntry> doForgetPassword_2(
+            @Query("username") String username,
+            @Query("password") String password,
+            @Query("repassword") String repassword
+    );
+
+    @POST("Api4Users/updatePassword")
+    Observable<ResultEntry> doUpdatePassword(
+            @Query("userid") String userid,
+            @Query("access_token") String access_token,
+            @Query("oldpassword") String oldpassword,
+            @Query("newpassword") String newpassword,
+            @Query("renewpassword") String renewpassword
+    );
+
+    @POST("Api4Users/add_user_info")
+    Observable<ResultEntry> doAdd_user_info(
+            @Query("access_token") String access_token,
+            @Query("company_name") String company_name,
+            @Query("company_profile") String company_profile,
+            @Query("company_qualification") String company_qualification,
+            @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Users/get_user_info")
+    Observable<QiyeResult> doGet_user_info(
+            @Query("access_token") String access_token
+    );
+
+
+
+    //    @Multipart
+    @POST("Api4Aquatics/add_user_info_pics")
+    Observable<ImageResult> doAdd_user_info_pics(@Body RequestBody Body);
+
+
     public class ServiceManager {
         private volatile static ServiceManager serviceManager;
         static final int DEFAULT_CONNECT_TIMEOUT = 6;
         static final int DEFAULT_READ_TIMEOUT = 15;
-        String defaultDomain = "http://nma.yy/";
+        static final String EPG_BASE_DOMAIN = "http:///nma.yy/";
+        static final String IMAGE_BASE_DOMAIN = "http://nmu.yy/";
         private RetrofitHelper baseService;
+        private RetrofitHelper imageService;
         SSLContext sc = null;
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
 
@@ -114,13 +162,20 @@ public interface RetrofitHelper {
                     .addInterceptor(interceptor)
                     .sslSocketFactory(sc.getSocketFactory())
                     .build();
-            Retrofit upgradeRetrofit = new Retrofit.Builder()
-                    .baseUrl(defaultDomain)
+            Retrofit epgRetrofit = new Retrofit.Builder()
+                    .baseUrl(EPG_BASE_DOMAIN)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(mClient)
                     .build();
-            baseService = upgradeRetrofit.create(RetrofitHelper.class);
+            Retrofit imageRetrofit = new Retrofit.Builder()
+                    .baseUrl(IMAGE_BASE_DOMAIN)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .client(mClient)
+                    .build();
+            baseService = epgRetrofit.create(RetrofitHelper.class);
+            imageService = imageRetrofit.create(RetrofitHelper.class);
         }
 
         private static ServiceManager getInstance() {    //对获取实例的方法进行同步
@@ -135,6 +190,11 @@ public interface RetrofitHelper {
         public static RetrofitHelper getBaseService() {
 
             return getInstance().baseService;
+        }
+
+        public static RetrofitHelper getBaseImageService() {
+
+            return getInstance().imageService;
         }
     }
 

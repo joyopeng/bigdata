@@ -75,13 +75,46 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         verify_code.setHint(R.string.hint_identifying_code);
         verify_code.setBackgroundResource(0);
         forgetpassword_1_qrcodeview = (ImageView) findViewById(R.id.forgetpassword_1_qrcodeview);
+        forgetpassword_1_qrcodeview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RetrofitHelper.ServiceManager.getBaseService().doGetQrcode("15221584146", "forget").subscribeOn(Schedulers.newThread())
+                        .map(new Func1<ResponseBody, Bitmap>() {
+                            @Override
+                            public Bitmap call(ResponseBody arg0) {
+                                Bitmap bitmap = BitmapFactory.decodeStream(arg0.byteStream());
+                                return bitmap;//返回一个bitmap对象
+                            }
+                        }).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                        new Subscriber<Bitmap>() {
+                            @Override
+                            public void onStart() {
+                                super.onStart();
+                            }
+
+                            @Override
+                            public void onCompleted() {
+                            }
+
+                            @Override
+                            public void onError(Throwable arg0) {
+                            }
+
+                            @Override
+                            public void onNext(Bitmap arg0) {
+                                forgetpassword_1_qrcodeview.setImageBitmap(arg0);
+                            }
+                        }
+                );
+            }
+        });
         register_button = (Button) findViewById(R.id.forgetpassword_button);
         register_button.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View view) {
                                                    String username = phonenumber.getText().toString();
                                                    String verify = verify_code.getText().toString();
-                                                   RetrofitHelper.ServiceManager.getBaseService().doForgetPassword_1(username, verify)
+                                                   RetrofitHelper.ServiceManager.getBaseService().doSendMsg(username, verify, "forget")
                                                            .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
                                                            new Observer<ResultEntry>() {
                                                                @Override
@@ -96,7 +129,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                                                @Override
                                                                public void onNext(ResultEntry arg0) {
                                                                    if (arg0.success == 0) {
-
+                                                                       Intent registerintent = new Intent(ForgetPasswordActivity.this, ForgetPasswordActivity2.class);
+                                                                       startActivity(registerintent);
                                                                    }
                                                                }
                                                            }
