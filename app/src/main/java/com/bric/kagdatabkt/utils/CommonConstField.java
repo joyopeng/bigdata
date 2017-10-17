@@ -30,10 +30,12 @@ public class CommonConstField {
     public static final String LOCATION_CITY = "location_city";
     public static final String LOCATION_DISTRICT = "location_district";
     public static final String ACCESS_TOKEN = "access_token";
+    public static final String USER_ID = "userid";
+    public static final String USER_NAME = "username";
 
 
     public static boolean isMatchered(CharSequence input) {
-        if(StringUtils.isEmpty(input))
+        if (StringUtils.isEmpty(input))
             return false;
         Pattern pattern = Pattern.compile(PHONE_PATTERN);
         Matcher matcher = pattern.matcher(input);

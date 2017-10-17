@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
 import com.bric.kagdatabkt.MainActivity;
 import com.bric.kagdatabkt.QiyexinxiAdd;
+import com.bric.kagdatabkt.QrcodeListActivity;
 import com.bric.kagdatabkt.R;
+import com.bric.kagdatabkt.UpdatePasswordActivity;
 
 /**
  * Created by joyopeng on 17-9-13.
@@ -55,9 +58,13 @@ public class Settingfragment extends Fragment implements View.OnClickListener {
             }
             break;
             case R.id.setting_login_password_item: {
+                Intent updatepasswordintent = new Intent(getActivity(), UpdatePasswordActivity.class);
+                startActivity(updatepasswordintent);
             }
             break;
             case R.id.setting_get_qrcode_item: {
+                Intent updatepasswordintent = new Intent(getActivity(), QrcodeListActivity.class);
+                startActivity(updatepasswordintent);
             }
             break;
             case R.id.setting_clear_cache_item: {

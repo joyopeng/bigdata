@@ -70,4 +70,9 @@
         <!-- 允许对话框的背景变暗 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+    <style name="dialog_exit">
+        <item name="@android:windowEnterAnimation">@anim/in_translate_top</item>
+        <item name="@android:windowExitAnimation">@anim/out_translate_top</item>
+    </style>
 </resources>

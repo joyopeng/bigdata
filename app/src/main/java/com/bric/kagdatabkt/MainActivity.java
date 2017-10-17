@@ -18,8 +18,8 @@ import com.bric.kagdatabkt.view.fragment.Settingfragment;
 
 public class MainActivity extends FragmentActivity {
 
-    private ImageView base_nav_right;
-    private TextView base_toolbar_title;
+    //    private ImageView base_nav_right;
+//    private TextView base_toolbar_title;
     private ImageView homepage_tab_img;
     private TextView homepage_tab_text;
     private ImageView chitang_tab_img;
@@ -41,8 +41,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
-        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
-        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+//        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+//        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
         homepage_tab_img = (ImageView) findViewById(R.id.homepage_tab_img);
         homepage_tab_text = (TextView) findViewById(R.id.homepage_tab_text);
         chitang_tab_img = (ImageView) findViewById(R.id.chitang_tab_img);
@@ -135,18 +135,18 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        base_nav_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addintent = new Intent(MainActivity.this, ChitangAddActivity.class);
-                if (currentTabid == CommonConstField.TABHOST_TAB_CHITANG_ID) {
-                    addintent = new Intent(MainActivity.this, ChitangAddActivity.class);
-                } else if (currentTabid == CommonConstField.TABHOST_TAB_DANGAN_ID) {
-                    addintent = new Intent(MainActivity.this, DanganAddChoseActivity.class);
-                }
-                startActivity(addintent);
-            }
-        });
+//        base_nav_right.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent addintent = new Intent(MainActivity.this, ChitangAddActivity.class);
+//                if (currentTabid == CommonConstField.TABHOST_TAB_CHITANG_ID) {
+//                    addintent = new Intent(MainActivity.this, ChitangAddActivity.class);
+//                } else if (currentTabid == CommonConstField.TABHOST_TAB_DANGAN_ID) {
+//                    addintent = new Intent(MainActivity.this, DanganAddChoseActivity.class);
+//                }
+//                startActivity(addintent);
+//            }
+//        });
     }
 
     private void changeHomepage() {

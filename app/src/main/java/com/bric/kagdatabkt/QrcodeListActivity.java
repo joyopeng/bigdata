@@ -1,0 +1,156 @@
+package com.bric.kagdatabkt;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.blankj.utilcode.utils.StringUtils;
+import com.bric.kagdatabkt.entry.ChitanglistResult;
+import com.bric.kagdatabkt.entry.QrcodeListResult;
+import com.bric.kagdatabkt.net.RetrofitHelper;
+import com.bric.kagdatabkt.utils.CommonConstField;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+public class QrcodeListActivity extends AppCompatActivity {
+
+    private static final String TAG = QrcodeListActivity.class.getSimpleName();
+
+    private ListView codelistView;
+
+    private ArrayList<QrcodeListResult.SubItem> qrcodelist;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.qrcode_list);
+        initView();
+        fetchChitangData();
+    }
+
+    private void initView() {
+        codelistView = (ListView) findViewById(R.id.qrcode_list);
+    }
+
+    private void fetchChitangData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        String access_token = sharedPreferences.getString(CommonConstField.ACCESS_TOKEN, "");
+        RetrofitHelper.ServiceManager.getBaseService().doGet_apply_qrcode_list(access_token)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                new Observer<QrcodeListResult>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable arg0) {
+                        Log.v(TAG, arg0.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onNext(QrcodeListResult arg0) {
+                        if (arg0.success == 0) {
+                            qrcodelist = arg0.data.get(0).List;
+                            codelistView.setAdapter(new MyAdspter());
+                        }
+                    }
+                }
+        );
+    }
+
+
+    class MyAdspter extends BaseAdapter {
+
+        private LayoutInflater layoutInflater;
+        private Context context;
+
+        public MyAdspter() {
+            this.layoutInflater = LayoutInflater.from(QrcodeListActivity.this);
+        }
+
+        /**
+         * 组件集合，对应list.xml中的控件
+         *
+         * @author Administrator
+         */
+        public final class PlaceHolder {
+            public TextView qrcode_gardenname;
+            public TextView qrcode_applystatus;
+            public ImageView qrcode_report;
+            public TextView control_date;
+            public TextView qrcode_product_name;
+            public TextView qrcode_consumption;
+            public TextView qrcode_operator;
+            public Button qrcode_submit;
+        }
+
+        @Override
+        public int getCount() {
+            return qrcodelist.size();
+        }
+
+        /**
+         * 获得某一位置的数据
+         */
+        @Override
+        public Object getItem(int position) {
+            return qrcodelist.get(position);
+        }
+
+        /**
+         * 获得唯一标识
+         */
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            PlaceHolder holder;
+            if (convertView == null) {
+                holder = new PlaceHolder();
+                //获得组件，实例化组件
+                convertView = layoutInflater.inflate(R.layout.qrcode_item, null);
+                holder.qrcode_gardenname = (TextView) convertView.findViewById(R.id.qrcode_gardenname);
+                holder.qrcode_applystatus = (TextView) convertView.findViewById(R.id.qrcode_applystatus);
+                holder.qrcode_report = (ImageView) convertView.findViewById(R.id.qrcode_report);
+                holder.control_date = (TextView) convertView.findViewById(R.id.control_date);
+                holder.qrcode_product_name = (TextView) convertView.findViewById(R.id.qrcode_product_name);
+                holder.qrcode_consumption = (TextView) convertView.findViewById(R.id.qrcode_consumption);
+                holder.qrcode_operator = (TextView) convertView.findViewById(R.id.qrcode_operator);
+                holder.qrcode_submit = (Button) convertView.findViewById(R.id.qrcode_submit);
+                convertView.setTag(holder);
+            } else {
+                holder = (PlaceHolder) convertView.getTag();
+            }
+            QrcodeListResult.SubItem item = qrcodelist.get(position);
+            holder.qrcode_gardenname.setText(item.bag_name);
+            holder.qrcode_applystatus.setText((item.has_apply_qrcode_count > 0 ? "已申请" : "再申请"));
+            if(StringUtils.isEmpty(item.report))
+                item.report = "http://nmu.yy/files/pics/AqUserInfoReport/15077965457533.png";
+            Picasso.with(QrcodeListActivity.this).load(item.report).into(holder.qrcode_report);
+            holder.control_date.setText(item.control_date);
+            holder.qrcode_product_name.setText(item.product_name);
+            holder.qrcode_consumption.setText(item.consumption);
+            holder.qrcode_operator.setText(item.operator);
+            return convertView;
+        }
+
+    }
+}

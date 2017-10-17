@@ -52,7 +52,7 @@ public class LoginMainActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.login_button: {
-                    String username = login_name_edit.getText().toString();
+                    final String username = login_name_edit.getText().toString();
                     String password = login_password_edit.getText().toString();
                     if (!CommonConstField.isMatchered(username)) {
                         Toast.makeText(LoginMainActivity.this,"请输入正确的电话号码",Toast.LENGTH_LONG).show();
@@ -79,7 +79,10 @@ public class LoginMainActivity extends AppCompatActivity {
                                     if (arg0.data.size() > 0) {
                                         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
                                         String access_token = ((RegisterResult.Item) (arg0.data.get(0))).Token.access_token;
+                                        String user_id = ((RegisterResult.Item) (arg0.data.get(0))).User.id;
                                         sharedPreferences.edit().putString(CommonConstField.ACCESS_TOKEN, access_token).commit();
+                                        sharedPreferences.edit().putString(CommonConstField.USER_ID, user_id).commit();
+                                        sharedPreferences.edit().putString(CommonConstField.USER_NAME, username).commit();
                                         Intent registerintent = new Intent(LoginMainActivity.this, MainActivity.class);
                                         startActivity(registerintent);
                                     }

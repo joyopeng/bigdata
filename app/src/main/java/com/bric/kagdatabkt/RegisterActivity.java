@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = phonenumber.getText().toString();
+                final String username = phonenumber.getText().toString();
                 String password = register_password.getText().toString();
                 String mobile_code = verify_code.getText().toString();
                 SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
@@ -100,7 +100,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 if (arg0.data.size() > 0) {
                                     SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
                                     String access_token = ((RegisterResult.Item) (arg0.data.get(0))).Token.access_token;
+                                    String user_id = ((RegisterResult.Item) (arg0.data.get(0))).User.id;
                                     sharedPreferences.edit().putString(CommonConstField.ACCESS_TOKEN, access_token).commit();
+                                    sharedPreferences.edit().putString(CommonConstField.USER_ID, user_id).commit();
+                                    sharedPreferences.edit().putString(CommonConstField.USER_NAME, username).commit();
                                     Intent registerintent = new Intent(RegisterActivity.this, MainActivity.class);
                                     startActivity(registerintent);
                                 }

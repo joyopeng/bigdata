@@ -2,8 +2,12 @@ package com.bric.kagdatabkt.net;
 
 import android.util.Log;
 
+import com.bric.kagdatabkt.entry.ChitanglistResult;
+import com.bric.kagdatabkt.entry.DanganlistResult;
 import com.bric.kagdatabkt.entry.ImageResult;
+import com.bric.kagdatabkt.entry.LunboResult;
 import com.bric.kagdatabkt.entry.QiyeResult;
+import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
 import com.google.gson.GsonBuilder;
@@ -109,6 +113,28 @@ public interface RetrofitHelper {
             @Query("access_token") String access_token
     );
 
+    @POST("Api4Datas/get_breeding_gardens")
+    Observable<ChitanglistResult> doGet_breeding_gardens(
+            @Query("access_token") String access_token
+    );
+
+    @POST("Api4Datas/get_jobs")
+    Observable<DanganlistResult> doGet_jobs(
+            @Query("access_token") String access_token,
+            @Query("garden_numid") String garden_numid,
+            @Query("page") String page,
+            @Query("limit") String limit
+
+    );
+
+    @POST("Api4Datas/get_apply_qrcode_list")
+    Observable<QrcodeListResult> doGet_apply_qrcode_list(
+            @Query("access_token") String access_token
+    );
+
+    @POST("api4Datas/get_supplier_carousels")
+    Observable<LunboResult> doGet_supplier_carousels(
+    );
 
 
     //    @Multipart

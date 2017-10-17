@@ -112,6 +112,14 @@
             android:name=".ForgetPasswordActivity3"
             android:label="@string/title_activity_qiyexinxi_add"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".UpdatePasswordActivity"
+            android:label="@string/title_activity_qiyexinxi_add"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".QrcodeListActivity"
+            android:label="@string/title_activity_qiyexinxi_add"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

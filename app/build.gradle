@@ -62,6 +62,7 @@ dependencies {
     compile(name: 'photopicker-release', ext: 'aar')
     compile(name: 'autoScrollViewPager-release', ext: 'aar')
     compile(name: 'pickerview-release', ext: 'aar')
+    compile(name: 'indicator-release', ext: 'aar')
     // 此处以JPush 3.0.3 版本为例。
     // 此处以JCore 1.1.1 版本为例。
     compile 'com.android.support:appcompat-v7:26.+'
