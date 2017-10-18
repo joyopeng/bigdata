@@ -54,7 +54,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent addintent = new Intent(DanganAddChoseActivity.this, DanganAddActivity.class);
                 addintent.putExtra(JOB_TYPE_ID_KEY, types.get(i).key);
-                addintent.putExtra(NUMID_KEY, String.valueOf(types.get(i).key));
+                addintent.putExtra(NUMID_KEY, filebag_numid);
                 startActivity(addintent);
             }
         });

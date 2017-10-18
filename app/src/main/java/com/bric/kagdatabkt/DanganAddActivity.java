@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static android.R.attr.data;
@@ -494,8 +495,8 @@ public class DanganAddActivity extends FragmentActivity {
     private void fillChoseData() {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
-        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, filebag_numid, String.valueOf(job_type_id))
-                .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
+        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, "", String.valueOf(job_type_id))
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ProductResult>() {
                     @Override
                     public void onCompleted() {
