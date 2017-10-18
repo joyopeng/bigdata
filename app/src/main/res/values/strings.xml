@@ -13,11 +13,11 @@
     <string name="label_document_id">档案编号:</string>
     <string name="title_chitang_catogery">请选择作业类型</string>
     <string name="title_chitang_infoinput">信息录入</string>
-    <string name="title_chitang_xiaodu">消毒信息录入</string>
-    <string name="label_chitang_xiaodudate">消毒日期</string>
-    <string name="label_chitang_xiaoduchi">消毒池子</string>
-    <string name="hint_chitang_xiaoduchi">选择消毒池</string>
-    <string name="label_chitang_xiaodushiji">消毒试剂</string>
+    <string name="title_chitang_xiaodu">病害防治信息录入</string>
+    <string name="label_chitang_xiaodudate">防治日期</string>
+    <string name="label_chitang_xiaoduchi">防治用品</string>
+    <string name="hint_chitang_xiaoduchi">请输入防治用品名称</string>
+    <string name="label_chitang_xiaodushiji">防治用品</string>
     <string name="hint_chitang_xiaodushiji">选择消毒试剂</string>
     <string name="label_chitang_xiaoduyongliang">用量</string>
     <string name="hint_chitang_xiaoduyongliang">填写消毒用量</string>
@@ -37,8 +37,8 @@
     <string name="hint_chitang_miaozhong_amount">填写投苗重量</string>
     <string name="title_chitang_weishi">喂食信息录入</string>
     <string name="label_chitang_weishidate">喂食日期</string>
-    <string name="label_chitang_weishichi">喂食池</string>
-    <string name="hint_chitang_weishichi">选择喂食池</string>
+    <string name="label_chitang_weishichi">饲料名称</string>
+    <string name="hint_chitang_weishichi">输入购买饲料名称</string>
     <string name="label_chitang_weishisiliao">饲料名称</string>
     <string name="hint_chitang_weishisiliao">填写饲料名称</string>
     <string name="label_chitang_weishigoumaishang">购买商</string>
@@ -55,15 +55,19 @@
     <string name="hint_chitang_pulaoamount">填写捕捞重量</string>
     <string name="title_chitang_jiance">检测信息录入</string>
     <string name="label_chitang_jiancedate">检测日期</string>
-    <string name="label_chitang_jianceid">检测编号</string>
+    <string name="label_chitang_jianceid">检测品种</string>
     <string name="hint_chitang_jianceid">选择检测池</string>
+    <string name="label_chitang_jiancexiangmu">检测项目</string>
+    <string name="hint_chitang_jiancexiangmu">请填写检测项目</string>
     <string name="label_chitang_jiancejieguo">检测结果</string>
     <string name="hint_chitang_jiancejieguo">选择检测结果</string>
     <string name="label_chitang_jianceoperator">检测人</string>
-    <string name="title_chitang_fangshui">放水信息录入</string>
-    <string name="label_chitang_fangshuidate">放水日期</string>
-    <string name="label_chitang_fangshuichi">放水池</string>
-    <string name="hint_chitang_fangshuichi">选择放水池</string>
+    <string name="title_chitang_fangshui">日常管理信息录入</string>
+    <string name="label_chitang_fangshuidate">管理日期</string>
+    <string name="label_chitang_fangshuichi">管理类型</string>
+    <string name="hint_chitang_fangshuichi">选择管理类型</string>
+    <string name="label_chitang_guanli_touruliang">投入量</string>
+    <string name="hint_chitang_guanli_touruliang">请输入投入作业量</string>
     <!-- 池塘 -->
     <string name="title_add_chitang">添加池塘</string>
     <string name="label_chitang_name">池塘名称</string>
@@ -126,7 +130,7 @@
     <string name="chitang_addpage_discription_hint">请简要介绍说明</string>
     <string name="title_activity_chitang_add">ChitangAdd</string>
     <!-- 我的-->
-    <string name="setting_label_persion_info">个人信息</string>
+    <string name="setting_label_persion_info">养殖单位信息</string>
     <string name="setting_label_login_password">登录密码</string>
     <string name="setting_label_get_qrcode">申请二维码</string>
     <string name="setting_label_clear_cache">清除缓存</string>

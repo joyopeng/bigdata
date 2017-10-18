@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
     <!--头部-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/base_tool_bar"
@@ -24,9 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:drawableRight="@drawable/arrow_down"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@string/app_title"
+            android:text="档案管理"
             android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
@@ -38,27 +38,84 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/add_item"
             android:clickable="true"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </android.support.v7.widget.Toolbar>
-    <ImageView
-        android:id="@+id/emperty_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/document_emperty" />
 
-    <TextView
-        android:id="@+id/hint_emperty_text1"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/dangan_empty"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/emperty_image"
-        android:layout_centerHorizontal="true"
-        android:text="亲,您还没有添加池塘额~" />
+        android:layout_below="@id/base_tool_bar"
+        android:visibility="gone">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/emperty_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/document_emperty" />
+
+        <TextView
+            android:id="@+id/hint_emperty_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emperty_image"
+            android:layout_centerHorizontal="true"
+            android:text="亲,您还没有添加池塘额~" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hint_emperty_text1"
+            android:layout_centerHorizontal="true"
+            android:text="请去池塘概况添加" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hint_emperty_text1"
-        android:layout_centerHorizontal="true"
-        android:text="请去池塘概况添加" />
+        android:layout_below="@id/base_tool_bar"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/filebag_numid_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:textSize="@dimen/title_size"
+                android:text="档案编号:" />
+
+            <TextView
+                android:id="@+id/filebag_numid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/filebag_numid_label"
+                android:textSize="@dimen/title_size"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/jobs_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:drawableRight="@drawable/filter"
+                android:textSize="@dimen/title_size"
+                android:text="全部" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/dangan_jobs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="@dimen/dangan_item_top_big_margin">
+
+        </ListView>
+    </LinearLayout>
 </RelativeLayout>

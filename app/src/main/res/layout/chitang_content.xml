@@ -1,188 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!--头部-->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/base_tool_bar"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fadingEdge="vertical"
+    android:scrollbars="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/skyblue"
-        android:navigationContentDescription="back">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--头部-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/base_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/skyblue"
+            android:navigationContentDescription="back">
 
-        <ImageView
-            android:id="@+id/base_nav_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dangan_left_margin"
-            android:paddingRight="@dimen/dangan_right_margin"
-            android:src="@drawable/back" />
+            <ImageView
+                android:id="@+id/base_nav_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dangan_left_margin"
+                android:paddingRight="@dimen/dangan_right_margin"
+                android:src="@drawable/back" />
 
-        <TextView
-            android:id="@+id/base_toolbar_title"
+            <TextView
+                android:id="@+id/base_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/chitang_addpage_title"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/base_nav_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:background="@color/colorAccent"
+                android:clickable="true"
+                android:textColor="@color/colorWhite"
+                android:visibility="visible" />
+        </android.support.v7.widget.Toolbar>
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/chitangaddressmap"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorWhite"
+            android:padding="@dimen/dangan_right_margin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="@string/chitang_addpage_namelabel"
+                android:textSize="@dimen/label_size" />
+
+            <EditText
+                android:id="@+id/chitang_addpage_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chitang_addpage_namehint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="@string/chitang_addpage_addresslabel"
+                android:textSize="@dimen/label_size" />
+
+            <EditText
+                android:id="@+id/chitang_addpage_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="池塘地址" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="@string/chitang_addpage_arealabel"
+                android:textSize="@dimen/label_size" />
+
+            <EditText
+                android:id="@+id/chitang_addpage_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chitang_addpage_areahint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="@string/chitang_addpage_owenerlabel"
+                android:textSize="@dimen/label_size" />
+
+            <EditText
+                android:id="@+id/chitang_addpage_owener"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chitang_addpage_owenerhint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="@string/chitang_addpage_owenerphonelabel"
+                android:textSize="@dimen/label_size" />
+
+            <EditText
+                android:id="@+id/chitang_addpage_owenerphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chitang_addpage_owenerphonehint" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/document_media_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="@string/label_chitang_tupian"
+                android:textSize="@dimen/label_size" />
+
+            <EditText
+                android:id="@+id/document_media_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/document_media_label"
+                android:enabled="false"
+                android:hint="@string/hint_chitang_tupian" />
+
+            <ImageView
+                android:id="@+id/document_media_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:clickable="true"
+                android:src="@drawable/add_item" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/upload_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/preview_img1"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+
+            <ImageView
+                android:id="@+id/preview_img2"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+
+            <ImageView
+                android:id="@+id/preview_img3"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+
+            <ImageView
+                android:id="@+id/preview_img4"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="@string/chitang_addpage_discription_label"
+                android:textSize="@dimen/label_size" />
+
+            <EditText
+                android:id="@+id/chitang_addpage_discription_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chitang_addpage_discription_hint" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addchitang_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@string/chitang_addpage_title"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/base_nav_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="@dimen/dangan_right_margin"
-            android:background="@color/colorAccent"
-            android:clickable="true"
-            android:textColor="@color/colorWhite"
-            android:visibility="visible" />
-    </android.support.v7.widget.Toolbar>
-
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/chitangaddressmap"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/colorWhite"
-        android:padding="@dimen/dangan_right_margin"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
-        android:background="@color/colorWhite"
-        >
-
-        <TextView
-            android:layout_width="@dimen/dangan_label_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/chitang_addpage_namelabel"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/chitang_addpage_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chitang_addpage_namehint" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+            android:background="@color/skyblue"
+            android:text="@string/title_add" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dangan_item_top_margin"
-        android:background="@color/colorWhite"
-        >
-
-        <TextView
-            android:layout_width="@dimen/dangan_label_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/chitang_addpage_addresslabel"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/chitang_addpage_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="marquee"
-            android:text="池塘地址" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dangan_item_top_margin"
-        android:background="@color/colorWhite"
-        >
-
-        <TextView
-            android:layout_width="@dimen/dangan_label_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/chitang_addpage_arealabel"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/chitang_addpage_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chitang_addpage_areahint" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dangan_item_top_margin"
-        android:background="@color/colorWhite"
-        >
-
-        <TextView
-            android:layout_width="@dimen/dangan_label_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/chitang_addpage_owenerlabel"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/chitang_addpage_owener"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chitang_addpage_owenerhint" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dangan_item_top_margin"
-        android:background="@color/colorWhite"
-        >
-
-        <TextView
-            android:layout_width="@dimen/dangan_label_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/chitang_addpage_owenerphonelabel"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/chitang_addpage_owenerphone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chitang_addpage_owenerphonehint" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dangan_item_top_margin"
-        android:background="@color/colorWhite"
-        >
-
-        <TextView
-            android:layout_width="@dimen/dangan_label_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:text="@string/chitang_addpage_discription_label"
-            android:textSize="@dimen/label_size" />
-
-        <EditText
-            android:id="@+id/chitang_addpage_discription_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/chitang_addpage_discription_hint" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/addchitang_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/skyblue"
-        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
-        android:text="@string/title_add" />
-</LinearLayout>
+</ScrollView>

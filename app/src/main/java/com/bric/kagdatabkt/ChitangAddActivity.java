@@ -1,9 +1,17 @@
 package com.bric.kagdatabkt;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.baidu.location.BDLocation;
@@ -14,7 +22,30 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
+import com.bric.kagdatabkt.bean.GardenBean;
+import com.bric.kagdatabkt.entry.ImageResult;
+import com.bric.kagdatabkt.entry.ResultEntry;
+import com.bric.kagdatabkt.net.RetrofitHelper;
+import com.bric.kagdatabkt.utils.CommonConstField;
 import com.bric.kagdatabkt.utils.LocationService;
+import com.foamtrace.photopicker.PhotoPickerActivity;
+import com.foamtrace.photopicker.SelectModel;
+import com.foamtrace.photopicker.intent.PhotoPickerIntent;
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.bric.kagdatabkt.utils.CommonConstField.ACCESS_TOKEN;
 
 public class ChitangAddActivity extends AppCompatActivity {
 
@@ -30,6 +61,18 @@ public class ChitangAddActivity extends AppCompatActivity {
     private EditText chitang_addpage_owener;
     private EditText chitang_addpage_owenerphone;
     private EditText chitang_addpage_discription_label;
+
+    private ImageView document_media_add;
+    private LinearLayout upload_image_view;
+    private ImageView preview_img1;
+    private ImageView preview_img2;
+    private ImageView preview_img3;
+    private ImageView preview_img4;
+
+    private Button addchitang_button;
+    private ArrayList<String> imagepath;
+    private String lat;
+    private String lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +96,130 @@ public class ChitangAddActivity extends AppCompatActivity {
         chitang_addpage_owener.setBackgroundResource(0);
         chitang_addpage_owenerphone.setBackgroundResource(0);
         chitang_addpage_discription_label.setBackgroundResource(0);
+
+        document_media_add = (ImageView) findViewById(R.id.document_media_add);
+        upload_image_view = (LinearLayout) findViewById(R.id.upload_image_view);
+        preview_img1 = (ImageView) findViewById(R.id.preview_img1);
+        preview_img2 = (ImageView) findViewById(R.id.preview_img2);
+        preview_img3 = (ImageView) findViewById(R.id.preview_img3);
+        preview_img4 = (ImageView) findViewById(R.id.preview_img4);
+
+        document_media_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PhotoPickerIntent intent = new PhotoPickerIntent(ChitangAddActivity.this);
+                intent.setSelectModel(SelectModel.MULTI);
+                intent.setShowCarema(true); // 是否显示拍照
+                intent.setMaxTotal(4); // 最多选择照片数量，默认为9
+                startActivityForResult(intent, 2);
+            }
+        });
+
+        addchitang_button = (Button) findViewById(R.id.addchitang_button);
+        addchitang_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<File> images = new ArrayList<File>();
+                for (String i : imagepath) {
+                    images.add(new File(i));
+                }
+                Observable<ImageResult> entry = upload(images);
+                entry.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<ImageResult>() {
+                            @Override
+                            public void onNext(ImageResult uploadImgBean) {
+                                if (uploadImgBean.data.size() > 0) {
+                                    ImageResult.Item item = uploadImgBean.data.get(0);
+                                    Gson gson = new Gson();
+                                    String file_urls = gson.toJson(item);
+//                                    ArrayList<String> files = item.file_url;
+                                    SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+                                    String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
+                                    GardenBean bean = new GardenBean();
+                                    bean.access_token = access_token;
+                                    bean.garden_name = chitang_addpage_name.getText().toString();
+                                    bean.garden_address = chitang_addpage_address.getText().toString();
+                                    bean.garden_area = chitang_addpage_area.getText().toString();
+                                    bean.garden_charge = chitang_addpage_owener.getText().toString();
+                                    bean.garden_tel = chitang_addpage_owenerphone.getText().toString();
+                                    bean.garden_profile = chitang_addpage_discription_label.getText().toString();
+                                    bean.file_urls = file_urls;
+                                    RetrofitHelper.ServiceManager.getBaseService().doAdd_reeding_garden(
+                                            bean.access_token, bean.garden_name,
+                                            bean.garden_address, lat, lng, bean.garden_area, bean.garden_charge,
+                                            bean.garden_tel, bean.garden_profile, bean.file_urls).subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+                                        @Override
+                                        public void onCompleted() {
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable arg0) {
+                                            Log.v(TAG, arg0.getLocalizedMessage());
+                                        }
+
+                                        @Override
+                                        public void onNext(ResultEntry arg0) {
+                                            Log.v(TAG, "message = " + arg0.message);
+                                            if (arg0.success == 0) {
+                                                ChitangAddActivity.this.finish();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable throwable) {
+                                Log.i(TAG, "onError: --->" + throwable.getMessage());
+                            }
+
+                            @Override
+                            public void onCompleted() {
+                                Log.i(TAG, "onComplete: ");
+                            }
+                        });
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            ArrayList<String> paths = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
+            imagepath = paths;
+            if (paths.size() > 0)
+                upload_image_view.setVisibility(View.VISIBLE);
+            for (int i = 0; i < paths.size(); i++) {
+                if (i == 0) {
+                    preview_img1.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                }
+                if (i == 1) {
+                    preview_img2.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                }
+                if (i == 2) {
+                    preview_img3.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                }
+                if (i == 3) {
+                    preview_img4.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                }
+            }
+        }
+    }
+
+    private Observable<ImageResult> upload(List<File> fileList) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("access_token", access_token);
+        int i = 0;
+        for (File file : fileList) {
+            builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
+        }
+        MultipartBody requestBody = builder.build();
+        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_user_info_pics(requestBody);
     }
 
     /***
@@ -98,6 +265,8 @@ public class ChitangAddActivity extends AppCompatActivity {
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
                 StringBuffer sb = new StringBuffer(256);
                 sb.append("time : ");
+                lat = String.valueOf(location.getLatitude());
+                lng = String.valueOf(location.getLongitude());
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
                 mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 24.0f);
                 mMapView.getMap().animateMapStatus(mapStatus);

@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bric.kagdatabkt.utils.CommonConstField;
 import com.bric.kagdatabkt.utils.ResourceUtils;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.bric.kagdatabkt.utils.CommonConstField.DANGAN_CONTENT_TYPE_KEY;
+import static com.bric.kagdatabkt.utils.CommonConstField.JOB_TYPE_ID_KEY;
+import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
 
 /**
  * Created by joyopeng on 17-9-14.
@@ -32,20 +35,26 @@ public class DanganAddChoseActivity extends FragmentActivity {
 
     private TextView base_toolbar_title;
     private ListView typelistview;
+    private TextView addoperator_documentid;
     private ArrayList<OperatorType> types = new ArrayList<>();
+    private String filebag_numid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.danganaddchose);
+        filebag_numid = getIntent().getStringExtra(NUMID_KEY);
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
         base_toolbar_title.setText("东塘管理");
         typelistview = (ListView) findViewById(R.id.typelistview);
+        addoperator_documentid = (TextView) findViewById(R.id.addoperator_documentid);
+        addoperator_documentid.setText(filebag_numid);
         typelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent addintent = new Intent(DanganAddChoseActivity.this, DanganAddActivity.class);
-                addintent.putExtra(DANGAN_CONTENT_TYPE_KEY,types.get(i).key);
+                addintent.putExtra(JOB_TYPE_ID_KEY, types.get(i).key);
+                addintent.putExtra(NUMID_KEY, String.valueOf(types.get(i).key));
                 startActivity(addintent);
             }
         });

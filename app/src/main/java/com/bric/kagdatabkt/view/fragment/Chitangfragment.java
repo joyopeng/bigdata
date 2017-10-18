@@ -21,6 +21,7 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
+import com.bric.kagdatabkt.ChitangAddActivity;
 import com.bric.kagdatabkt.DanganAddChoseActivity;
 import com.bric.kagdatabkt.R;
 import com.bric.kagdatabkt.entry.ChitanglistResult;
@@ -104,7 +105,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
         base_nav_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addintent = new Intent(getActivity(), DanganAddChoseActivity.class);
+                Intent addintent = new Intent(getActivity(), ChitangAddActivity.class);
                 startActivity(addintent);
             }
         });
@@ -206,7 +207,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
         DisplayMetrics dm = resources.getDisplayMetrics();
         int height = dm.heightPixels;
         IndicatorDialog dialog = new IndicatorBuilder(getActivity())
-                .width(500)
+                .width(600)
                 .animator(R.style.dialog_exit)
                 .height((int) (height * 0.5))
                 .ArrowDirection(IndicatorBuilder.TOP)

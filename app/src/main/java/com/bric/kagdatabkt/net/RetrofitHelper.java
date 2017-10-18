@@ -6,41 +6,32 @@ import com.bric.kagdatabkt.entry.ChitanglistResult;
 import com.bric.kagdatabkt.entry.DanganlistResult;
 import com.bric.kagdatabkt.entry.ImageResult;
 import com.bric.kagdatabkt.entry.LunboResult;
+import com.bric.kagdatabkt.entry.ProductResult;
 import com.bric.kagdatabkt.entry.QiyeResult;
 import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
-import com.google.gson.GsonBuilder;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -127,6 +118,14 @@ public interface RetrofitHelper {
 
     );
 
+    @POST("Api4Datas/get_breed_products")
+    Observable<ProductResult> doGet_breed_products(
+            @Query("access_token") String access_token,
+            @Query("filebag_numid") String filebag_numid,
+            @Query("job_type_id") String job_type_id
+
+    );
+
     @POST("Api4Datas/get_apply_qrcode_list")
     Observable<QrcodeListResult> doGet_apply_qrcode_list(
             @Query("access_token") String access_token
@@ -136,6 +135,102 @@ public interface RetrofitHelper {
     Observable<LunboResult> doGet_supplier_carousels(
     );
 
+    @POST("Api4Ponds/add_reeding_garden")
+    Observable<ResultEntry> doAdd_reeding_garden(
+            @Query("access_token") String access_token,
+            @Query("garden_name") String garden_name,
+            @Query("garden_address") String garden_address,
+            @Query("lat") String lat,
+            @Query("lng") String lng,
+            @Query("garden_area") String garden_area,
+            @Query("garden_charge") String garden_charge,
+            @Query("garden_tel") String garden_tel,
+            @Query("garden_profile") String garden_profile,
+            @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Ponds/add_job_disease_prevention")
+    Observable<ResultEntry> doAdd_job_disease_prevention(
+            @Query("access_token") String access_token,
+            @Query("filebag_numid") String filebag_numid,
+            @Query("title") String title,
+            @Query("control_date") String control_date,
+            @Query("supplies") String supplies,
+            @Query("operator") String operator,
+            @Query("remark") String remark,
+            @Query("consumption") String consumption,
+            @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Ponds/add_job_seedling")
+    Observable<ResultEntry> doAdd_job_seedling(
+            @Query("access_token") String access_token,
+            @Query("filebag_numid") String filebag_numid,
+            @Query("product_id") String product_id,
+            @Query("title") String title,
+            @Query("control_date") String control_date,
+            @Query("source") String source,
+            @Query("supplies") String supplies,
+            @Query("operator") String operator,
+            @Query("remark") String remark,
+            @Query("consumption") String consumption,
+            @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Ponds/add_job_feed")
+    Observable<ResultEntry> doAdd_job_feed(
+            @Query("access_token") String access_token,
+            @Query("filebag_numid") String filebag_numid,
+            @Query("title") String title,
+            @Query("control_date") String control_date,
+            @Query("consumption") String consumption,
+            @Query("operator") String operator,
+            @Query("feed_pic") String feed_pic,
+            @Query("feed_name") String feed_name,
+            @Query("buyer") String buyer,
+            @Query("remark") String remark,
+            @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Ponds/add_job_fishing")
+    Observable<ResultEntry> doAdd_job_fishing(
+            @Query("access_token") String access_token,
+            @Query("filebag_numid") String filebag_numid,
+            @Query("product_id") String product_id,
+            @Query("title") String title,
+            @Query("control_date") String control_date,
+            @Query("consumption") String consumption,
+            @Query("operator") String operator,
+            @Query("remark") String remark,
+            @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Ponds/add_job_testing")
+    Observable<ResultEntry> doAdd_job_testing(
+            @Query("access_token") String access_token,
+            @Query("filebag_numid") String filebag_numid,
+            @Query("product_id") String product_id,
+            @Query("title") String title,
+            @Query("control_date") String control_date,
+            @Query("project_name") String project_name,
+            @Query("result") String result,
+            @Query("operator") String operator,
+            @Query("remark") String remark,
+            @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Ponds/add_job_daily")
+    Observable<ResultEntry> doAdd_job_daily(
+            @Query("access_token") String access_token,
+            @Query("filebag_numid") String filebag_numid,
+            @Query("title") String title,
+            @Query("control_date") String control_date,
+            @Query("daily_type_id") String daily_type_id,
+            @Query("consumption") String consumption,
+            @Query("operator") String operator,
+            @Query("remark") String remark,
+            @Query("file_urls") String file_urls
+    );
 
     //    @Multipart
     @POST("Api4Aquatics/add_user_info_pics")
@@ -221,7 +316,7 @@ public interface RetrofitHelper {
         public static RetrofitHelper getBaseImageService() {
 
             return getInstance().imageService;
+
         }
     }
-
 }

@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  */
 
 public class CommonConstField {
+    //你们用13776019930 036031
     public final static String PHONE_PATTERN = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
 
     public static final String DANGAN_CONTENT_TYPE_KEY = "operator_key";
@@ -33,6 +34,8 @@ public class CommonConstField {
     public static final String USER_ID = "userid";
     public static final String USER_NAME = "username";
 
+    public static final String NUMID_KEY = "numid_key";
+    public static final String JOB_TYPE_ID_KEY = "job_type_id_key";
 
     public static boolean isMatchered(CharSequence input) {
         if (StringUtils.isEmpty(input))
