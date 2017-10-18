@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +19,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.model.IPickerViewData;
-import com.bric.kagdatabkt.entry.DanganlistResult;
 import com.bric.kagdatabkt.entry.ProductResult;
-import com.bric.kagdatabkt.entry.ResultEntry;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
 import com.foamtrace.photopicker.PhotoPickerActivity;
@@ -40,7 +37,6 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static android.R.attr.data;
 import static com.bric.kagdatabkt.utils.CommonConstField.ACCESS_TOKEN;
 
 public class DanganAddActivity extends FragmentActivity {
@@ -103,6 +99,8 @@ public class DanganAddActivity extends FragmentActivity {
         filebag_numid = getIntent().getStringExtra(CommonConstField.NUMID_KEY);
         job_type_id = getIntent().getIntExtra(CommonConstField.JOB_TYPE_ID_KEY, 0);
         if (2 == job_type_id || 4 == job_type_id || 5 == job_type_id) {
+            if(2 == job_type_id)
+                filebag_numid = "";
             fillChoseData();
         }
         initView();
@@ -495,7 +493,7 @@ public class DanganAddActivity extends FragmentActivity {
     private void fillChoseData() {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
-        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, "", String.valueOf(job_type_id))
+        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, filebag_numid, String.valueOf(job_type_id))
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ProductResult>() {
                     @Override

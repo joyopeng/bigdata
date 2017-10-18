@@ -156,7 +156,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin"
         android:background="@color/colorWhite"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:descendantFocusability="beforeDescendants"
+        >
 
         <TextView
             android:id="@+id/document_item3_label"
