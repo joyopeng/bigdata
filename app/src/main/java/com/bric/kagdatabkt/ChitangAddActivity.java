@@ -119,69 +119,90 @@ public class ChitangAddActivity extends AppCompatActivity {
         addchitang_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<File> images = new ArrayList<File>();
-                for (String i : imagepath) {
-                    images.add(new File(i));
-                }
-                Observable<ImageResult> entry = upload(images);
-                entry.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<ImageResult>() {
-                            @Override
-                            public void onNext(ImageResult uploadImgBean) {
-                                if (uploadImgBean.data.size() > 0) {
-                                    ImageResult.Item item = uploadImgBean.data.get(0);
-                                    Gson gson = new Gson();
-                                    String file_urls = gson.toJson(item);
-//                                    ArrayList<String> files = item.file_url;
-                                    SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
-                                    String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
-                                    GardenBean bean = new GardenBean();
-                                    bean.access_token = access_token;
-                                    bean.garden_name = chitang_addpage_name.getText().toString();
-                                    bean.garden_address = chitang_addpage_address.getText().toString();
-                                    bean.garden_area = chitang_addpage_area.getText().toString();
-                                    bean.garden_charge = chitang_addpage_owener.getText().toString();
-                                    bean.garden_tel = chitang_addpage_owenerphone.getText().toString();
-                                    bean.garden_profile = chitang_addpage_discription_label.getText().toString();
-                                    bean.file_urls = file_urls;
-                                    RetrofitHelper.ServiceManager.getBaseService().doAdd_reeding_garden(
-                                            bean.access_token, bean.garden_name,
-                                            bean.garden_address, lat, lng, bean.garden_area, bean.garden_charge,
-                                            bean.garden_tel, bean.garden_profile, bean.file_urls).subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
-                                        @Override
-                                        public void onCompleted() {
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable arg0) {
-                                            Log.v(TAG, arg0.getLocalizedMessage());
-                                        }
-
-                                        @Override
-                                        public void onNext(ResultEntry arg0) {
-                                            Log.v(TAG, "message = " + arg0.message);
-                                            if (arg0.success == 0) {
-                                                ChitangAddActivity.this.finish();
-                                            }
-                                        }
-                                    });
+                if (imagepath != null && imagepath.size() > 0) {
+                    ArrayList<File> images = new ArrayList<File>();
+                    for (String i : imagepath) {
+                        images.add(new File(i));
+                    }
+                    Observable<ImageResult> entry = upload(images);
+                    entry.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<ImageResult>() {
+                                @Override
+                                public void onNext(ImageResult uploadImgBean) {
+                                    if (uploadImgBean.data.size() > 0) {
+                                        ImageResult.Item item = uploadImgBean.data.get(0);
+                                        Gson gson = new Gson();
+                                        String file_urls = gson.toJson(item);
+                                        submitData(file_urls);
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onError(Throwable throwable) {
-                                Log.i(TAG, "onError: --->" + throwable.getMessage());
-                            }
+                                @Override
+                                public void onError(Throwable throwable) {
+                                    Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                }
 
-                            @Override
-                            public void onCompleted() {
-                                Log.i(TAG, "onComplete: ");
-                            }
-                        });
+                                @Override
+                                public void onCompleted() {
+                                    Log.i(TAG, "onComplete: ");
+                                }
+                            });
+                } else {
+                    submitData("");
+                }
             }
         });
+    }
+
+    private void submitData(String fileurls) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
+        GardenBean bean = new GardenBean();
+        bean.access_token = access_token;
+        bean.garden_name = chitang_addpage_name.getText().toString();
+        bean.garden_address = chitang_addpage_address.getText().toString();
+        bean.garden_area = chitang_addpage_area.getText().toString();
+        bean.garden_charge = chitang_addpage_owener.getText().toString();
+        bean.garden_tel = chitang_addpage_owenerphone.getText().toString();
+        bean.garden_profile = chitang_addpage_discription_label.getText().toString();
+        bean.file_urls = fileurls;
+        RetrofitHelper.ServiceManager.getBaseService().doAdd_reeding_garden(
+                bean.access_token, bean.garden_name,
+                bean.garden_address, lat, lng, bean.garden_area, bean.garden_charge,
+                bean.garden_tel, bean.garden_profile, bean.file_urls).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable arg0) {
+                Log.v(TAG, arg0.getLocalizedMessage());
+            }
+
+            @Override
+            public void onNext(ResultEntry arg0) {
+                Log.v(TAG, "message = " + arg0.message);
+                if (arg0.success == 0) {
+                    ChitangAddActivity.this.finish();
+                }
+            }
+        });
+    }
+
+    private Observable<ImageResult> uploadImageData(List<File> fileList) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("access_token", access_token);
+        int i = 0;
+        for (File file : fileList) {
+            builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
+        }
+        MultipartBody requestBody = builder.build();
+        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_reeding_garden_pics(requestBody);
     }
 
     @Override
@@ -219,7 +240,7 @@ public class ChitangAddActivity extends AppCompatActivity {
             builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
         }
         MultipartBody requestBody = builder.build();
-        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_user_info_pics(requestBody);
+        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_reeding_garden_pics(requestBody);
     }
 
     /***
@@ -271,83 +292,80 @@ public class ChitangAddActivity extends AppCompatActivity {
                 mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 24.0f);
                 mMapView.getMap().animateMapStatus(mapStatus);
                 chitang_addpage_address.setText(location.getAddrStr());
-                /**
-                 * 时间也可以使用systemClock.elapsedRealtime()方法 获取的是自从开机以来，每次回调的时间；
-                 * location.getTime() 是指服务端出本次结果的时间，如果位置不发生变化，则时间不变
-                 */
-                sb.append(location.getTime());
-                sb.append("\nlocType : ");// 定位类型
-                sb.append(location.getLocType());
-                sb.append("\nlocType description : ");// *****对应的定位类型说明*****
-                sb.append(location.getLocTypeDescription());
-                sb.append("\nlatitude : ");// 纬度
-                sb.append(location.getLatitude());
-                sb.append("\nlontitude : ");// 经度
-                sb.append(location.getLongitude());
-                sb.append("\nradius : ");// 半径
-                sb.append(location.getRadius());
-                sb.append("\nCountryCode : ");// 国家码
-                sb.append(location.getCountryCode());
-                sb.append("\nCountry : ");// 国家名称
-                sb.append(location.getCountry());
-                sb.append("\ncitycode : ");// 城市编码
-                sb.append(location.getCityCode());
-                sb.append("\ncity : ");// 城市
-                sb.append(location.getCity());
-                sb.append("\nDistrict : ");// 区
-                sb.append(location.getDistrict());
-                sb.append("\nStreet : ");// 街道
-                sb.append(location.getStreet());
-                sb.append("\naddr : ");// 地址信息
-                sb.append(location.getAddrStr());
-                sb.append("\nUserIndoorState: ");// *****返回用户室内外判断结果*****
-                sb.append(location.getUserIndoorState());
-                sb.append("\nDirection(not all devices have value): ");
-                sb.append(location.getDirection());// 方向
-                sb.append("\nlocationdescribe: ");
-                sb.append(location.getLocationDescribe());// 位置语义化信息
-                sb.append("\nPoi: ");// POI信息
-                if (location.getPoiList() != null && !location.getPoiList().isEmpty()) {
-                    for (int i = 0; i < location.getPoiList().size(); i++) {
-                        Poi poi = (Poi) location.getPoiList().get(i);
-                        sb.append(poi.getName() + ";");
-                    }
-                }
-                if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
-                    sb.append("\nspeed : ");
-                    sb.append(location.getSpeed());// 速度 单位：km/h
-                    sb.append("\nsatellite : ");
-                    sb.append(location.getSatelliteNumber());// 卫星数目
-                    sb.append("\nheight : ");
-                    sb.append(location.getAltitude());// 海拔高度 单位：米
-                    sb.append("\ngps status : ");
-                    sb.append(location.getGpsAccuracyStatus());// *****gps质量判断*****
-                    sb.append("\ndescribe : ");
-                    sb.append("gps定位成功");
-                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-                    // 运营商信息
-                    if (location.hasAltitude()) {// *****如果有海拔高度*****
-                        sb.append("\nheight : ");
-                        sb.append(location.getAltitude());// 单位：米
-                    }
-                    sb.append("\noperationers : ");// 运营商信息
-                    sb.append(location.getOperators());
-                    sb.append("\ndescribe : ");
-                    sb.append("网络定位成功");
-                } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
-                    sb.append("\ndescribe : ");
-                    sb.append("离线定位成功，离线定位结果也是有效的");
-                } else if (location.getLocType() == BDLocation.TypeServerError) {
-                    sb.append("\ndescribe : ");
-                    sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
-                } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                    sb.append("\ndescribe : ");
-                    sb.append("网络不同导致定位失败，请检查网络是否通畅");
-                } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-                    sb.append("\ndescribe : ");
-                    sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
-                }
-                Log.v(TAG, sb.toString());
+//
+//                sb.append(location.getTime());
+//                sb.append("\nlocType : ");// 定位类型
+//                sb.append(location.getLocType());
+//                sb.append("\nlocType description : ");// *****对应的定位类型说明*****
+//                sb.append(location.getLocTypeDescription());
+//                sb.append("\nlatitude : ");// 纬度
+//                sb.append(location.getLatitude());
+//                sb.append("\nlontitude : ");// 经度
+//                sb.append(location.getLongitude());
+//                sb.append("\nradius : ");// 半径
+//                sb.append(location.getRadius());
+//                sb.append("\nCountryCode : ");// 国家码
+//                sb.append(location.getCountryCode());
+//                sb.append("\nCountry : ");// 国家名称
+//                sb.append(location.getCountry());
+//                sb.append("\ncitycode : ");// 城市编码
+//                sb.append(location.getCityCode());
+//                sb.append("\ncity : ");// 城市
+//                sb.append(location.getCity());
+//                sb.append("\nDistrict : ");// 区
+//                sb.append(location.getDistrict());
+//                sb.append("\nStreet : ");// 街道
+//                sb.append(location.getStreet());
+//                sb.append("\naddr : ");// 地址信息
+//                sb.append(location.getAddrStr());
+//                sb.append("\nUserIndoorState: ");// *****返回用户室内外判断结果*****
+//                sb.append(location.getUserIndoorState());
+//                sb.append("\nDirection(not all devices have value): ");
+//                sb.append(location.getDirection());// 方向
+//                sb.append("\nlocationdescribe: ");
+//                sb.append(location.getLocationDescribe());// 位置语义化信息
+//                sb.append("\nPoi: ");// POI信息
+//                if (location.getPoiList() != null && !location.getPoiList().isEmpty()) {
+//                    for (int i = 0; i < location.getPoiList().size(); i++) {
+//                        Poi poi = (Poi) location.getPoiList().get(i);
+//                        sb.append(poi.getName() + ";");
+//                    }
+//                }
+//                if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+//                    sb.append("\nspeed : ");
+//                    sb.append(location.getSpeed());// 速度 单位：km/h
+//                    sb.append("\nsatellite : ");
+//                    sb.append(location.getSatelliteNumber());// 卫星数目
+//                    sb.append("\nheight : ");
+//                    sb.append(location.getAltitude());// 海拔高度 单位：米
+//                    sb.append("\ngps status : ");
+//                    sb.append(location.getGpsAccuracyStatus());// *****gps质量判断*****
+//                    sb.append("\ndescribe : ");
+//                    sb.append("gps定位成功");
+//                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+//                    // 运营商信息
+//                    if (location.hasAltitude()) {// *****如果有海拔高度*****
+//                        sb.append("\nheight : ");
+//                        sb.append(location.getAltitude());// 单位：米
+//                    }
+//                    sb.append("\noperationers : ");// 运营商信息
+//                    sb.append(location.getOperators());
+//                    sb.append("\ndescribe : ");
+//                    sb.append("网络定位成功");
+//                } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
+//                    sb.append("\ndescribe : ");
+//                    sb.append("离线定位成功，离线定位结果也是有效的");
+//                } else if (location.getLocType() == BDLocation.TypeServerError) {
+//                    sb.append("\ndescribe : ");
+//                    sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+//                } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
+//                    sb.append("\ndescribe : ");
+//                    sb.append("网络不同导致定位失败，请检查网络是否通畅");
+//                } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
+//                    sb.append("\ndescribe : ");
+//                    sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
+//                }
+//                Log.v(TAG, sb.toString());
             }
         }
 

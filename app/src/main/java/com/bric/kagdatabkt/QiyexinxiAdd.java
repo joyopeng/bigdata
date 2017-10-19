@@ -66,7 +66,7 @@ public class QiyexinxiAdd extends AppCompatActivity {
     private ImageView qiyerongyu_preview_img3;
     private ImageView qiyerongyu_preview_img4;
     private Button addqiyexinxi;
-    private ArrayList<String> imagepath = new ArrayList<>();
+    private ArrayList<String> imagepath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

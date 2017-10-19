@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bric.kagdatabkt.DanganAddChoseActivity;
@@ -49,6 +51,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private ImageView base_nav_right;
     private TextView filebag_numid;
     private ListView listView;
+    private RelativeLayout dangan_empty;
+    private LinearLayout dangan_content;
 
     private String access_token;
     private ArrayList<ChitanglistResult.SubItem> chitanglist;
@@ -73,6 +77,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         base_nav_right = (ImageView) v.findViewById(R.id.base_nav_right);
         filebag_numid = (TextView) v.findViewById(R.id.filebag_numid);
         listView = (ListView) v.findViewById(R.id.dangan_jobs);
+        dangan_empty = (RelativeLayout) v.findViewById(R.id.dangan_empty);
+        dangan_content = (LinearLayout) v.findViewById(R.id.dangan_content);
         base_nav_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +133,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     }
 
     private void getChitangById(final String garden_numid) {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, "1", "1")
+        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, "1", "20")
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DanganlistResult>() {
                     @Override
@@ -155,7 +161,11 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         jobs = item.jobs;
         base_toolbar_title.setText(garden.name);
         filebag_numid.setText(garden.numid);
-        listView.setAdapter(new MyAdspter());
+        if(jobs.size() >0) {
+            dangan_empty.setVisibility(View.GONE);
+            dangan_content.setVisibility(View.VISIBLE);
+            listView.setAdapter(new MyAdspter());
+        }
     }
 
 

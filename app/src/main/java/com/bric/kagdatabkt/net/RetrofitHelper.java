@@ -11,6 +11,7 @@ import com.bric.kagdatabkt.entry.QiyeResult;
 import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
+import com.bric.kagdatabkt.entry.WeishiImageResult;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -166,11 +167,10 @@ public interface RetrofitHelper {
     Observable<ResultEntry> doAdd_job_seedling(
             @Query("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
-            @Query("product_id") String product_id,
+            @Query("product_id") int product_id,
             @Query("title") String title,
             @Query("control_date") String control_date,
             @Query("source") String source,
-            @Query("supplies") String supplies,
             @Query("operator") String operator,
             @Query("remark") String remark,
             @Query("consumption") String consumption,
@@ -232,6 +232,15 @@ public interface RetrofitHelper {
             @Query("file_urls") String file_urls
     );
 
+    @POST("Api4Aquatics/add_reeding_garden_pics")
+    Observable<ImageResult> doAdd_reeding_garden_pics(@Body RequestBody Body);
+
+    @POST("Api4Aquatics/add_job_pics")
+    Observable<ImageResult> doAdd_job_pics(@Body RequestBody Body);
+
+    @POST("Api4Aquatics/add_job_feed_pics")
+    Observable<WeishiImageResult> doAdd_job_feed_pics(@Body RequestBody Body);
+
     //    @Multipart
     @POST("Api4Aquatics/add_user_info_pics")
     Observable<ImageResult> doAdd_user_info_pics(@Body RequestBody Body);
@@ -239,8 +248,8 @@ public interface RetrofitHelper {
 
     public class ServiceManager {
         private volatile static ServiceManager serviceManager;
-        static final int DEFAULT_CONNECT_TIMEOUT = 6;
-        static final int DEFAULT_READ_TIMEOUT = 15;
+        static final int DEFAULT_CONNECT_TIMEOUT = 16;
+        static final int DEFAULT_READ_TIMEOUT = 150;
         static final String EPG_BASE_DOMAIN = "http:///nma.yy/";
         static final String IMAGE_BASE_DOMAIN = "http://nmu.yy/";
         private RetrofitHelper baseService;

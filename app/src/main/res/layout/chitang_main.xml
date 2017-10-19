@@ -46,7 +46,7 @@
     <RelativeLayout
         android:id="@+id/chitang_empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/base_tool_bar"
         android:visibility="gone">
 
@@ -171,7 +171,7 @@
                         android:id="@+id/chitang_owner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="东塘" />
+                        android:text="" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -188,7 +188,7 @@
                         android:id="@+id/chitang_phonenumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="13295460256" />
+                        android:text="" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -207,7 +207,7 @@
                     android:id="@+id/chitang_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="苏州市相城区阳澄湖生态园" />
+                    android:text="" />
             </LinearLayout>
         </LinearLayout>
 
@@ -233,7 +233,7 @@
                     android:id="@+id/chitang_yangzhipinzhong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="阳澄湖大闸蟹,阳澄湖大虾" />
+                    android:text="" />
             </LinearLayout>
 
             <RelativeLayout
@@ -255,7 +255,7 @@
                         android:id="@+id/chitang_zuijintoumiao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2017.08.23" />
+                        android:text="" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -272,7 +272,7 @@
                         android:id="@+id/chitang_zuijinxiaodu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2017.08.23" />
+                        android:text="" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -291,7 +291,7 @@
                     android:id="@+id/chitang_zuijinbulao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2017.08.23" />
+                    android:text="" />
             </LinearLayout>
         </LinearLayout>
 
@@ -321,7 +321,7 @@
                         android:id="@+id/chitang_zuijinzuoye"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2017.08.23" />
+                        android:text="" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -338,7 +338,7 @@
                         android:id="@+id/chitang_caozuoleixing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="13295460256" />
+                        android:text="" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -357,7 +357,7 @@
                     android:id="@+id/chitang_jiangcedanwei"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="相城区水产检测检疫局" />
+                    android:text="" />
             </LinearLayout>
 
             <LinearLayout
@@ -375,7 +375,7 @@
                     android:id="@+id/chitang_caozuoneirong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="对东塘的水质进行检测是否超标" />
+                    android:text="" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

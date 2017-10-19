@@ -44,9 +44,9 @@
     <RelativeLayout
         android:id="@+id/dangan_empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/base_tool_bar"
-        android:visibility="gone">
+        >
 
         <ImageView
             android:id="@+id/emperty_image"
@@ -72,10 +72,13 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/dangan_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/base_tool_bar"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"

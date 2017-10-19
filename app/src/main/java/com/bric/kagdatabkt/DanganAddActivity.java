@@ -1,13 +1,21 @@
 package com.bric.kagdatabkt;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,20 +27,30 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.model.IPickerViewData;
+import com.bric.kagdatabkt.entry.ImageResult;
 import com.bric.kagdatabkt.entry.ProductResult;
+import com.bric.kagdatabkt.entry.ResultEntry;
+import com.bric.kagdatabkt.entry.WeishiImageResult;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
 import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.foamtrace.photopicker.SelectModel;
 import com.foamtrace.photopicker.intent.PhotoPickerIntent;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -40,7 +58,9 @@ import rx.schedulers.Schedulers;
 import static com.bric.kagdatabkt.utils.CommonConstField.ACCESS_TOKEN;
 
 public class DanganAddActivity extends FragmentActivity {
-
+    private static final String TAG = DanganAddActivity.class.getSimpleName();
+    private static final int TAKEPICTURE_ACTION_TYPE = 1;
+    private static final int SELECTPICTURE_ACTION_TYPE = 2;
     private TextView base_toolbar_title;
     private String title;
 
@@ -55,7 +75,7 @@ public class DanganAddActivity extends FragmentActivity {
     private TextView document_item2_label;
     private EditText document_item2_edit;
     private ImageView document_item2_arrow;
-    private Button take_picture;
+    private ImageView take_picture;
     private RelativeLayout document_item3;
     private TextView document_item3_label;
     private EditText document_item3_edit;
@@ -81,7 +101,7 @@ public class DanganAddActivity extends FragmentActivity {
     private ImageView preview_img2;
     private ImageView preview_img3;
     private ImageView preview_img4;
-
+    private Button adddocument;
     //date picker
     private TimePickerView pvTime;
     private String time;
@@ -91,6 +111,9 @@ public class DanganAddActivity extends FragmentActivity {
 
     private String filebag_numid;
     private int job_type_id;
+    private ArrayList<String> imagepath;
+    private String access_token;
+    private Uri photoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +122,13 @@ public class DanganAddActivity extends FragmentActivity {
         filebag_numid = getIntent().getStringExtra(CommonConstField.NUMID_KEY);
         job_type_id = getIntent().getIntExtra(CommonConstField.JOB_TYPE_ID_KEY, 0);
         if (2 == job_type_id || 4 == job_type_id || 5 == job_type_id) {
-            if(2 == job_type_id)
-                filebag_numid = "";
-            fillChoseData();
+            String temp_numid = filebag_numid;
+            if (2 == job_type_id)
+                temp_numid = "";
+            fillChoseData(temp_numid);
         }
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
         initView();
         initprop();
         initCommonprop();
@@ -129,7 +155,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item2_edit = (EditText) findViewById(R.id.document_item2_edit);
         document_item2_arrow = (ImageView) findViewById(R.id.document_item2_arrow);
         document_item3 = (RelativeLayout) findViewById(R.id.document_item3);
-        take_picture = (Button) findViewById(R.id.take_picture);
+        take_picture = (ImageView) findViewById(R.id.take_picture);
         document_item3_label = (TextView) findViewById(R.id.document_item3_label);
         document_item3_edit = (EditText) findViewById(R.id.document_item3_edit);
         document_item3_arrow = (ImageView) findViewById(R.id.document_item3_arrow);
@@ -154,6 +180,7 @@ public class DanganAddActivity extends FragmentActivity {
         preview_img2 = (ImageView) findViewById(R.id.preview_img2);
         preview_img3 = (ImageView) findViewById(R.id.preview_img3);
         preview_img4 = (ImageView) findViewById(R.id.preview_img4);
+        adddocument = (Button) findViewById(R.id.adddocument);
     }
 
     private void initprop() {
@@ -205,10 +232,8 @@ public class DanganAddActivity extends FragmentActivity {
     private void setXiaoduprop() {
         document_item1_label.setText(R.string.label_chitang_xiaodudate);
         document_item1_edit.setKeyListener(null);
-//        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_xiaoduchi);
-        document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_xiaoduchi);
         document_item3.setVisibility(View.GONE);
@@ -263,15 +288,17 @@ public class DanganAddActivity extends FragmentActivity {
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_weishichi);
-        document_item2_edit.setEnabled(false);
+//        document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_weishichi);
+        take_picture.setVisibility(View.VISIBLE);
+
+        document_item3.setVisibility(View.GONE);
         document_item3_label.setText(R.string.label_chitang_weishisiliao);
 //        document_item3_edit.setEnabled(false);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_weishisiliao);
         document_item3_arrow.setVisibility(View.GONE);
-        take_picture.setVisibility(View.VISIBLE);
         document_item4_label.setText(R.string.label_chitang_weishigoumaishang);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_weishigoumaishang);
@@ -313,7 +340,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item2_label.setText(R.string.label_chitang_jianceid);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
-        document_item2_edit.setHint(R.string.hint_chitang_xiaoduchi);
+        document_item2_edit.setHint("请选择检测品种");
         document_item3_label.setText(R.string.label_chitang_jiancexiangmu);
         document_item3_edit.setEnabled(false);
         document_item3_edit.setHint(R.string.hint_chitang_jiancexiangmu);
@@ -360,30 +387,70 @@ public class DanganAddActivity extends FragmentActivity {
                 intent.setSelectModel(SelectModel.MULTI);
                 intent.setShowCarema(true); // 是否显示拍照
                 intent.setMaxTotal(4); // 最多选择照片数量，默认为9
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, SELECTPICTURE_ACTION_TYPE);
+            }
+        });
+
+        adddocument.setOnClickListener(sumitButtonClickListener);
+        take_picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getTag() != null) {
+                    showPreviewDialog();
+                } else {
+                    String state = Environment.getExternalStorageState();
+                    if (state.equals(Environment.MEDIA_MOUNTED)) {
+                        File file = new File(Environment.getExternalStorageDirectory() +
+                                File.separator + Environment.DIRECTORY_DCIM + File.separator);
+                        if (!file.exists()) {
+                            file.mkdir();
+                        }
+                        String fileName = getPhotoFileName() + ".jpg";
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        photoUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory() +
+                                File.separator + Environment.DIRECTORY_DCIM + File.separator + fileName));
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                        startActivityForResult(intent, TAKEPICTURE_ACTION_TYPE);
+                    }
+                }
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            ArrayList<String> paths = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
-            if (paths.size() > 0)
-                upload_image_view.setVisibility(View.VISIBLE);
-            for (int i = 0; i < paths.size(); i++) {
-                if (i == 0) {
-                    preview_img1.setImageURI(Uri.fromFile(new File(paths.get(i))));
+        if (SELECTPICTURE_ACTION_TYPE == requestCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                ArrayList<String> paths = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
+                imagepath = paths;
+                if (paths.size() > 0)
+                    upload_image_view.setVisibility(View.VISIBLE);
+                for (int i = 0; i < paths.size(); i++) {
+                    if (i == 0) {
+                        preview_img1.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    }
+                    if (i == 1) {
+                        preview_img2.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    }
+                    if (i == 2) {
+                        preview_img3.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    }
+                    if (i == 3) {
+                        preview_img4.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    }
                 }
-                if (i == 1) {
-                    preview_img2.setImageURI(Uri.fromFile(new File(paths.get(i))));
+            }
+        } else {
+            if (resultCode == Activity.RESULT_OK) {
+                Uri uri = null;
+                if (data != null && data.getData() != null) {
+                    uri = data.getData();
+                    Log.v(TAG, "uri = " + uri);
+                } else {
+                    uri = photoUri;
                 }
-                if (i == 2) {
-                    preview_img3.setImageURI(Uri.fromFile(new File(paths.get(i))));
-                }
-                if (i == 3) {
-                    preview_img4.setImageURI(Uri.fromFile(new File(paths.get(i))));
-                }
+                Picasso.with(getBaseContext()).load(uri).resize(50, 50).centerCrop().into(take_picture);
+                take_picture.setTag(photoUri);
             }
         }
     }
@@ -451,19 +518,15 @@ public class DanganAddActivity extends FragmentActivity {
         return format.format(date);
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
-
-    private void initCustomOptionPicker(ArrayList<ProductResult.SubItem> datas) {
+    private void initCustomOptionPicker(final ArrayList<ProductResult.SubItem> datas, final View hostview) {
         choseview = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
 //                String tx = cardItem.get(options1).getPickerViewText();
+                document_item3_edit.setTag(options1);
+                document_item3_edit.setText(datas.get(options1).name);
+                Log.v(TAG, "hostview tag = " + hostview.getTag());
             }
         }).setLayoutRes(R.layout.pickerview_custom_options, new CustomListener() {
             @Override
@@ -490,10 +553,10 @@ public class DanganAddActivity extends FragmentActivity {
         choseview.setPicker(datas);//添加数据
     }
 
-    private void fillChoseData() {
+    private void fillChoseData(String numid) {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
-        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, filebag_numid, String.valueOf(job_type_id))
+        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, numid, String.valueOf(job_type_id))
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ProductResult>() {
                     @Override
@@ -508,19 +571,262 @@ public class DanganAddActivity extends FragmentActivity {
                     public void onNext(ProductResult arg0) {
                         if (arg0.success == 0) {
                             choseItems = arg0.data.get(0).List;
-                            initCustomOptionPicker(choseItems);
+                            initCustomOptionPicker(choseItems, document_item3_edit);
                         }
                     }
                 }
         );
     }
 
-    private class ChoseItem implements IPickerViewData {
-        public String id;
-        public String value;
+    private View.OnClickListener sumitButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (job_type_id) {
+                case 1: {
+                    if (imagepath != null && imagepath.size() > 0) {
+                        ArrayList<File> images = new ArrayList<File>();
+                        for (String i : imagepath) {
+                            images.add(new File(i));
+                        }
+                        Observable<ImageResult> entry = uploadImageData(images);
+                        entry.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<ImageResult>() {
+                                    @Override
+                                    public void onNext(ImageResult uploadImgBean) {
+                                        if (uploadImgBean.data.size() > 0) {
+                                            ImageResult.Item item = uploadImgBean.data.get(0);
+                                            Gson gson = new Gson();
+                                            String file_urls = gson.toJson(item);
+                                            submitBinghaifangzhiData(file_urls);
+                                        }
+                                    }
 
-        public String getPickerViewText() {
-            return value;
+                                    @Override
+                                    public void onError(Throwable throwable) {
+                                        Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onComplete: ");
+                                    }
+                                });
+                    } else {
+                        submitBinghaifangzhiData("");
+                    }
+                }
+                break;
+                case 2: {
+                    if (imagepath != null && imagepath.size() > 0) {
+                        ArrayList<File> images = new ArrayList<File>();
+                        for (String i : imagepath) {
+                            images.add(new File(i));
+                        }
+                        Observable<ImageResult> entry = uploadImageData(images);
+                        entry.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<ImageResult>() {
+                                    @Override
+                                    public void onNext(ImageResult uploadImgBean) {
+                                        if (uploadImgBean.data.size() > 0) {
+                                            ImageResult.Item item = uploadImgBean.data.get(0);
+                                            Gson gson = new Gson();
+                                            String file_urls = gson.toJson(item);
+                                            submitToumiaoData(file_urls);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable throwable) {
+                                        Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onComplete: ");
+                                    }
+                                });
+                    } else {
+                        submitToumiaoData("");
+                    }
+                }
+                break;
+                case 3: {
+                    if (imagepath != null && imagepath.size() > 0) {
+                        ArrayList<File> images = new ArrayList<File>();
+                        for (String i : imagepath) {
+                            images.add(new File(i));
+                        }
+                        File take_phote = new File(photoUri.getPath());
+                        Observable<WeishiImageResult> entry = uploadWeishiImageData(images, take_phote);
+                        entry.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<WeishiImageResult>() {
+                                    @Override
+                                    public void onNext(WeishiImageResult uploadImgBean) {
+                                        if (uploadImgBean.data.size() > 0) {
+                                            WeishiImageResult.Item item = uploadImgBean.data.get(0);
+                                            Gson gson = new Gson();
+                                            String file_urls = gson.toJson(item.upload_files);
+                                            String feed_url = gson.toJson(item.feed_pic);
+                                            submitWeishiData(file_urls, feed_url);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable throwable) {
+                                        Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onComplete: ");
+                                    }
+                                });
+                    } else {
+                        submitWeishiData("", "");
+                    }
+                }
+                break;
+            }
         }
+    };
+
+    private void submitBinghaifangzhiData(String fileurl) {
+        String title = document_item0_edit.getText().toString();
+        String date = document_item1_edit.getText().toString();
+        String yongpin = document_item2_edit.getText().toString();
+        String operator = document_operator_edit.getText().toString();
+        String consumption = document_item4_edit.getText().toString();
+        String note = document_note_edit.getText().toString();
+        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_disease_prevention(access_token, filebag_numid, title, date, yongpin, operator, note, consumption, fileurl).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable arg0) {
+                Log.v(TAG, arg0.getLocalizedMessage());
+            }
+
+            @Override
+            public void onNext(ResultEntry arg0) {
+                Log.v(TAG, "message = " + arg0.message);
+                if (arg0.success == 0) {
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void submitToumiaoData(String fileurl) {
+        String title = document_item0_edit.getText().toString();
+        String date = document_item1_edit.getText().toString();
+        String miaozhonglaiyuan = document_item2_edit.getText().toString();
+        int miaozhong = Integer.parseInt(document_item3_edit.getTag().toString());
+        String consumption = document_item4_edit.getText().toString();
+        String note = document_note_edit.getText().toString();
+        String operator = document_operator_edit.getText().toString();
+        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_seedling(access_token, filebag_numid, miaozhong, title, date, miaozhonglaiyuan, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable arg0) {
+                Log.v(TAG, arg0.getLocalizedMessage());
+            }
+
+            @Override
+            public void onNext(ResultEntry arg0) {
+                Log.v(TAG, "message = " + arg0.message);
+                if (arg0.success == 0) {
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void submitWeishiData(String fileurl, String feed_pic) {
+        String title = document_item0_edit.getText().toString();
+        String date = document_item1_edit.getText().toString();
+        String siliaomingcheng = document_item2_edit.getText().toString();
+        String goumaishang = document_item4_edit.getText().toString();
+        String consumption = document_item5_edit.getText().toString();
+        String note = document_note_edit.getText().toString();
+        String operator = document_operator_edit.getText().toString();
+        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_feed(access_token, filebag_numid, title, date, consumption, operator, feed_pic, siliaomingcheng, goumaishang, note, fileurl).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable arg0) {
+                Log.v(TAG, arg0.getLocalizedMessage());
+            }
+
+            @Override
+            public void onNext(ResultEntry arg0) {
+                Log.v(TAG, "message = " + arg0.message);
+                if (arg0.success == 0) {
+                    finish();
+                }
+            }
+        });
+    }
+
+    private Observable<ImageResult> uploadImageData(List<File> fileList) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("access_token", access_token);
+        int i = 0;
+        for (File file : fileList) {
+            builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
+        }
+        MultipartBody requestBody = builder.build();
+        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_job_pics(requestBody);
+    }
+
+    private Observable<WeishiImageResult> uploadWeishiImageData(List<File> fileList, File weishi) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("access_token", access_token);
+        int i = 0;
+        for (File file : fileList) {
+            builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
+        }
+        if (weishi.exists())
+            builder.addFormDataPart("feed_pic", weishi.getName(), RequestBody.create(MediaType.parse("image/jpeg"), weishi));
+        MultipartBody requestBody = builder.build();
+        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_job_feed_pics(requestBody);
+    }
+
+    private void showPreviewDialog() {
+        Dialog dialog = new Dialog(this, R.style.Dialog_FullScreen);
+        dialog.setContentView(R.layout.previe);
+        ImageView imageView = dialog.findViewById(R.id.preview_view);
+        Picasso.with(getBaseContext()).load(photoUri).config(Bitmap.Config.RGB_565).into(imageView);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    private String getPhotoFileName() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        return "IMG_" + dateFormat.format(date);
     }
 }

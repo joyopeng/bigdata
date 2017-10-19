@@ -73,7 +73,7 @@
                 android:id="@+id/chitang_addpage_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chitang_addpage_namehint" />
+                android:hint="@string/chitang_addpage_namehint" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,6 +86,7 @@
                 android:layout_width="@dimen/dangan_label_width"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:layout_gravity="center_vertical"
                 android:text="@string/chitang_addpage_addresslabel"
                 android:textSize="@dimen/label_size" />
 
@@ -93,8 +94,8 @@
                 android:id="@+id/chitang_addpage_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="池塘地址" />
+                android:maxLines="2"
+                android:hint="池塘地址" />
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +115,7 @@
                 android:id="@+id/chitang_addpage_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chitang_addpage_areahint" />
+                android:hint="@string/chitang_addpage_areahint" />
         </LinearLayout>
 
         <LinearLayout
@@ -134,7 +135,7 @@
                 android:id="@+id/chitang_addpage_owener"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chitang_addpage_owenerhint" />
+                android:hint="@string/chitang_addpage_owenerhint" />
         </LinearLayout>
 
         <LinearLayout
@@ -154,7 +155,7 @@
                 android:id="@+id/chitang_addpage_owenerphone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chitang_addpage_owenerphonehint" />
+                android:hint="@string/chitang_addpage_owenerphonehint" />
         </LinearLayout>
 
         <RelativeLayout
@@ -249,7 +250,7 @@
                 android:id="@+id/chitang_addpage_discription_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chitang_addpage_discription_hint" />
+                android:hint="@string/chitang_addpage_discription_hint" />
         </LinearLayout>
 
         <Button

@@ -85,6 +85,7 @@ public class LoginMainActivity extends AppCompatActivity {
                                         sharedPreferences.edit().putString(CommonConstField.USER_NAME, username).commit();
                                         Intent registerintent = new Intent(LoginMainActivity.this, MainActivity.class);
                                         startActivity(registerintent);
+                                        finish();
                                     }
                                 }
                             }

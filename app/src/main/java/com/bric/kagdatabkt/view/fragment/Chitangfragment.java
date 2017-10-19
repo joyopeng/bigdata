@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
+import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.ChitangAddActivity;
 import com.bric.kagdatabkt.DanganAddChoseActivity;
 import com.bric.kagdatabkt.R;
@@ -69,6 +72,8 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     private TextView chitang_jiangcedanwei;
     private TextView chitang_caozuoneirong;
 
+    private RelativeLayout chitang_empty;
+    private LinearLayout chitang_content;
     private String access_token;
 
     private ArrayList<ChitanglistResult.SubItem> chitanglist;
@@ -102,6 +107,9 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
         chitang_caozuoleixing = (TextView) v.findViewById(R.id.chitang_caozuoleixing);
         chitang_jiangcedanwei = (TextView) v.findViewById(R.id.chitang_jiangcedanwei);
         chitang_caozuoneirong = (TextView) v.findViewById(R.id.chitang_caozuoneirong);
+        chitang_empty = (RelativeLayout) v.findViewById(R.id.chitang_empty);
+        chitang_content = (LinearLayout) v.findViewById(R.id.chitang_content);
+
         base_nav_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +154,12 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
                             chitanglist = arg0.data.get(0).AqBreedingGardenList;
-                            getChitangById(chitanglist.get(0).AqBreedingGarden.numid);
+                            if (chitanglist.size() > 0) {
+                                getChitangById(chitanglist.get(0).AqBreedingGarden.numid);
+                            } else {
+                                chitang_empty.setVisibility(View.VISIBLE);
+                                chitang_content.setVisibility(View.GONE);
+                            }
                         }
                     }
                 }
@@ -189,9 +202,9 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
         chitang_phonenumber.setText(garden.tel);
         chitang_address.setText(garden.address);
         chitang_yangzhipinzhong.setText(garden.product_name_string);
-        chitang_zuijintoumiao.setText(garden.last_seedling.substring(0, 10));
-        chitang_zuijinxiaodu.setText(garden.last_disease_prevention.substring(0, 10));
-        chitang_zuijinbulao.setText(garden.last_fishing.substring(0, 10));
+        chitang_zuijintoumiao.setText(StringUtils.isEmpty(garden.last_seedling) ? "" : garden.last_seedling.substring(0, 10));
+        chitang_zuijinxiaodu.setText(StringUtils.isEmpty(garden.last_disease_prevention) ? "" : garden.last_disease_prevention.substring(0, 10));
+        chitang_zuijinbulao.setText(StringUtils.isEmpty(garden.last_fishing) ? "" : garden.last_fishing.substring(0, 10));
 
 
         DanganlistResult.Job job = item.jobs.get(0);

@@ -56,6 +56,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
                 addintent.putExtra(JOB_TYPE_ID_KEY, types.get(i).key);
                 addintent.putExtra(NUMID_KEY, filebag_numid);
                 startActivity(addintent);
+                finish();
             }
         });
         loadxmlData();

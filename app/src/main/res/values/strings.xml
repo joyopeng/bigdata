@@ -38,7 +38,7 @@
     <string name="title_chitang_weishi">喂食信息录入</string>
     <string name="label_chitang_weishidate">喂食日期</string>
     <string name="label_chitang_weishichi">饲料名称</string>
-    <string name="hint_chitang_weishichi">输入购买饲料名称</string>
+    <string name="hint_chitang_weishichi">输入饲料名称</string>
     <string name="label_chitang_weishisiliao">饲料名称</string>
     <string name="hint_chitang_weishisiliao">填写饲料名称</string>
     <string name="label_chitang_weishigoumaishang">购买商</string>
