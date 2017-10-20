@@ -268,6 +268,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                initCustomOptionPicker(choseItems, document_item3_edit);
                 if (choseview != null)
                     choseview.show(true);
             }
@@ -314,6 +315,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
+        document_item2.setVisibility(View.GONE);
         document_item2_label.setText(R.string.label_chitang_pulaochi);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
@@ -322,6 +324,14 @@ public class DanganAddActivity extends FragmentActivity {
         document_item3_edit.setEnabled(false);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_pulaocatogery);
+        document_item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initCustomOptionPicker(choseItems, document_item3_edit);
+                if (choseview != null)
+                    choseview.show(true);
+            }
+        });
         document_item4_label.setText(R.string.label_chitang_pulaoamount);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_pulaoamount);
@@ -342,13 +352,43 @@ public class DanganAddActivity extends FragmentActivity {
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint("请选择检测品种");
         document_item3_label.setText(R.string.label_chitang_jiancexiangmu);
-        document_item3_edit.setEnabled(false);
+//        document_item3_edit.setEnabled(false);
         document_item3_edit.setHint(R.string.hint_chitang_jiancexiangmu);
+        document_item3_edit.setBackgroundResource(0);
         document_item4_label.setText(R.string.label_chitang_jiancejieguo);
         document_item4_edit.setHint(R.string.hint_chitang_jiancejieguo);
+        document_item4_edit.setEnabled(false);
         document_item4_edit.setBackgroundResource(0);
+        document_item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initCustomOptionPicker(choseItems, document_item2_edit);
+                if (choseview != null)
+                    choseview.show(true);
+            }
+        });
+        document_item4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<ProductResult.SubItem> dd = new ArrayList<ProductResult.SubItem>();
+                ProductResult result1 = new ProductResult();
+                ProductResult.SubItem hege = result1.new SubItem();
+                hege.id = "1";
+                hege.name = "合格";
+                ProductResult result2 = new ProductResult();
+                ProductResult.SubItem buhege = result2.new SubItem();
+                buhege.id = "0";
+                buhege.name = "不合格";
+                dd.add(hege);
+                dd.add(buhege);
+                initCustomOptionPicker(dd, document_item4_edit);
+                if (choseview != null)
+                    choseview.show(true);
+            }
+        });
         document_item4_arrow.setVisibility(View.GONE);
         document_operator_label.setText("检测单位");
+        document_operator_edit.setHint("请输入检测单位名称");
         document_item5.setVisibility(View.GONE);
         document_item5_label.setVisibility(View.GONE);
         document_item5_edit.setVisibility(View.GONE);
@@ -364,6 +404,30 @@ public class DanganAddActivity extends FragmentActivity {
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_fangshuichi);
+        document_item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<ProductResult.SubItem> dd = new ArrayList<ProductResult.SubItem>();
+                ProductResult result1 = new ProductResult();
+                ProductResult.SubItem s1 = result1.new SubItem();
+                s1.id = "1";
+                s1.name = "种草";
+                ProductResult result2 = new ProductResult();
+                ProductResult.SubItem s2 = result2.new SubItem();
+                s2.id = "2";
+                s2.name = "施肥";
+                ProductResult result3 = new ProductResult();
+                ProductResult.SubItem s3 = result3.new SubItem();
+                s3.id = "3";
+                s3.name = "调水";
+                dd.add(s1);
+                dd.add(s2);
+                dd.add(s3);
+                initCustomOptionPicker(dd, document_item2_edit);
+                if (choseview != null)
+                    choseview.show(true);
+            }
+        });
         document_item3_label.setText(R.string.label_chitang_guanli_touruliang);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_guanli_touruliang);
@@ -518,14 +582,14 @@ public class DanganAddActivity extends FragmentActivity {
         return format.format(date);
     }
 
-    private void initCustomOptionPicker(final ArrayList<ProductResult.SubItem> datas, final View hostview) {
+    private void initCustomOptionPicker(final ArrayList<ProductResult.SubItem> datas, final EditText hostview) {
         choseview = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
 //                String tx = cardItem.get(options1).getPickerViewText();
-                document_item3_edit.setTag(options1);
-                document_item3_edit.setText(datas.get(options1).name);
+                hostview.setTag(datas.get(options1).id);
+                hostview.setText(datas.get(options1).name);
                 Log.v(TAG, "hostview tag = " + hostview.getTag());
             }
         }).setLayoutRes(R.layout.pickerview_custom_options, new CustomListener() {
@@ -556,7 +620,7 @@ public class DanganAddActivity extends FragmentActivity {
     private void fillChoseData(String numid) {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
-        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, numid, String.valueOf(job_type_id))
+        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, numid, String.valueOf(2))
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ProductResult>() {
                     @Override
@@ -571,7 +635,7 @@ public class DanganAddActivity extends FragmentActivity {
                     public void onNext(ProductResult arg0) {
                         if (arg0.success == 0) {
                             choseItems = arg0.data.get(0).List;
-                            initCustomOptionPicker(choseItems, document_item3_edit);
+//                            initCustomOptionPicker(choseItems, document_item3_edit);
                         }
                     }
                 }
@@ -689,6 +753,112 @@ public class DanganAddActivity extends FragmentActivity {
                     }
                 }
                 break;
+                case 4: {
+                    if (imagepath != null && imagepath.size() > 0) {
+                        ArrayList<File> images = new ArrayList<File>();
+                        for (String i : imagepath) {
+                            images.add(new File(i));
+                        }
+                        Observable<ImageResult> entry = uploadImageData(images);
+                        entry.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<ImageResult>() {
+                                    @Override
+                                    public void onNext(ImageResult uploadImgBean) {
+                                        if (uploadImgBean.data.size() > 0) {
+                                            ImageResult.Item item = uploadImgBean.data.get(0);
+                                            Gson gson = new Gson();
+                                            String file_urls = gson.toJson(item);
+                                            submitBulaoData(file_urls);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable throwable) {
+                                        Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onComplete: ");
+                                    }
+                                });
+                    } else {
+                        submitBulaoData("");
+                    }
+                }
+                break;
+                case 5: {
+                    if (imagepath != null && imagepath.size() > 0) {
+                        ArrayList<File> images = new ArrayList<File>();
+                        for (String i : imagepath) {
+                            images.add(new File(i));
+                        }
+                        Observable<ImageResult> entry = uploadImageData(images);
+                        entry.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<ImageResult>() {
+                                    @Override
+                                    public void onNext(ImageResult uploadImgBean) {
+                                        if (uploadImgBean.data.size() > 0) {
+                                            ImageResult.Item item = uploadImgBean.data.get(0);
+                                            Gson gson = new Gson();
+                                            String file_urls = gson.toJson(item);
+                                            submitJianceData(file_urls);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable throwable) {
+                                        Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onComplete: ");
+                                    }
+                                });
+                    } else {
+                        submitJianceData("");
+                    }
+                }
+                break;
+
+                case 6: {
+                    if (imagepath != null && imagepath.size() > 0) {
+                        ArrayList<File> images = new ArrayList<File>();
+                        for (String i : imagepath) {
+                            images.add(new File(i));
+                        }
+                        Observable<ImageResult> entry = uploadImageData(images);
+                        entry.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<ImageResult>() {
+                                    @Override
+                                    public void onNext(ImageResult uploadImgBean) {
+                                        if (uploadImgBean.data.size() > 0) {
+                                            ImageResult.Item item = uploadImgBean.data.get(0);
+                                            Gson gson = new Gson();
+                                            String file_urls = gson.toJson(item);
+                                            submitRichangweihuData(file_urls);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable throwable) {
+                                        Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onComplete: ");
+                                    }
+                                });
+                    } else {
+                        submitRichangweihuData("");
+                    }
+                }
+                break;
             }
         }
     };
@@ -759,6 +929,91 @@ public class DanganAddActivity extends FragmentActivity {
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_feed(access_token, filebag_numid, title, date, consumption, operator, feed_pic, siliaomingcheng, goumaishang, note, fileurl).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable arg0) {
+                Log.v(TAG, arg0.getLocalizedMessage());
+            }
+
+            @Override
+            public void onNext(ResultEntry arg0) {
+                Log.v(TAG, "message = " + arg0.message);
+                if (arg0.success == 0) {
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void submitBulaoData(String fileurl) {
+        String title = document_item0_edit.getText().toString();
+        String date = document_item1_edit.getText().toString();
+        int miaozhong = Integer.parseInt(document_item3_edit.getTag().toString());
+        String consumption = document_item4_edit.getText().toString();
+        String note = document_note_edit.getText().toString();
+        String operator = document_operator_edit.getText().toString();
+        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_fishing(access_token, filebag_numid, miaozhong, title, date, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable arg0) {
+                Log.v(TAG, arg0.getLocalizedMessage());
+            }
+
+            @Override
+            public void onNext(ResultEntry arg0) {
+                Log.v(TAG, "message = " + arg0.message);
+                if (arg0.success == 0) {
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void submitJianceData(String fileurl) {
+        String title = document_item0_edit.getText().toString();
+        String date = document_item1_edit.getText().toString();
+        int miaozhong = Integer.parseInt(document_item2_edit.getTag().toString());
+        String xiangmu = document_item4_edit.getText().toString();
+        int jieguo = Integer.parseInt(document_item4_edit.getTag().toString());
+        String note = document_note_edit.getText().toString();
+        String operator = document_operator_edit.getText().toString();
+        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_testing(access_token, filebag_numid, miaozhong, title, date, xiangmu, jieguo, operator, note, fileurl).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable arg0) {
+                Log.v(TAG, arg0.getLocalizedMessage());
+            }
+
+            @Override
+            public void onNext(ResultEntry arg0) {
+                Log.v(TAG, "message = " + arg0.message);
+                if (arg0.success == 0) {
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void submitRichangweihuData(String fileurl) {
+        String title = document_item0_edit.getText().toString();
+        String date = document_item1_edit.getText().toString();
+        int guanlileixing = Integer.parseInt(document_item2_edit.getTag().toString());
+        String touruliang = document_item3_edit.getText().toString();
+        String note = document_note_edit.getText().toString();
+        String operator = document_operator_edit.getText().toString();
+        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_daily(access_token, filebag_numid, title, date, guanlileixing, touruliang, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
             public void onCompleted() {

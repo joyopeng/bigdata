@@ -167,7 +167,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     }
 
     private void getChitangById(final String garden_numid) {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, "1", "1")
+        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid,0, "1", "1")
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DanganlistResult>() {
                     @Override

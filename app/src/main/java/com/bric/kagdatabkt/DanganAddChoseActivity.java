@@ -124,7 +124,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
         }
     }
 
-    private class OperatorType {
+    public class OperatorType {
         public String name;
         public int key;
     }

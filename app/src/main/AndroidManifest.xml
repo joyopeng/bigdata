@@ -120,6 +120,11 @@
             android:name=".QrcodeListActivity"
             android:label="@string/title_activity_qiyexinxi_add"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.foamtrace.photopicker.PhotoPreviewActivity"
+            android:label="@string/title_activity_qiyexinxi_add"
+            android:theme="@style/AppTheme"></activity>
+
     </application>
 
 </manifest>

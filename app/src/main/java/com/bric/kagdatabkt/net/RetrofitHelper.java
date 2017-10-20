@@ -114,6 +114,7 @@ public interface RetrofitHelper {
     Observable<DanganlistResult> doGet_jobs(
             @Query("access_token") String access_token,
             @Query("garden_numid") String garden_numid,
+            @Query("job_type_id") int job_type_id,
             @Query("page") String page,
             @Query("limit") String limit
 
@@ -196,7 +197,7 @@ public interface RetrofitHelper {
     Observable<ResultEntry> doAdd_job_fishing(
             @Query("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
-            @Query("product_id") String product_id,
+            @Query("product_id") int product_id,
             @Query("title") String title,
             @Query("control_date") String control_date,
             @Query("consumption") String consumption,
@@ -209,11 +210,11 @@ public interface RetrofitHelper {
     Observable<ResultEntry> doAdd_job_testing(
             @Query("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
-            @Query("product_id") String product_id,
+            @Query("product_id") int product_id,
             @Query("title") String title,
             @Query("control_date") String control_date,
             @Query("project_name") String project_name,
-            @Query("result") String result,
+            @Query("result") int result,
             @Query("operator") String operator,
             @Query("remark") String remark,
             @Query("file_urls") String file_urls
@@ -225,7 +226,7 @@ public interface RetrofitHelper {
             @Query("filebag_numid") String filebag_numid,
             @Query("title") String title,
             @Query("control_date") String control_date,
-            @Query("daily_type_id") String daily_type_id,
+            @Query("daily_type_id") int daily_type_id,
             @Query("consumption") String consumption,
             @Query("operator") String operator,
             @Query("remark") String remark,

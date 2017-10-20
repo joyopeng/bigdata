@@ -32,7 +32,9 @@ import com.jiang.android.indicatordialog.IndicatorBuilder;
 import com.jiang.android.indicatordialog.IndicatorDialog;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -53,11 +55,14 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private ListView listView;
     private RelativeLayout dangan_empty;
     private LinearLayout dangan_content;
+    private TextView jobs_filter;
 
     private String access_token;
     private ArrayList<ChitanglistResult.SubItem> chitanglist;
     private ArrayList<DanganlistResult.Job> jobs;
     Map<String, String> typeelement;
+    private String numid;
+    private ArrayList<OperatorType> types = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +72,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         access_token = sharedPreferences.getString(CommonConstField.ACCESS_TOKEN, "");
         init(v);
         fetchChitangData();
+        loadxmlData();
         typeelement = ResourceUtils.getHashMapResource(getActivity(), R.xml.operate_type);
         return v;
     }
@@ -79,6 +85,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         listView = (ListView) v.findViewById(R.id.dangan_jobs);
         dangan_empty = (RelativeLayout) v.findViewById(R.id.dangan_empty);
         dangan_content = (LinearLayout) v.findViewById(R.id.dangan_content);
+        jobs_filter = (TextView) v.findViewById(R.id.jobs_filter);
         base_nav_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +99,13 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 showTopDialog(v, 0.5f, IndicatorBuilder.GRAVITY_CENTER);
+            }
+        });
+
+        jobs_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRightDialog(v, 0.2f, IndicatorBuilder.GRAVITY_RIGHT);
             }
         });
 
@@ -125,15 +139,16 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
                             chitanglist = arg0.data.get(0).AqBreedingGardenList;
-                            getChitangById(chitanglist.get(0).AqBreedingGarden.numid);
+                            numid = chitanglist.get(0).AqBreedingGarden.numid;
+                            getChitangById(numid, 0);
                         }
                     }
                 }
         );
     }
 
-    private void getChitangById(final String garden_numid) {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, "1", "20")
+    private void getChitangById(final String garden_numid, int jobtype_id) {
+        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, jobtype_id, "1", "20")
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DanganlistResult>() {
                     @Override
@@ -161,10 +176,13 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         jobs = item.jobs;
         base_toolbar_title.setText(garden.name);
         filebag_numid.setText(garden.numid);
-        if(jobs.size() >0) {
+        if (jobs.size() > 0) {
             dangan_empty.setVisibility(View.GONE);
             dangan_content.setVisibility(View.VISIBLE);
             listView.setAdapter(new MyAdspter());
+        } else {
+            dangan_empty.setVisibility(View.VISIBLE);
+            dangan_content.setVisibility(View.GONE);
         }
     }
 
@@ -209,7 +227,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onItemClick(View v, int position) {
-                        getChitangById(chitanglist.get(position).AqBreedingGarden.numid);
+                        numid = chitanglist.get(position).AqBreedingGarden.numid;
+                        getChitangById(numid, 0);
                         new Thread() {
                             public void run() {
                                 try {
@@ -233,6 +252,69 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         dialog.show(v);
     }
 
+    private void showRightDialog(View v, float v1, int gravityCenter) {
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        int height = dm.heightPixels;
+        IndicatorDialog dialog = new IndicatorBuilder(getActivity())
+                .width(600)
+                .animator(R.style.dialog_exit)
+                .height((int) (height * 0.5))
+                .ArrowDirection(IndicatorBuilder.RIGHT)
+                .bgColor(Color.WHITE)
+                .gravity(gravityCenter)
+                .dimEnabled(true)
+                .ArrowRectage(v1)
+                .radius(18)
+                .layoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false))
+                .adapter(new BaseAdapter() {
+                    @Override
+                    public void onBindView(BaseViewHolder holder, int position) {
+                        TextView tv = holder.getView(R.id.item_add);
+                        tv.setText(types.get(position).name);
+                        if (position == types.size() - 1) {
+                            holder.setVisibility(R.id.item_line, BaseViewHolder.GONE);
+                        } else {
+                            holder.setVisibility(R.id.item_line, BaseViewHolder.VISIBLE);
+
+                        }
+                    }
+
+                    @Override
+                    public int getLayoutID(int position) {
+                        return R.layout.chitang_item;
+                    }
+
+                    @Override
+                    public boolean clickable() {
+                        return true;
+                    }
+
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        getChitangById(numid, types.get(position).key);
+                        new Thread() {
+                            public void run() {
+                                try {
+                                    Instrumentation inst = new Instrumentation();
+                                    inst.sendKeyDownUpSync(4);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }.start();
+                    }
+
+                    @Override
+                    public int getItemCount() {
+                        return types.size();
+                    }
+                }).create();
+
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show(v);
+    }
 
     class MyAdspter extends android.widget.BaseAdapter {
 
@@ -327,6 +409,28 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             default:
                 return R.drawable.bingchongfangzhi;
         }
+    }
+
+
+    private void loadxmlData() {
+        Map<String, String> typeelement = ResourceUtils.getHashMapResource(getActivity(), R.xml.operate_type);
+        if (typeelement.size() > 0) {
+            Set<Map.Entry<String, String>> sets = typeelement.entrySet();
+            Iterator<Map.Entry<String, String>> its = sets.iterator();
+            while (its.hasNext()) {
+                Map.Entry<String, String> entry = its.next();
+                OperatorType type = new OperatorType();
+                type.key = Integer.parseInt(entry.getKey());
+                type.name = entry.getValue();
+                types.add(type);
+            }
+        }
+
+    }
+
+    public class OperatorType {
+        public String name;
+        public int key;
     }
 
 }
