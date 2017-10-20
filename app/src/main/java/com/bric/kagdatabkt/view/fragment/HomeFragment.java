@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bric.kagdatabkt.MainActivity;
 import com.bric.kagdatabkt.QrcodeListActivity;
 import com.bric.kagdatabkt.R;
 import com.bric.kagdatabkt.entry.LunboResult;
@@ -36,17 +38,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private AutoScrollViewPager viewPager;
     private BaseViewPagerAdapter<String> mBaseViewPagerAdapter;
+    private MainActivity hostactivity;
+
+    private LinearLayout chitanggaikuang;
+    private LinearLayout danganguanli;
+    private LinearLayout tianjiadangan;
+    private LinearLayout erweimashenqing;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.homepage_main, null);
+        hostactivity = (MainActivity) getActivity();
         init(v);
         return v;
     }
 
     private void init(View v) {
         viewPager = (AutoScrollViewPager) v.findViewById(R.id.viewPager);
+        chitanggaikuang = (LinearLayout) v.findViewById(R.id.chitanggaikuang);
+        danganguanli = (LinearLayout) v.findViewById(R.id.danganguanli);
+        tianjiadangan = (LinearLayout) v.findViewById(R.id.tianjiadangan);
+        erweimashenqing = (LinearLayout) v.findViewById(R.id.erweimashenqing);
+        chitanggaikuang.setOnClickListener(this);
+        danganguanli.setOnClickListener(this);
+        tianjiadangan.setOnClickListener(this);
+        erweimashenqing.setOnClickListener(this);
         mBaseViewPagerAdapter = new BaseViewPagerAdapter<String>(getActivity(), listener) {
             @Override
             public void loadImage(ImageView view, int position, String url) {
@@ -63,8 +80,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            // case R.id.person2_shopping: // °ŽÅ¥²Ù×÷
-            // break;
+            case R.id.chitanggaikuang: {
+                hostactivity.trigechitangClick();
+            }
+            break;
+            case R.id.danganguanli: {
+                hostactivity.trigedanganClick();
+            }
+            break;
             default:
                 break;
         }

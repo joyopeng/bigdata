@@ -885,6 +885,7 @@ public class DanganAddActivity extends FragmentActivity {
             public void onNext(ResultEntry arg0) {
                 Log.v(TAG, "message = " + arg0.message);
                 if (arg0.success == 0) {
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }
             }
@@ -914,6 +915,7 @@ public class DanganAddActivity extends FragmentActivity {
             public void onNext(ResultEntry arg0) {
                 Log.v(TAG, "message = " + arg0.message);
                 if (arg0.success == 0) {
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }
             }
@@ -943,6 +945,7 @@ public class DanganAddActivity extends FragmentActivity {
             public void onNext(ResultEntry arg0) {
                 Log.v(TAG, "message = " + arg0.message);
                 if (arg0.success == 0) {
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }
             }
@@ -971,6 +974,7 @@ public class DanganAddActivity extends FragmentActivity {
             public void onNext(ResultEntry arg0) {
                 Log.v(TAG, "message = " + arg0.message);
                 if (arg0.success == 0) {
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }
             }
@@ -1000,6 +1004,7 @@ public class DanganAddActivity extends FragmentActivity {
             public void onNext(ResultEntry arg0) {
                 Log.v(TAG, "message = " + arg0.message);
                 if (arg0.success == 0) {
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }
             }
@@ -1028,6 +1033,7 @@ public class DanganAddActivity extends FragmentActivity {
             public void onNext(ResultEntry arg0) {
                 Log.v(TAG, "message = " + arg0.message);
                 if (arg0.success == 0) {
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }
             }

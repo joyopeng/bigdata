@@ -156,7 +156,7 @@ public class MainActivity extends FragmentActivity {
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
         ft.replace(R.id.base_content, f);
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 
 
@@ -167,7 +167,7 @@ public class MainActivity extends FragmentActivity {
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
         ft.replace(R.id.base_content, f);
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 
     private void changdangan() {
@@ -177,7 +177,7 @@ public class MainActivity extends FragmentActivity {
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
         ft.replace(R.id.base_content, f);
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 
     private void changSeting() {
@@ -187,6 +187,14 @@ public class MainActivity extends FragmentActivity {
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
         ft.replace(R.id.base_content, f);
-        ft.commit();
+        ft.commitAllowingStateLoss();
+    }
+
+    public void trigedanganClick(){
+        dangan_tab_img.performClick();
+    }
+
+    public void trigechitangClick(){
+        chitang_tab_img.performClick();
     }
 }

@@ -1,5 +1,6 @@
 package com.bric.kagdatabkt.view.fragment;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -91,7 +92,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 Intent addintent = new Intent(getActivity(), DanganAddChoseActivity.class);
                 addintent.putExtra(NUMID_KEY, filebag_numid.getText());
-                startActivity(addintent);
+                startActivityForResult(addintent, 0);
             }
         });
 
@@ -109,6 +110,14 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            Log.v(TAG, "ok");
+            fetchChitangData();
+        }
     }
 
     @Override
@@ -292,6 +301,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onItemClick(View v, int position) {
+                        jobs_filter.setText(types.get(position).name);
                         getChitangById(numid, types.get(position).key);
                         new Thread() {
                             public void run() {

@@ -1,5 +1,6 @@
 package com.bric.kagdatabkt;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,11 +56,20 @@ public class DanganAddChoseActivity extends FragmentActivity {
                 Intent addintent = new Intent(DanganAddChoseActivity.this, DanganAddActivity.class);
                 addintent.putExtra(JOB_TYPE_ID_KEY, types.get(i).key);
                 addintent.putExtra(NUMID_KEY, filebag_numid);
-                startActivity(addintent);
-                finish();
+                startActivityForResult(addintent,0);
+//                finish();
             }
         });
         loadxmlData();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            Log.v("aaaa", "ok");
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
     }
 
     private void loadxmlData() {

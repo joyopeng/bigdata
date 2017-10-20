@@ -133,6 +133,12 @@ public interface RetrofitHelper {
             @Query("access_token") String access_token
     );
 
+    @POST("Api4Datas/get_apply_qrcode_info")
+    Observable<QrcodeListResult> doGet_apply_qrcode_list(
+            @Query("access_token") String access_token,
+            @Query("job_fishing_id") String job_fishing_id
+    );
+
     @POST("api4Datas/get_supplier_carousels")
     Observable<LunboResult> doGet_supplier_carousels(
     );
@@ -231,6 +237,13 @@ public interface RetrofitHelper {
             @Query("operator") String operator,
             @Query("remark") String remark,
             @Query("file_urls") String file_urls
+    );
+
+    @POST("Api4Ponds/apply_qrcode")
+    Observable<ResultEntry> doApply_qrcode(
+            @Query("access_token") String access_token,
+            @Query("job_fishing_id") String job_fishing_id,
+            @Query("quantity") int quantity
     );
 
     @POST("Api4Aquatics/add_reeding_garden_pics")

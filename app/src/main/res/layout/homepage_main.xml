@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <!--头部-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/base_tool_bar"
@@ -20,8 +19,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="15dp"
             android:src="@drawable/back"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/base_toolbar_title"
@@ -52,121 +50,115 @@
         android:layout_height="200dp"
         android:background="@color/colorWhite"
         android:padding="@dimen/dangan_right_margin"
-        app:point_layout="center">
-    </com.kcode.autoscrollviewpager.view.AutoScrollViewPager>
+        app:point_layout="center"></com.kcode.autoscrollviewpager.view.AutoScrollViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="@dimen/dangan_right_margin"
-        >
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/chitanggaikuang"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:orientation="horizontal"
             android:background="@color/colorWhite"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dangan_left_margin"
-                android:text="@string/homepage_text_chitang"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/title_size"
-                />
+                android:text="@string/homepage_text_chitang"
+                android:textSize="@dimen/title_size" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
                 android:layout_marginRight="@dimen/dangan_right_margin"
-                android:layout_gravity="center"
                 android:src="@drawable/chitanggaikuang" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/danganguanli"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:background="@color/colorWhite"
             android:layout_marginLeft="@dimen/dangan_item_top_margin"
-            >
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/homepage_text_dangan"
-                android:textSize="@dimen/title_size"
-                />
+                android:textSize="@dimen/title_size" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dangan_right_margin"
-                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:layout_marginRight="@dimen/dangan_right_margin"
                 android:src="@drawable/danganguanli" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="2dp"
-        >
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/tianjiadangan"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:orientation="horizontal"
             android:background="@color/colorWhite"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dangan_left_margin"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
                 android:text="@string/homepage_text_tianjiadangan"
-                android:textSize="@dimen/title_size"
-                />
+                android:textSize="@dimen/title_size" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dangan_right_margin"
-                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:layout_marginRight="@dimen/dangan_right_margin"
                 android:src="@drawable/tianjiadangan" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/erweimashenqing"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:background="@color/colorWhite"
             android:layout_marginLeft="@dimen/dangan_item_top_margin"
-            >
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/homepage_text_qrcode"
-                android:textSize="@dimen/title_size"
-                />
+                android:textSize="@dimen/title_size" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/dangan_right_margin"
                 android:layout_marginLeft="@dimen/homepage_fragment_icon_leftmergin"
+                android:layout_marginRight="@dimen/dangan_right_margin"
                 android:src="@drawable/erweimashenqing" />
         </LinearLayout>
     </LinearLayout>

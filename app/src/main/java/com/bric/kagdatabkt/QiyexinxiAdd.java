@@ -79,8 +79,14 @@ public class QiyexinxiAdd extends AppCompatActivity {
 
     private void initview() {
         setting_edit_qiye_name = (EditText) findViewById(R.id.setting_edit_qiye_name);
+        setting_edit_qiye_name.setHint(R.string.setting_hint_qiye_name);
+        setting_edit_qiye_name.setBackgroundResource(0);
         setting_edit_qiye_zizhi = (EditText) findViewById(R.id.setting_edit_qiye_zizhi);
+        setting_edit_qiye_zizhi.setHint(R.string.setting_hint_qiye_zizhi);
+        setting_edit_qiye_zizhi.setBackgroundResource(0);
         setting_edit_qiye_jianjie = (EditText) findViewById(R.id.setting_edit_qiye_jianjie);
+        setting_edit_qiye_jianjie.setHint(R.string.setting_hint_qiye_jianjie);
+        setting_edit_qiye_jianjie.setBackgroundResource(0);
         setting_qiye_yingyezhizhao_add = (ImageView) findViewById(R.id.setting_qiye_yingyezhizhao_add);
         setting_qiye_yingyerongyu_add = (ImageView) findViewById(R.id.setting_qiye_yingyerongyu_add);
         yingyezhizhao_upload_image_view = (LinearLayout) findViewById(R.id.yingyezhizhao_upload_image_view);

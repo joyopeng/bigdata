@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/setting_label_qiye_name"
-            android:hint="@string/setting_hint_qiye_name" />
+             />
     </RelativeLayout>
 
     <RelativeLayout
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/setting_label_qiye_zizhi"
-            android:hint="@string/setting_hint_qiye_zizhi" />
+             />
     </RelativeLayout>
 
     <RelativeLayout
