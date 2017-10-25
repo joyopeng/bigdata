@@ -1,9 +1,15 @@
 package com.bric.kagdatabkt.utils;
 
+import android.util.Log;
+
 import com.blankj.utilcode.utils.StringUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
 
 /**
  * Created by joyopeng on 17-9-14.
@@ -11,6 +17,7 @@ import java.util.regex.Pattern;
 
 public class CommonConstField {
     //你们用13776019930 036031
+    public final String TAG = CommonConstField.class.getSimpleName();
     public final static String PHONE_PATTERN = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
 
     public static final String DANGAN_CONTENT_TYPE_KEY = "operator_key";
@@ -48,5 +55,50 @@ public class CommonConstField {
             return true;
         }
         return false;
+    }
+
+    Observer<String> observer = new Observer<String>() {
+        @Override
+        public void onNext(String s) {
+            Log.d(TAG, "Item: " + s);
+        }
+
+        @Override
+        public void onCompleted() {
+            Log.d(TAG, "Completed!");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.d(TAG, "Error!");
+        }
+    };
+
+    Subscriber<String> subscriber = new Subscriber<String>() {
+        @Override
+        public void onNext(String s) {
+            Log.d(TAG, "Item: " + s);
+        }
+
+        @Override
+        public void onCompleted() {
+            Log.d(TAG, "Completed!");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.d(TAG, "Error!");
+        }
+    };
+
+    private static void test() {
+
+        String[] words = {"Hello", "Hi", "Aloha"};
+        Observable observable = Observable.from(words);
+        
+    }
+
+    public static void main(String[] args) {
+        test();
     }
 }

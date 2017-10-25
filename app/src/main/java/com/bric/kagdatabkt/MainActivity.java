@@ -1,6 +1,7 @@
 package com.bric.kagdatabkt;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -10,11 +11,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.utils.CommonConstField;
 import com.bric.kagdatabkt.view.fragment.Chitangfragment;
 import com.bric.kagdatabkt.view.fragment.Danganfragment;
 import com.bric.kagdatabkt.view.fragment.HomeFragment;
 import com.bric.kagdatabkt.view.fragment.Settingfragment;
+
+import static com.bric.kagdatabkt.utils.CommonConstField.USER_NAME;
 
 public class MainActivity extends FragmentActivity {
 
@@ -38,6 +42,13 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         initView();
         initActionListener();
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        if (sharedPreferences != null && !StringUtils.isEmpty(sharedPreferences.getString(USER_NAME, ""))) {
+        } else {
+            Intent registerintent = new Intent(MainActivity.this, LoginMainActivity.class);
+            startActivity(registerintent);
+            finish();
+        }
     }
 
     private void initView() {
@@ -190,11 +201,11 @@ public class MainActivity extends FragmentActivity {
         ft.commitAllowingStateLoss();
     }
 
-    public void trigedanganClick(){
+    public void trigedanganClick() {
         dangan_tab_img.performClick();
     }
 
-    public void trigechitangClick(){
+    public void trigechitangClick() {
         chitang_tab_img.performClick();
     }
 }
