@@ -14,15 +14,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bric.kagdatabkt.DanganAddActivity;
 import com.bric.kagdatabkt.DanganAddChoseActivity;
+import com.bric.kagdatabkt.DanganDetailActivity;
 import com.bric.kagdatabkt.R;
 import com.bric.kagdatabkt.entry.ChitanglistResult;
+import com.bric.kagdatabkt.entry.DanganDetailResult;
 import com.bric.kagdatabkt.entry.DanganlistResult;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
@@ -41,6 +45,8 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.bric.kagdatabkt.utils.CommonConstField.JOB_ID;
+import static com.bric.kagdatabkt.utils.CommonConstField.JOB_TYPE_ID_KEY;
 import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
 
 /**
@@ -193,6 +199,17 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             dangan_empty.setVisibility(View.VISIBLE);
             dangan_content.setVisibility(View.GONE);
         }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent addintent = new Intent(getActivity(), DanganDetailActivity.class);
+                addintent.putExtra(JOB_TYPE_ID_KEY, jobs.get(position).aq_job_type_id);
+                addintent.putExtra(NUMID_KEY, numid);
+                addintent.putExtra(JOB_ID, jobs.get(position).id);
+                startActivity(addintent);
+//                finish();
+            }
+        });
     }
 
 
@@ -389,9 +406,6 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             DanganlistResult.Job job = jobs.get(position);
             holder.operator_type_icon.setBackgroundResource(getIconByType(Integer.parseInt(job.aq_job_type_id)));
             holder.operator_type_value.setText(typeelement.get(job.aq_job_type_id));
-//            if("5".equals(job.aq_job_type_id)){
-//                holder.control_date_label.setText("检测单位");
-//            }
             holder.control_date_value.setText(job.control_date);
             if ("5".equals(job.aq_job_type_id)) {
                 holder.operator_label.setText("检测单位:");

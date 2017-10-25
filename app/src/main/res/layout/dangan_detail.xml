@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fadingEdge="vertical"
+    android:scrollbars="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--头部-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/base_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/skyblue"
+            android:navigationContentDescription="back">
+
+            <ImageView
+                android:id="@+id/base_nav_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dangan_left_margin"
+                android:paddingRight="@dimen/dangan_right_margin"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/base_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/chitang_addpage_title"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/base_nav_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/dangan_right_margin"
+                android:background="@color/colorAccent"
+                android:clickable="true"
+                android:textColor="@color/colorWhite"
+                android:visibility="visible" />
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/detail_item1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dangan_item_height"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/detail_item1_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:textSize="@dimen/label_size" />
+
+            <TextView
+                android:id="@+id/detail_item1_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detail_item2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dangan_item_height"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/detail_item2_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:textSize="@dimen/label_size" />
+
+            <TextView
+                android:id="@+id/detail_item2_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detail_item3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dangan_item_height"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/detail_item3_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:textSize="@dimen/label_size" />
+
+            <TextView
+                android:id="@+id/detail_item3_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detail_item4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dangan_item_height"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/detail_item4_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:textSize="@dimen/label_size" />
+
+            <TextView
+                android:id="@+id/detail_item4_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detail_item5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/detail_item5_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:textSize="@dimen/label_size" />
+
+            <TextView
+                android:id="@+id/detail_item5_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detail_item6"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dangan_item_height"
+            android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/detail_item6_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:textSize="@dimen/label_size" />
+
+            <TextView
+                android:id="@+id/detail_item6_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/label_size"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/image_review_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_margin"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/preview_img1"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+
+            <ImageView
+                android:id="@+id/preview_img2"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+
+            <ImageView
+                android:id="@+id/preview_img3"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+
+            <ImageView
+                android:id="@+id/preview_img4"
+                android:layout_width="@dimen/dangan_preview_img_wide"
+                android:layout_height="@dimen/dangan_preview_img_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dangan_right_margin" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detail_item_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dangan_item_top_big_margin"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/detail_item_note_label"
+                android:layout_width="@dimen/dangan_label_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dangan_left_margin"
+                android:text="备注:"
+                android:textSize="@dimen/label_size" />
+
+            <TextView
+                android:id="@+id/detail_item_note_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

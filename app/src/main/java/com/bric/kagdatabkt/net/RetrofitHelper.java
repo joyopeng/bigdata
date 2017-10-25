@@ -3,6 +3,7 @@ package com.bric.kagdatabkt.net;
 import android.util.Log;
 
 import com.bric.kagdatabkt.entry.ChitanglistResult;
+import com.bric.kagdatabkt.entry.DanganDetailResult;
 import com.bric.kagdatabkt.entry.DanganlistResult;
 import com.bric.kagdatabkt.entry.ImageResult;
 import com.bric.kagdatabkt.entry.LunboResult;
@@ -118,6 +119,14 @@ public interface RetrofitHelper {
             @Query("page") String page,
             @Query("limit") String limit
 
+    );
+
+    @POST("Api4Datas/get_job_info")
+    Observable<DanganDetailResult> doGet_job_info(
+            @Query("access_token") String access_token,
+            @Query("garden_numid") String garden_numid,
+            @Query("job_type_id") int job_type_id,
+            @Query("id") int id
     );
 
     @POST("Api4Datas/get_breed_products")
@@ -242,7 +251,7 @@ public interface RetrofitHelper {
     @POST("Api4Ponds/apply_qrcode")
     Observable<ResultEntry> doApply_qrcode(
             @Query("access_token") String access_token,
-            @Query("job_fishing_id") String job_fishing_id,
+            @Query("job_fishing_id") int job_fishing_id,
             @Query("quantity") int quantity
     );
 

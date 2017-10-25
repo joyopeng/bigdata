@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
     private TextView addoperator_documentid;
     private ArrayList<OperatorType> types = new ArrayList<>();
     private String filebag_numid;
+    private ImageView base_nav_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,14 @@ public class DanganAddChoseActivity extends FragmentActivity {
         typelistview = (ListView) findViewById(R.id.typelistview);
         addoperator_documentid = (TextView) findViewById(R.id.addoperator_documentid);
         addoperator_documentid.setText(filebag_numid);
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         typelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

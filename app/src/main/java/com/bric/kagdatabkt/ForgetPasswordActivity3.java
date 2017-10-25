@@ -1,6 +1,7 @@
 package com.bric.kagdatabkt;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,11 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
 import com.bric.kagdatabkt.net.RetrofitHelper;
+import com.bric.kagdatabkt.utils.CommonConstField;
 
 import rx.Observer;
 import rx.schedulers.Schedulers;
+
+import static com.bric.kagdatabkt.utils.CommonConstField.USER_NAME;
 
 public class ForgetPasswordActivity3 extends AppCompatActivity {
 
@@ -32,12 +37,14 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
         password = (EditText) findViewById(R.id.forgetpassword_3_newpassword);
         password.setHint(R.string.hint_new_phonenumber);
         password.setBackgroundResource(0);
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        final String account = sharedPreferences.getString(USER_NAME,"15221584146");
         forgetpassword_3_button = (Button) findViewById(R.id.forgetpassword_3_button);
         forgetpassword_3_button.setOnClickListener(new View.OnClickListener() {
                                                        @Override
                                                        public void onClick(View view) {
                                                            String pw = password.getText().toString();
-                                                           RetrofitHelper.ServiceManager.getBaseService().doForgetPassword_2("15221584146", pw, pw)
+                                                           RetrofitHelper.ServiceManager.getBaseService().doForgetPassword_2(account, pw, pw)
                                                                    .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
                                                                    new Observer<ResultEntry>() {
                                                                        @Override

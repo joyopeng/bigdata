@@ -24,6 +24,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static com.bric.kagdatabkt.utils.CommonConstField.USER_NAME;
+
 public class ForgetPasswordActivity extends AppCompatActivity {
 
     private static final String TAG = ForgetPasswordActivity.class.getSimpleName();
@@ -37,7 +39,10 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgetpassword_1);
         initView();
-        RetrofitHelper.ServiceManager.getBaseService().doGetQrcode("15221584146", "forget").subscribeOn(Schedulers.newThread())
+        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+        final String account = sharedPreferences.getString(USER_NAME, "15221584146");
+        phonenumber.setText(account);
+        RetrofitHelper.ServiceManager.getBaseService().doGetQrcode(phonenumber.getText().toString(), "forget").subscribeOn(Schedulers.newThread())
                 .map(new Func1<ResponseBody, Bitmap>() {
                     @Override
                     public Bitmap call(ResponseBody arg0) {

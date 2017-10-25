@@ -1,6 +1,7 @@
 package com.bric.kagdatabkt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,10 +29,16 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.bric.kagdatabkt.utils.CommonConstField.JOB_FISHING_ID;
+import static com.bric.kagdatabkt.utils.CommonConstField.JOB_ID;
+import static com.bric.kagdatabkt.utils.CommonConstField.JOB_TYPE_ID_KEY;
+import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
+
 public class QrcodeListActivity extends AppCompatActivity {
 
     private static final String TAG = QrcodeListActivity.class.getSimpleName();
 
+    private ImageView base_nav_back;
     private ListView codelistView;
 
     private ArrayList<QrcodeListResult.SubItem> qrcodelist;
@@ -44,7 +52,22 @@ public class QrcodeListActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         codelistView = (ListView) findViewById(R.id.qrcode_list);
+        codelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent addintent = new Intent(QrcodeListActivity.this, DanganDetailActivity.class);
+                addintent.putExtra(JOB_FISHING_ID, qrcodelist.get(position).id);
+                startActivity(addintent);
+            }
+        });
     }
 
     private void fetchChitangData() {
@@ -142,13 +165,25 @@ public class QrcodeListActivity extends AppCompatActivity {
             QrcodeListResult.SubItem item = qrcodelist.get(position);
             holder.qrcode_gardenname.setText(item.bag_name);
             holder.qrcode_applystatus.setText((item.has_apply_qrcode_count > 0 ? "已申请" : "再申请"));
-            if(StringUtils.isEmpty(item.report))
+            if (StringUtils.isEmpty(item.report))
                 item.report = "http://nmu.yy/files/pics/AqUserInfoReport/15077965457533.png";
             Picasso.with(QrcodeListActivity.this).load(item.report).into(holder.qrcode_report);
             holder.control_date.setText(item.control_date);
             holder.qrcode_product_name.setText(item.product_name);
             holder.qrcode_consumption.setText(item.consumption);
             holder.qrcode_operator.setText(item.operator);
+            holder.qrcode_submit.setText((item.has_apply_qrcode_count > 0 ? "已申请" : "再申请"));
+            holder.qrcode_submit.setTag(position);
+            holder.qrcode_submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = Integer.parseInt(v.getTag().toString());
+                    Intent addintent = new Intent(QrcodeListActivity.this, QrcodeApplyActivity.class);
+                    addintent.putExtra(JOB_FISHING_ID, qrcodelist.get(position).id);
+                    addintent.putExtra(NUMID_KEY, qrcodelist.get(position).numid);
+                    startActivity(addintent);
+                }
+            });
             return convertView;
         }
 

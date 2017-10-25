@@ -50,6 +50,8 @@ import static com.bric.kagdatabkt.utils.CommonConstField.ACCESS_TOKEN;
 public class ChitangAddActivity extends AppCompatActivity {
 
     private static final String TAG = ChitangAddActivity.class.getSimpleName();
+
+    private ImageView base_nav_back;
     private MapView mMapView;
     private RelativeLayout rootview;
     private LocationService locationService;
@@ -83,6 +85,14 @@ public class ChitangAddActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         chitang_addpage_name = (EditText) findViewById(R.id.chitang_addpage_name);
         chitang_addpage_address = (EditText) findViewById(R.id.chitang_addpage_address);
         chitang_addpage_area = (EditText) findViewById(R.id.chitang_addpage_area);

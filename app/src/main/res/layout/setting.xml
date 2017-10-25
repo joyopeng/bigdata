@@ -21,7 +21,9 @@
             android:layout_height="match_parent"
             android:paddingLeft="10dp"
             android:paddingRight="15dp"
-            android:src="@drawable/back" />
+            android:src="@drawable/back"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/base_toolbar_title"

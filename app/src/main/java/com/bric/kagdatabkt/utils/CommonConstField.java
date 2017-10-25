@@ -36,6 +36,8 @@ public class CommonConstField {
 
     public static final String NUMID_KEY = "numid_key";
     public static final String JOB_TYPE_ID_KEY = "job_type_id_key";
+    public static final String JOB_ID = "job_id";
+    public static final String JOB_FISHING_ID = "job_fishing_id";
 
     public static boolean isMatchered(CharSequence input) {
         if (StringUtils.isEmpty(input))

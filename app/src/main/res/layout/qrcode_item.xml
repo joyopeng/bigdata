@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="77dp"
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
@@ -13,28 +13,39 @@
             android:id="@+id/qrcode_gardenname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            />
 
         <TextView
             android:id="@+id/qrcode_applystatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin">
 
         <ImageView
             android:id="@+id/qrcode_report"
-            android:layout_width="60dip"
-            android:layout_height="60dip" />
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            android:padding="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginRight="7dp"
+            />
 
         <LinearLayout
+            android:id="@+id/qr_center_item"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_toRightOf="@id/qrcode_report"
             android:orientation="vertical">
 
             <LinearLayout
@@ -100,10 +111,15 @@
 
         <Button
             android:id="@+id/qrcode_submit"
-            android:layout_width="wrap_content"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/qr_center_item"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:background="@color/skyblue"
             android:text="申请"
             android:textColor="@color/colorWhite" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

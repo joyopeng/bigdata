@@ -64,6 +64,7 @@ public class DanganAddActivity extends FragmentActivity {
     private TextView base_toolbar_title;
     private String title;
 
+    private ImageView base_nav_back;
     private RelativeLayout document_item0;
     private TextView document_item0_label;
     private EditText document_item0_edit;
@@ -143,7 +144,13 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void initView() {
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
-
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         document_item0_label = (TextView) findViewById(R.id.document_item0_label);
         document_item0_edit = (EditText) findViewById(R.id.document_item0_edit);
         document_item1 = (RelativeLayout) findViewById(R.id.document_item1);
@@ -211,10 +218,11 @@ public class DanganAddActivity extends FragmentActivity {
                 setFangshuiprop();
                 break;
         }
-        document_item1_edit.setOnClickListener(new View.OnClickListener() {
+        initPicker();
+        document_item1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initPicker();
+                pvTime.show(document_item1_edit, true);
             }
         });
         String name = gettypeNameBykey(typekey);
@@ -545,7 +553,6 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void initPicker() {
-
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
@@ -574,7 +581,6 @@ public class DanganAddActivity extends FragmentActivity {
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
                 .build();
-        pvTime.show(document_item1_edit, true);
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
