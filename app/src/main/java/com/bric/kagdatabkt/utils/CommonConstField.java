@@ -1,9 +1,20 @@
 package com.bric.kagdatabkt.utils;
 
+import android.os.Looper;
 import android.util.Log;
+import android.util.LruCache;
 
 import com.blankj.utilcode.utils.StringUtils;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,6 +53,7 @@ public class CommonConstField {
     public static final String USER_NAME = "username";
 
     public static final String NUMID_KEY = "numid_key";
+    public static final String NUMNAME_KEY = "numname_key";
     public static final String JOB_TYPE_ID_KEY = "job_type_id_key";
     public static final String JOB_ID = "job_id";
     public static final String JOB_FISHING_ID = "job_fishing_id";
@@ -95,10 +107,44 @@ public class CommonConstField {
 
         String[] words = {"Hello", "Hi", "Aloha"};
         Observable observable = Observable.from(words);
-        
+
+    }
+
+    private void testUrl() {
+        try {
+            URL url = new URL("");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("");
+//            con.setChunkedStreamingMode();
+            InputStream ino = con.getInputStream();
+//            ByteArrayOutputStream out = new ByteArrayOutputStream();
+//            byte[] buffer = new byte[1024];
+//            int len = 0;
+//            while ((len = ino.read(buffer)) != -1) {
+//                out.write(buffer, 0, len);
+//                out.flush();
+//            }
+            StringBuffer sb = new StringBuffer();
+            InputStreamReader reader = new InputStreamReader(ino);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (MalformedURLException e) {
+        } catch (IOException ioe) {
+        }
     }
 
     public static void main(String[] args) {
-        test();
+//        test();
+//        LruCache
+
+        LinkedHashMap<Integer, String> ddd = new LinkedHashMap<>();
+        ddd.put(1, "dd");
+        ddd.put(1, "dd1");
+        ddd.put(1, "dd2");
+        System.out.print(ddd);
     }
 }

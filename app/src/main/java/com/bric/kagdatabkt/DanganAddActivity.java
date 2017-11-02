@@ -22,11 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.model.IPickerViewData;
+import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.entry.ImageResult;
 import com.bric.kagdatabkt.entry.ProductResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
@@ -669,12 +671,15 @@ public class DanganAddActivity extends FragmentActivity {
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
                                             submitBinghaifangzhiData(file_urls);
+                                        } else {
+                                            showError(uploadImgBean.message);
                                         }
                                     }
 
                                     @Override
                                     public void onError(Throwable throwable) {
                                         Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                        showError(throwable.getLocalizedMessage());
                                     }
 
                                     @Override
@@ -704,12 +709,15 @@ public class DanganAddActivity extends FragmentActivity {
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
                                             submitToumiaoData(file_urls);
+                                        } else {
+                                            showError(uploadImgBean.message);
                                         }
                                     }
 
                                     @Override
                                     public void onError(Throwable throwable) {
                                         Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                        showError(throwable.getLocalizedMessage());
                                     }
 
                                     @Override
@@ -741,12 +749,15 @@ public class DanganAddActivity extends FragmentActivity {
                                             String file_urls = gson.toJson(item.upload_files);
                                             String feed_url = gson.toJson(item.feed_pic);
                                             submitWeishiData(file_urls, feed_url);
+                                        } else {
+                                            showError(uploadImgBean.message);
                                         }
                                     }
 
                                     @Override
                                     public void onError(Throwable throwable) {
                                         Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                        showError(throwable.getLocalizedMessage());
                                     }
 
                                     @Override
@@ -776,12 +787,15 @@ public class DanganAddActivity extends FragmentActivity {
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
                                             submitBulaoData(file_urls);
+                                        } else {
+                                            showError(uploadImgBean.message);
                                         }
                                     }
 
                                     @Override
                                     public void onError(Throwable throwable) {
                                         Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                        showError(throwable.getLocalizedMessage());
                                     }
 
                                     @Override
@@ -811,12 +825,15 @@ public class DanganAddActivity extends FragmentActivity {
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
                                             submitJianceData(file_urls);
+                                        } else {
+                                            showError(uploadImgBean.message);
                                         }
                                     }
 
                                     @Override
                                     public void onError(Throwable throwable) {
                                         Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                        showError(throwable.getLocalizedMessage());
                                     }
 
                                     @Override
@@ -847,12 +864,15 @@ public class DanganAddActivity extends FragmentActivity {
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
                                             submitRichangweihuData(file_urls);
+                                        } else {
+                                            showError(uploadImgBean.message);
                                         }
                                     }
 
                                     @Override
                                     public void onError(Throwable throwable) {
                                         Log.i(TAG, "onError: --->" + throwable.getMessage());
+                                        showError(throwable.getLocalizedMessage());
                                     }
 
                                     @Override
@@ -876,6 +896,10 @@ public class DanganAddActivity extends FragmentActivity {
         String operator = document_operator_edit.getText().toString();
         String consumption = document_item4_edit.getText().toString();
         String note = document_note_edit.getText().toString();
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(yongpin) || StringUtils.isEmpty(operator)) {
+            showError("请填写完整信息");
+            return;
+        }
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_disease_prevention(access_token, filebag_numid, title, date, yongpin, operator, note, consumption, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -893,6 +917,8 @@ public class DanganAddActivity extends FragmentActivity {
                 if (arg0.success == 0) {
                     setResult(Activity.RESULT_OK);
                     finish();
+                } else {
+                    showError(arg0.message);
                 }
             }
         });
@@ -906,6 +932,10 @@ public class DanganAddActivity extends FragmentActivity {
         String consumption = document_item4_edit.getText().toString();
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator)) {
+            showError("请填写完整信息");
+            return;
+        }
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_seedling(access_token, filebag_numid, miaozhong, title, date, miaozhonglaiyuan, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -923,6 +953,8 @@ public class DanganAddActivity extends FragmentActivity {
                 if (arg0.success == 0) {
                     setResult(Activity.RESULT_OK);
                     finish();
+                } else {
+                    showError(arg0.message);
                 }
             }
         });
@@ -936,6 +968,10 @@ public class DanganAddActivity extends FragmentActivity {
         String consumption = document_item5_edit.getText().toString();
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(siliaomingcheng) || StringUtils.isEmpty(goumaishang) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator)) {
+            showError("请填写完整信息");
+            return;
+        }
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_feed(access_token, filebag_numid, title, date, consumption, operator, feed_pic, siliaomingcheng, goumaishang, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -953,6 +989,8 @@ public class DanganAddActivity extends FragmentActivity {
                 if (arg0.success == 0) {
                     setResult(Activity.RESULT_OK);
                     finish();
+                } else {
+                    showError(arg0.message);
                 }
             }
         });
@@ -965,6 +1003,10 @@ public class DanganAddActivity extends FragmentActivity {
         String consumption = document_item4_edit.getText().toString();
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator)) {
+            showError("请填写完整信息");
+            return;
+        }
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_fishing(access_token, filebag_numid, miaozhong, title, date, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -982,6 +1024,8 @@ public class DanganAddActivity extends FragmentActivity {
                 if (arg0.success == 0) {
                     setResult(Activity.RESULT_OK);
                     finish();
+                } else {
+                    showError(arg0.message);
                 }
             }
         });
@@ -991,10 +1035,14 @@ public class DanganAddActivity extends FragmentActivity {
         String title = document_item0_edit.getText().toString();
         String date = document_item1_edit.getText().toString();
         int miaozhong = Integer.parseInt(document_item2_edit.getTag().toString());
-        String xiangmu = document_item4_edit.getText().toString();
+        String xiangmu = document_item3_edit.getText().toString();
         int jieguo = Integer.parseInt(document_item4_edit.getTag().toString());
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(xiangmu) || StringUtils.isEmpty(operator)) {
+            showError("请填写完整信息");
+            return;
+        }
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_testing(access_token, filebag_numid, miaozhong, title, date, xiangmu, jieguo, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -1012,6 +1060,8 @@ public class DanganAddActivity extends FragmentActivity {
                 if (arg0.success == 0) {
                     setResult(Activity.RESULT_OK);
                     finish();
+                } else {
+                    showError(arg0.message);
                 }
             }
         });
@@ -1020,10 +1070,14 @@ public class DanganAddActivity extends FragmentActivity {
     private void submitRichangweihuData(String fileurl) {
         String title = document_item0_edit.getText().toString();
         String date = document_item1_edit.getText().toString();
-        int guanlileixing = Integer.parseInt(document_item2_edit.getTag().toString());
+        int guanlileixing = Integer.parseInt(document_item2_edit.getTag() != null ? document_item2_edit.getTag().toString() : "-1");
         String touruliang = document_item3_edit.getText().toString();
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(touruliang) || StringUtils.isEmpty(operator)) {
+            showError("请填写完整信息");
+            return;
+        }
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_daily(access_token, filebag_numid, title, date, guanlileixing, touruliang, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -1041,6 +1095,8 @@ public class DanganAddActivity extends FragmentActivity {
                 if (arg0.success == 0) {
                     setResult(Activity.RESULT_OK);
                     finish();
+                } else {
+                    showError(arg0.message);
                 }
             }
         });
@@ -1095,5 +1151,9 @@ public class DanganAddActivity extends FragmentActivity {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         return "IMG_" + dateFormat.format(date);
+    }
+
+    private void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }

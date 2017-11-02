@@ -15,7 +15,10 @@ import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
+import com.bumptech.glide.manager.Lifecycle;
+
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class LoginMainActivity extends AppCompatActivity {
@@ -55,15 +58,15 @@ public class LoginMainActivity extends AppCompatActivity {
                     final String username = login_name_edit.getText().toString();
                     String password = login_password_edit.getText().toString();
                     if (!CommonConstField.isMatchered(username)) {
-                        Toast.makeText(LoginMainActivity.this,"请输入正确的电话号码",Toast.LENGTH_LONG).show();
+                        showError("请输入正确的电话号码");
                         return;
                     }
-                    if(StringUtils.isEmpty(password)){
-                        Toast.makeText(LoginMainActivity.this,"请输入密码",Toast.LENGTH_LONG).show();
+                    if (StringUtils.isEmpty(password) || password.length() < 6) {
+                        showError("请输入正确的密码");
                         return;
                     }
                     RetrofitHelper.ServiceManager.getBaseService().doLogin(username, password)
-                            .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
+                            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                             new Observer<RegisterResult>() {
                                 @Override
                                 public void onCompleted() {
@@ -86,6 +89,8 @@ public class LoginMainActivity extends AppCompatActivity {
                                         Intent registerintent = new Intent(LoginMainActivity.this, MainActivity.class);
                                         startActivity(registerintent);
                                         finish();
+                                    } else {
+                                        showError(arg0.message);
                                     }
                                 }
                             }
@@ -105,4 +110,8 @@ public class LoginMainActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
 }

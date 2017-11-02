@@ -49,6 +49,7 @@ public class QiyexinxiAdd extends AppCompatActivity {
     private static final String TAG = QiyexinxiAdd.class.getSimpleName();
     private static final int ZIZHI_TAG = 1;
     private static final int RONGYU_TAG = 2;
+    private ImageView base_nav_back;
     private EditText setting_edit_qiye_name;
     private EditText setting_edit_qiye_zizhi;
     private EditText setting_edit_qiye_jianjie;
@@ -78,6 +79,13 @@ public class QiyexinxiAdd extends AppCompatActivity {
     }
 
     private void initview() {
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         setting_edit_qiye_name = (EditText) findViewById(R.id.setting_edit_qiye_name);
         setting_edit_qiye_name.setHint(R.string.setting_hint_qiye_name);
         setting_edit_qiye_name.setBackgroundResource(0);

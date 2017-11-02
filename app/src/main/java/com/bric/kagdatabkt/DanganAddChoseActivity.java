@@ -28,6 +28,7 @@ import java.util.Set;
 import static com.bric.kagdatabkt.utils.CommonConstField.DANGAN_CONTENT_TYPE_KEY;
 import static com.bric.kagdatabkt.utils.CommonConstField.JOB_TYPE_ID_KEY;
 import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
+import static com.bric.kagdatabkt.utils.CommonConstField.NUMNAME_KEY;
 
 /**
  * Created by joyopeng on 17-9-14.
@@ -40,6 +41,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
     private TextView addoperator_documentid;
     private ArrayList<OperatorType> types = new ArrayList<>();
     private String filebag_numid;
+    private String filebag_numName;
     private ImageView base_nav_back;
 
     @Override
@@ -47,8 +49,9 @@ public class DanganAddChoseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.danganaddchose);
         filebag_numid = getIntent().getStringExtra(NUMID_KEY);
+        filebag_numName = getIntent().getStringExtra(NUMNAME_KEY);
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
-        base_toolbar_title.setText("东塘管理");
+        base_toolbar_title.setText(filebag_numName);
         typelistview = (ListView) findViewById(R.id.typelistview);
         addoperator_documentid = (TextView) findViewById(R.id.addoperator_documentid);
         addoperator_documentid.setText(filebag_numid);
@@ -66,7 +69,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
                 Intent addintent = new Intent(DanganAddChoseActivity.this, DanganAddActivity.class);
                 addintent.putExtra(JOB_TYPE_ID_KEY, types.get(i).key);
                 addintent.putExtra(NUMID_KEY, filebag_numid);
-                startActivityForResult(addintent,0);
+                startActivityForResult(addintent, 0);
 //                finish();
             }
         });

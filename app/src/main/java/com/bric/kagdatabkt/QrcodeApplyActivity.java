@@ -11,11 +11,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bric.kagdatabkt.entry.QrcodeInfoResult;
+import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
 
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static com.bric.kagdatabkt.utils.CommonConstField.ACCESS_TOKEN;
@@ -45,6 +48,7 @@ public class QrcodeApplyActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
         initView();
+        fetchData();
     }
 
     private void initView() {
@@ -62,6 +66,7 @@ public class QrcodeApplyActivity extends AppCompatActivity {
         qrcode_numid.setHint("填写关联码");
         qrcode_numid.setBackgroundResource(0);
         qrcode_numid.setText(numid);
+        qrcode_numid.setEnabled(false);
         qrcode_product_name.setHint("填写产品名称");
         qrcode_product_name.setBackgroundResource(0);
         qrcode_apply_count.setHint("填写申请数量");
@@ -95,4 +100,28 @@ public class QrcodeApplyActivity extends AppCompatActivity {
         );
     }
 
+    private void fetchData() {
+        RetrofitHelper.ServiceManager.getBaseService().doGet_apply_qrcode_list(access_token, job_fishing_id)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                new Observer<QrcodeInfoResult>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable arg0) {
+                        Log.v(TAG, arg0.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onNext(QrcodeInfoResult arg0) {
+                        if (arg0.success == 0) {
+                            QrcodeInfoResult.Item item = arg0.data.get(0);
+                            String name = item.AqBreedProduct.name;
+                            qrcode_product_name.setText(name);
+                        }
+                    }
+                }
+        );
+    }
 }

@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText verify_code;
     private EditText register_password;
     private Button register_button;
-
+    private ImageView base_nav_back;
     private TextView login_forgetpassword;
     private TextView login_register;
     private Button button_getqrcode;
@@ -57,6 +57,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         phonenumber = (EditText) findViewById(R.id.register_phonenumber);
         verify_code = (EditText) findViewById(R.id.verify_code);
         register_password = (EditText) findViewById(R.id.register_password);
@@ -81,6 +88,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = register_password.getText().toString();
                 String mobile_code = verify_code.getText().toString();
                 SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+                if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(mobile_code)) {
+                    showError("填写完整的注册信息");
+                }
                 String city = sharedPreferences.getString(CommonConstField.LOCATION_CITY, "苏州");
                 String district = sharedPreferences.getString(CommonConstField.LOCATION_DISTRICT, "相城区");
                 RetrofitHelper.ServiceManager.getBaseService().doRegister(username, password, mobile_code, city, district)
@@ -93,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onError(Throwable arg0) {
                                 Log.v(TAG, arg0.getLocalizedMessage());
+                                showError(arg0.getLocalizedMessage());
                             }
 
                             @Override
@@ -106,6 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
                                     sharedPreferences.edit().putString(CommonConstField.USER_NAME, username).commit();
                                     Intent registerintent = new Intent(RegisterActivity.this, MainActivity.class);
                                     startActivity(registerintent);
+                                    finish();
+                                } else {
+                                    showError(arg0.message);
                                 }
                             }
                         }
@@ -225,8 +239,12 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     break;
                     case R.id.btn_common_dialog_double_right: {
+                        if (StringUtils.isEmpty(qrcode_edit.getText().toString())) {
+                            showError("请填写验证码");
+                            return;
+                        }
                         RetrofitHelper.ServiceManager.getBaseService().doSendMsg(phonenumber.getText().toString(), qrcode_edit.getText().toString(), "reg")
-                                .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
+                                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                                 new Observer<ResultEntry>() {
                                     @Override
                                     public void onCompleted() {
@@ -235,6 +253,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     @Override
                                     public void onError(Throwable arg0) {
                                         Log.v(TAG, arg0.getLocalizedMessage());
+                                        showError(arg0.getLocalizedMessage());
                                     }
 
                                     @Override
@@ -242,7 +261,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (arg0.success == 0) {
                                             CustomDialog.this.dismiss();
                                         } else {
-                                            Toast.makeText(getContext(), arg0.message, Toast.LENGTH_LONG).show();
+                                            showError(arg0.message);
                                         }
                                     }
                                 }
@@ -252,5 +271,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    private void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }

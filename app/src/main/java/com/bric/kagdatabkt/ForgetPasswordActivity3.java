@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bric.kagdatabkt.entry.RegisterResult;
@@ -25,6 +26,7 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
     private static final String TAG = ForgetPasswordActivity3.class.getSimpleName();
     private EditText password;
     private Button forgetpassword_3_button;
+    private ImageView base_nav_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,18 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
     }
 
     private void initView() {
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         password = (EditText) findViewById(R.id.forgetpassword_3_newpassword);
         password.setHint(R.string.hint_new_phonenumber);
         password.setBackgroundResource(0);
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
-        final String account = sharedPreferences.getString(USER_NAME,"15221584146");
+        final String account = sharedPreferences.getString(USER_NAME, "");
         forgetpassword_3_button = (Button) findViewById(R.id.forgetpassword_3_button);
         forgetpassword_3_button.setOnClickListener(new View.OnClickListener() {
                                                        @Override

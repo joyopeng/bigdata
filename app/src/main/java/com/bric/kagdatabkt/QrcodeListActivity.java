@@ -164,7 +164,7 @@ public class QrcodeListActivity extends AppCompatActivity {
             }
             QrcodeListResult.SubItem item = qrcodelist.get(position);
             holder.qrcode_gardenname.setText(item.bag_name);
-            holder.qrcode_applystatus.setText((item.has_apply_qrcode_count > 0 ? "已申请" : "再申请"));
+            holder.qrcode_applystatus.setText((item.has_apply_qrcode_count > 0 ? "已申请" : "未申请"));
             if (StringUtils.isEmpty(item.report))
                 item.report = "http://nmu.yy/files/pics/AqUserInfoReport/15077965457533.png";
             Picasso.with(QrcodeListActivity.this).load(item.report).into(holder.qrcode_report);
@@ -172,7 +172,7 @@ public class QrcodeListActivity extends AppCompatActivity {
             holder.qrcode_product_name.setText(item.product_name);
             holder.qrcode_consumption.setText(item.consumption);
             holder.qrcode_operator.setText(item.operator);
-            holder.qrcode_submit.setText((item.has_apply_qrcode_count > 0 ? "已申请" : "再申请"));
+            holder.qrcode_submit.setText((item.has_apply_qrcode_count > 0 ? "再申请" : "申请"));
             holder.qrcode_submit.setTag(position);
             holder.qrcode_submit.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -48,6 +48,7 @@ import rx.schedulers.Schedulers;
 import static com.bric.kagdatabkt.utils.CommonConstField.JOB_ID;
 import static com.bric.kagdatabkt.utils.CommonConstField.JOB_TYPE_ID_KEY;
 import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
+import static com.bric.kagdatabkt.utils.CommonConstField.NUMNAME_KEY;
 
 /**
  * Created by joyopeng on 17-9-13.
@@ -69,6 +70,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private ArrayList<DanganlistResult.Job> jobs;
     Map<String, String> typeelement;
     private String numid;
+    private String numName;
     private ArrayList<OperatorType> types = new ArrayList<>();
 
     @Override
@@ -98,6 +100,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 Intent addintent = new Intent(getActivity(), DanganAddChoseActivity.class);
                 addintent.putExtra(NUMID_KEY, filebag_numid.getText());
+                addintent.putExtra(NUMNAME_KEY, numName);
                 startActivityForResult(addintent, 0);
             }
         });
@@ -155,6 +158,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                             Log.v(TAG, arg0.message);
                             chitanglist = arg0.data.get(0).AqBreedingGardenList;
                             numid = chitanglist.get(0).AqBreedingGarden.numid;
+                            numName = chitanglist.get(0).AqBreedingGarden.name;
                             getChitangById(numid, 0);
                         }
                     }
@@ -190,6 +194,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         DanganlistResult.Gardens garden = item.gardens;
         jobs = item.jobs;
         base_toolbar_title.setText(garden.name);
+        numName = garden.name;
         filebag_numid.setText(garden.numid);
         if (jobs.size() > 0) {
             dangan_empty.setVisibility(View.GONE);
@@ -270,7 +275,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public int getItemCount() {
-                        return chitanglist.size();
+                        return chitanglist != null ? chitanglist.size() : 0;
                     }
                 }).create();
 

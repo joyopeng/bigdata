@@ -33,6 +33,7 @@ public class ForgetPasswordActivity2 extends AppCompatActivity {
     private EditText verify_code;
     private Button forgetpassword_button_send_msg;
     private Button forgetpassword2_button;
+    private ImageView base_nav_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +43,19 @@ public class ForgetPasswordActivity2 extends AppCompatActivity {
     }
 
     private void initView() {
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         forgetpassword_2_title = (TextView) findViewById(R.id.forgetpassword_2_title);
         verify_code = (EditText) findViewById(R.id.forgetpassword_1_verify_code);
         verify_code.setHint(R.string.hint_identifying_code);
         verify_code.setBackgroundResource(0);
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
-        final String account = sharedPreferences.getString(USER_NAME, "15221584146");
+        final String account = sharedPreferences.getString(USER_NAME, "");
         forgetpassword_button_send_msg = (Button) findViewById(R.id.forgetpassword_button_send_msg);
         forgetpassword2_button = (Button) findViewById(R.id.forgetpassword2_button);
         forgetpassword_button_send_msg.setOnClickListener(new View.OnClickListener() {

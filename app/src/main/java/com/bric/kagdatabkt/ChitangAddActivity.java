@@ -195,6 +195,7 @@ public class ChitangAddActivity extends AppCompatActivity {
             public void onNext(ResultEntry arg0) {
                 Log.v(TAG, "message = " + arg0.message);
                 if (arg0.success == 0) {
+                    setResult(Activity.RESULT_OK);
                     ChitangAddActivity.this.finish();
                 }
             }
@@ -302,7 +303,7 @@ public class ChitangAddActivity extends AppCompatActivity {
                 mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 24.0f);
                 mMapView.getMap().animateMapStatus(mapStatus);
                 chitang_addpage_address.setText(location.getAddrStr());
-//
+
 //                sb.append(location.getTime());
 //                sb.append("\nlocType : ");// 定位类型
 //                sb.append(location.getLocType());

@@ -1,5 +1,6 @@
 package com.bric.kagdatabkt.view.fragment;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -114,7 +115,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Intent addintent = new Intent(getActivity(), ChitangAddActivity.class);
-                startActivity(addintent);
+                startActivityForResult(addintent, 0);
             }
         });
 
@@ -133,6 +134,14 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
             // break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            Log.v(TAG, "ok");
+            fetchChitangData();
         }
     }
 
@@ -167,7 +176,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     }
 
     private void getChitangById(final String garden_numid) {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid,0, "1", "1")
+        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, 0, "1", "1")
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DanganlistResult>() {
                     @Override

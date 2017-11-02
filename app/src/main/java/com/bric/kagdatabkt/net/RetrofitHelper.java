@@ -9,6 +9,7 @@ import com.bric.kagdatabkt.entry.ImageResult;
 import com.bric.kagdatabkt.entry.LunboResult;
 import com.bric.kagdatabkt.entry.ProductResult;
 import com.bric.kagdatabkt.entry.QiyeResult;
+import com.bric.kagdatabkt.entry.QrcodeInfoResult;
 import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
@@ -143,9 +144,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Datas/get_apply_qrcode_info")
-    Observable<QrcodeListResult> doGet_apply_qrcode_list(
+    Observable<QrcodeInfoResult> doGet_apply_qrcode_list(
             @Query("access_token") String access_token,
-            @Query("job_fishing_id") String job_fishing_id
+            @Query("job_fishing_id") int job_fishing_id
     );
 
     @POST("api4Datas/get_supplier_carousels")
@@ -273,8 +274,10 @@ public interface RetrofitHelper {
         private volatile static ServiceManager serviceManager;
         static final int DEFAULT_CONNECT_TIMEOUT = 16;
         static final int DEFAULT_READ_TIMEOUT = 150;
-        static final String EPG_BASE_DOMAIN = "http:///nma.yy/";
-        static final String IMAGE_BASE_DOMAIN = "http://nmu.yy/";
+        //        static final String EPG_BASE_DOMAIN = "http:///nma.yy/";
+//        static final String IMAGE_BASE_DOMAIN = "http://nmu.yy/";
+        static final String EPG_BASE_DOMAIN = "http:///192.168.3.155:8089/";
+        static final String IMAGE_BASE_DOMAIN = "http://192.168.3.155:8090/";
         private RetrofitHelper baseService;
         private RetrofitHelper imageService;
         SSLContext sc = null;
