@@ -199,6 +199,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                                                public void onNext(ResultEntry arg0) {
                                                                    if (arg0.success == 0) {
                                                                        Intent registerintent = new Intent(ForgetPasswordActivity.this, ForgetPasswordActivity2.class);
+                                                                       registerintent.putExtra(USER_NAME, phonenumber.getText().toString());
                                                                        startActivity(registerintent);
                                                                    } else {
                                                                        showError(arg0.message);

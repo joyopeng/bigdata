@@ -203,7 +203,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
         DanganlistResult.Gardens garden = item.gardens;
         base_toolbar_title.setText(garden.name);
         LatLng latlng = new LatLng(Double.parseDouble(garden.lat), Double.parseDouble(garden.lng));
-        MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 24.0f);
+        MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 19.0f);
         chitangaddressmap.getMap().animateMapStatus(mapStatus);
         chitang_title.setText(garden.name);
         chitang_area.setText(garden.area);

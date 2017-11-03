@@ -1,5 +1,6 @@
 package com.bric.kagdatabkt.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bric.kagdatabkt.LoginMainActivity;
 import com.bric.kagdatabkt.MainActivity;
 import com.bric.kagdatabkt.QrcodeListActivity;
 import com.bric.kagdatabkt.R;
@@ -86,6 +88,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             break;
             case R.id.danganguanli: {
                 hostactivity.trigedanganClick();
+            }
+            break;
+            case R.id.tianjiadangan: {
+
+            }
+            break;
+            case R.id.erweimashenqing: {
+                Intent registerintent = new Intent(getActivity(), QrcodeListActivity.class);
+                startActivity(registerintent);
             }
             break;
             default:

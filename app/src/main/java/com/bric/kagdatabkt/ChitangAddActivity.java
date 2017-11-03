@@ -300,7 +300,7 @@ public class ChitangAddActivity extends AppCompatActivity {
                 lat = String.valueOf(location.getLatitude());
                 lng = String.valueOf(location.getLongitude());
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-                mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 24.0f);
+                mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 19.0f);
                 mMapView.getMap().animateMapStatus(mapStatus);
                 chitang_addpage_address.setText(location.getAddrStr());
 

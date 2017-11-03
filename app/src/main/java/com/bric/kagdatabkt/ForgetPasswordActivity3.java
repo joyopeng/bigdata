@@ -46,8 +46,7 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
         password = (EditText) findViewById(R.id.forgetpassword_3_newpassword);
         password.setHint(R.string.hint_new_phonenumber);
         password.setBackgroundResource(0);
-        SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
-        final String account = sharedPreferences.getString(USER_NAME, "");
+        final String account = getIntent().getStringExtra(USER_NAME);
         forgetpassword_3_button = (Button) findViewById(R.id.forgetpassword_3_button);
         forgetpassword_3_button.setOnClickListener(new View.OnClickListener() {
                                                        @Override

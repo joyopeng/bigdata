@@ -29,7 +29,7 @@ import rx.Subscriber;
 public class CommonConstField {
     //你们用13776019930 036031
     public final String TAG = CommonConstField.class.getSimpleName();
-    public final static String PHONE_PATTERN = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public final static String PHONE_PATTERN = "^((13[0-9])|(15[^4,\\D])|(18[0,2,5-9]))\\d{8}$";
 
     public static final String DANGAN_CONTENT_TYPE_KEY = "operator_key";
     public static final int DANGAN_CONTENT_TYPE_XIAODU = 1;
@@ -63,7 +63,7 @@ public class CommonConstField {
             return false;
         Pattern pattern = Pattern.compile(PHONE_PATTERN);
         Matcher matcher = pattern.matcher(input);
-        if (matcher.find()) {
+        if (input.length() == 11) {
             return true;
         }
         return false;
