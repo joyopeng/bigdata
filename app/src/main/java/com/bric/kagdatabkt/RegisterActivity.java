@@ -90,11 +90,12 @@ public class RegisterActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
                 if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(mobile_code)) {
                     showError("填写完整的注册信息");
+                    return;
                 }
                 String city = sharedPreferences.getString(CommonConstField.LOCATION_CITY, "苏州");
                 String district = sharedPreferences.getString(CommonConstField.LOCATION_DISTRICT, "相城区");
                 RetrofitHelper.ServiceManager.getBaseService().doRegister(username, password, mobile_code, city, district)
-                        .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
+                        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         new Observer<RegisterResult>() {
                             @Override
                             public void onCompleted() {

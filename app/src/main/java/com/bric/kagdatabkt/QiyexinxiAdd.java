@@ -67,7 +67,7 @@ public class QiyexinxiAdd extends AppCompatActivity {
     private ImageView qiyerongyu_preview_img3;
     private ImageView qiyerongyu_preview_img4;
     private Button addqiyexinxi;
-    private ArrayList<String> imagepath;
+    private ArrayList<String> imagepath = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,7 +290,8 @@ public class QiyexinxiAdd extends AppCompatActivity {
                 setting_edit_qiye_name.setText(item.user_info.company_name);
                 setting_edit_qiye_zizhi.setText(item.user_info.company_qualification);
                 setting_edit_qiye_jianjie.setText(item.user_info.company_profile);
-                imagepath.clear();
+                if (imagepath != null)
+                    imagepath.clear();
                 for (QiyeResult.SubItem i : item.reports) {
                     imagepath.add(i.AqUserInfoReport.file_url);
                 }

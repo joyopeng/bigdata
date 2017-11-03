@@ -279,6 +279,7 @@ public class DanganAddActivity extends FragmentActivity {
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_miaozhong_catogery);
         document_item3_edit.setClickable(true);
+        document_item3_edit.setCursorVisible(false);
         document_item3_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,12 +287,15 @@ public class DanganAddActivity extends FragmentActivity {
             }
         });
         document_item3.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        document_item3_edit.setTag("-1");
         document_item3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initCustomOptionPicker(choseItems, document_item3_edit);
-                if (choseview != null)
-                    choseview.show(true);
+                if (choseItems != null && choseItems.size() > 0) {
+                    initCustomOptionPicker(choseItems, document_item3_edit);
+                    if (choseview != null)
+                        choseview.show(true);
+                }
             }
         });
         document_item4_label.setText(R.string.label_chitang_miaozhong_amount);
@@ -342,15 +346,28 @@ public class DanganAddActivity extends FragmentActivity {
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_pulaochi);
         document_item3_label.setText(R.string.label_chitang_pulaocatogery);
-        document_item3_edit.setEnabled(false);
+        document_item3_edit.setFocusable(false);
+        document_item3_edit.setSelected(false);
         document_item3_edit.setBackgroundResource(0);
+        document_item3_edit.setHint(R.string.hint_chitang_miaozhong_catogery);
+        document_item3_edit.setClickable(true);
+        document_item3_edit.setCursorVisible(false);
+        document_item3_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                document_item3.performClick();
+            }
+        });
         document_item3_edit.setHint(R.string.hint_chitang_pulaocatogery);
+        document_item3_edit.setTag("-1");
         document_item3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initCustomOptionPicker(choseItems, document_item3_edit);
-                if (choseview != null)
-                    choseview.show(true);
+                if (choseItems != null && choseItems.size() > 0) {
+                    initCustomOptionPicker(choseItems, document_item3_edit);
+                    if (choseview != null)
+                        choseview.show(true);
+                }
             }
         });
         document_item4_label.setText(R.string.label_chitang_pulaoamount);
@@ -369,25 +386,39 @@ public class DanganAddActivity extends FragmentActivity {
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_jianceid);
-        document_item2_edit.setEnabled(false);
+        document_item2_edit.setFocusable(false);
+        document_item2_edit.setSelected(false);
         document_item2_edit.setBackgroundResource(0);
+        document_item2_edit.setHint(R.string.hint_chitang_miaozhong_catogery);
+        document_item2_edit.setClickable(true);
+        document_item2_edit.setCursorVisible(false);
+        document_item2_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                document_item2.performClick();
+            }
+        });
         document_item2_edit.setHint("请选择检测品种");
+        document_item2_edit.setTag("-1");
+        document_item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (choseItems != null && choseItems.size() > 0) {
+                    initCustomOptionPicker(choseItems, document_item2_edit);
+                    if (choseview != null)
+                        choseview.show(true);
+                }
+            }
+        });
         document_item3_label.setText(R.string.label_chitang_jiancexiangmu);
 //        document_item3_edit.setEnabled(false);
         document_item3_edit.setHint(R.string.hint_chitang_jiancexiangmu);
         document_item3_edit.setBackgroundResource(0);
         document_item4_label.setText(R.string.label_chitang_jiancejieguo);
         document_item4_edit.setHint(R.string.hint_chitang_jiancejieguo);
+        document_item4_edit.setTag("-1");
         document_item4_edit.setEnabled(false);
         document_item4_edit.setBackgroundResource(0);
-        document_item2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initCustomOptionPicker(choseItems, document_item2_edit);
-                if (choseview != null)
-                    choseview.show(true);
-            }
-        });
         document_item4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -943,7 +974,7 @@ public class DanganAddActivity extends FragmentActivity {
         String consumption = document_item4_edit.getText().toString();
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator)) {
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator) || miaozhong < 0) {
             showError("请填写完整信息");
             return;
         }
@@ -1014,7 +1045,7 @@ public class DanganAddActivity extends FragmentActivity {
         String consumption = document_item4_edit.getText().toString();
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator)) {
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator) || miaozhong < 0) {
             showError("请填写完整信息");
             return;
         }
@@ -1050,7 +1081,7 @@ public class DanganAddActivity extends FragmentActivity {
         int jieguo = Integer.parseInt(document_item4_edit.getTag().toString());
         String note = document_note_edit.getText().toString();
         String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(xiangmu) || StringUtils.isEmpty(operator)) {
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(xiangmu) || StringUtils.isEmpty(operator) || miaozhong < 0 || jieguo < 0) {
             showError("请填写完整信息");
             return;
         }
