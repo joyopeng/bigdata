@@ -178,7 +178,9 @@
                 android:id="@+id/document_item3_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/document_item3_label" />
+                android:layout_toRightOf="@id/document_item3_label"
+                android:cursorVisible="false"
+                />
 
             <ImageView
                 android:id="@+id/document_item3_arrow"

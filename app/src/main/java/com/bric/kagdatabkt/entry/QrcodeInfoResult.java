@@ -12,7 +12,7 @@ public class QrcodeInfoResult extends ResultEntry<QrcodeInfoResult.Item> {
         public AqJobFishing AqJobFishing;
         public AqFileBag AqFileBag;
         public AqBreedProduct AqBreedProduct;
-        public AqApplyQrcode AqApplyQrcode;
+        public ArrayList<SubItem> AqApplyQrcode;
     }
 
     public class AqJobFishing {
@@ -58,7 +58,4 @@ public class QrcodeInfoResult extends ResultEntry<QrcodeInfoResult.Item> {
         public String modified;
     }
 
-    public class AqApplyQrcode {
-        public ArrayList<SubItem> AqApplyQrcode;
-    }
 }

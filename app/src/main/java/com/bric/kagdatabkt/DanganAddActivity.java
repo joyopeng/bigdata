@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -272,9 +273,19 @@ public class DanganAddActivity extends FragmentActivity {
         document_item2_edit.setHint(R.string.hint_chitang_source);
         document_item2_arrow.setVisibility(View.GONE);
         document_item3_label.setText(R.string.label_chitang_miaozhong_catogery);
-        document_item3_edit.setEnabled(false);
+//        document_item3_edit.setEnabled(false);
+        document_item3_edit.setFocusable(false);
+        document_item3_edit.setSelected(false);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_miaozhong_catogery);
+        document_item3_edit.setClickable(true);
+        document_item3_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                document_item3.performClick();
+            }
+        });
+        document_item3.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         document_item3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

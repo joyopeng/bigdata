@@ -34,7 +34,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".RootApplication"
+        android:name="com.bric.kagdatabkt.RootApplication"
         android:allowBackup="true"
         android:anyDensity="true"
         android:icon="@mipmap/ic_launcher"
