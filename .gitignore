@@ -1,0 +1,6 @@
+build
+gradlew
+app/build/intermediates
+app/build/generated
+app/build/outputs
+app/build/tmp
