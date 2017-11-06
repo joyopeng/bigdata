@@ -417,8 +417,17 @@ public class DanganAddActivity extends FragmentActivity {
         document_item4_label.setText(R.string.label_chitang_jiancejieguo);
         document_item4_edit.setHint(R.string.hint_chitang_jiancejieguo);
         document_item4_edit.setTag("-1");
-        document_item4_edit.setEnabled(false);
         document_item4_edit.setBackgroundResource(0);
+        document_item4_edit.setFocusable(false);
+        document_item4_edit.setSelected(false);
+        document_item4_edit.setClickable(true);
+        document_item4_edit.setCursorVisible(false);
+        document_item4_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                document_item4.performClick();
+            }
+        });
         document_item4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -453,9 +462,19 @@ public class DanganAddActivity extends FragmentActivity {
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2_label.setText(R.string.label_chitang_fangshuichi);
-        document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_fangshuichi);
+        document_item2_edit.setFocusable(false);
+        document_item2_edit.setSelected(false);
+        document_item2_edit.setBackgroundResource(0);
+        document_item2_edit.setClickable(true);
+        document_item2_edit.setCursorVisible(false);
+        document_item2_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                document_item2.performClick();
+            }
+        });
         document_item2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -543,16 +562,16 @@ public class DanganAddActivity extends FragmentActivity {
                     upload_image_view.setVisibility(View.VISIBLE);
                 for (int i = 0; i < paths.size(); i++) {
                     if (i == 0) {
-                        preview_img1.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img1);
                     }
                     if (i == 1) {
-                        preview_img2.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img2);
                     }
                     if (i == 2) {
-                        preview_img3.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img3);
                     }
                     if (i == 3) {
-                        preview_img4.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img4);
                     }
                 }
             }
@@ -697,6 +716,16 @@ public class DanganAddActivity extends FragmentActivity {
         public void onClick(View v) {
             switch (job_type_id) {
                 case 1: {
+                    final String title = document_item0_edit.getText().toString();
+                    final String date = document_item1_edit.getText().toString();
+                    final String yongpin = document_item2_edit.getText().toString();
+                    final String operator = document_operator_edit.getText().toString();
+                    final String consumption = document_item4_edit.getText().toString();
+                    final String note = document_note_edit.getText().toString();
+                    if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(yongpin) || StringUtils.isEmpty(operator) || StringUtils.isEmpty(consumption)) {
+                        showError("请填写完整信息");
+                        return;
+                    }
                     if (imagepath != null && imagepath.size() > 0) {
                         ArrayList<File> images = new ArrayList<File>();
                         for (String i : imagepath) {
@@ -712,7 +741,7 @@ public class DanganAddActivity extends FragmentActivity {
                                             ImageResult.Item item = uploadImgBean.data.get(0);
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
-                                            submitBinghaifangzhiData(file_urls);
+                                            submitBinghaifangzhiData(file_urls, title, date, yongpin, operator, consumption, note);
                                         } else {
                                             showError(uploadImgBean.message);
                                         }
@@ -730,11 +759,22 @@ public class DanganAddActivity extends FragmentActivity {
                                     }
                                 });
                     } else {
-                        submitBinghaifangzhiData("");
+                        submitBinghaifangzhiData("", title, date, yongpin, operator, consumption, note);
                     }
                 }
                 break;
                 case 2: {
+                    final String title = document_item0_edit.getText().toString();
+                    final String date = document_item1_edit.getText().toString();
+                    final String miaozhonglaiyuan = document_item2_edit.getText().toString();
+                    final int miaozhong = Integer.parseInt(document_item3_edit.getTag().toString());
+                    final String consumption = document_item4_edit.getText().toString();
+                    final String note = document_note_edit.getText().toString();
+                    final String operator = document_operator_edit.getText().toString();
+                    if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator) || miaozhong < 0) {
+                        showError("请填写完整信息");
+                        return;
+                    }
                     if (imagepath != null && imagepath.size() > 0) {
                         ArrayList<File> images = new ArrayList<File>();
                         for (String i : imagepath) {
@@ -750,7 +790,7 @@ public class DanganAddActivity extends FragmentActivity {
                                             ImageResult.Item item = uploadImgBean.data.get(0);
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
-                                            submitToumiaoData(file_urls);
+                                            submitToumiaoData(file_urls, title, date, miaozhonglaiyuan, miaozhong, consumption, note, operator);
                                         } else {
                                             showError(uploadImgBean.message);
                                         }
@@ -768,11 +808,22 @@ public class DanganAddActivity extends FragmentActivity {
                                     }
                                 });
                     } else {
-                        submitToumiaoData("");
+                        submitToumiaoData("", title, date, miaozhonglaiyuan, miaozhong, consumption, note, operator);
                     }
                 }
                 break;
                 case 3: {
+                    final String title = document_item0_edit.getText().toString();
+                    final String date = document_item1_edit.getText().toString();
+                    final String siliaomingcheng = document_item2_edit.getText().toString();
+                    final String goumaishang = document_item4_edit.getText().toString();
+                    final String consumption = document_item5_edit.getText().toString();
+                    final String note = document_note_edit.getText().toString();
+                    final String operator = document_operator_edit.getText().toString();
+                    if (StringUtils.isEmpty(title) || StringUtils.isEmpty(siliaomingcheng) || StringUtils.isEmpty(goumaishang) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator)) {
+                        showError("请填写完整信息");
+                        return;
+                    }
                     if (imagepath != null && imagepath.size() > 0) {
                         ArrayList<File> images = new ArrayList<File>();
                         for (String i : imagepath) {
@@ -790,7 +841,7 @@ public class DanganAddActivity extends FragmentActivity {
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item.upload_files);
                                             String feed_url = gson.toJson(item.feed_pic);
-                                            submitWeishiData(file_urls, feed_url);
+                                            submitWeishiData(file_urls, feed_url, title, date, siliaomingcheng, goumaishang, consumption, note, operator);
                                         } else {
                                             showError(uploadImgBean.message);
                                         }
@@ -808,11 +859,21 @@ public class DanganAddActivity extends FragmentActivity {
                                     }
                                 });
                     } else {
-                        submitWeishiData("", "");
+                        submitWeishiData("", "", title, date, siliaomingcheng, goumaishang, consumption, note, operator);
                     }
                 }
                 break;
                 case 4: {
+                    final String title = document_item0_edit.getText().toString();
+                    final String date = document_item1_edit.getText().toString();
+                    final int miaozhong = Integer.parseInt(document_item3_edit.getTag().toString());
+                    final String consumption = document_item4_edit.getText().toString();
+                    final String note = document_note_edit.getText().toString();
+                    final String operator = document_operator_edit.getText().toString();
+                    if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator) || miaozhong < 0) {
+                        showError("请填写完整信息");
+                        return;
+                    }
                     if (imagepath != null && imagepath.size() > 0) {
                         ArrayList<File> images = new ArrayList<File>();
                         for (String i : imagepath) {
@@ -828,7 +889,7 @@ public class DanganAddActivity extends FragmentActivity {
                                             ImageResult.Item item = uploadImgBean.data.get(0);
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
-                                            submitBulaoData(file_urls);
+                                            submitBulaoData(file_urls, title, date, miaozhong, consumption, note, operator);
                                         } else {
                                             showError(uploadImgBean.message);
                                         }
@@ -846,11 +907,22 @@ public class DanganAddActivity extends FragmentActivity {
                                     }
                                 });
                     } else {
-                        submitBulaoData("");
+                        submitBulaoData("", title, date, miaozhong, consumption, note, operator);
                     }
                 }
                 break;
                 case 5: {
+                    final String title = document_item0_edit.getText().toString();
+                    final String date = document_item1_edit.getText().toString();
+                    final int miaozhong = Integer.parseInt(document_item2_edit.getTag().toString());
+                    final String xiangmu = document_item3_edit.getText().toString();
+                    final int jieguo = Integer.parseInt(document_item4_edit.getTag().toString());
+                    final String note = document_note_edit.getText().toString();
+                    final String operator = document_operator_edit.getText().toString();
+                    if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(xiangmu) || StringUtils.isEmpty(operator) || miaozhong < 0 || jieguo < 0) {
+                        showError("请填写完整信息");
+                        return;
+                    }
                     if (imagepath != null && imagepath.size() > 0) {
                         ArrayList<File> images = new ArrayList<File>();
                         for (String i : imagepath) {
@@ -866,7 +938,7 @@ public class DanganAddActivity extends FragmentActivity {
                                             ImageResult.Item item = uploadImgBean.data.get(0);
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
-                                            submitJianceData(file_urls);
+                                            submitJianceData(file_urls, title, date, miaozhong, xiangmu, jieguo, note, operator);
                                         } else {
                                             showError(uploadImgBean.message);
                                         }
@@ -884,12 +956,22 @@ public class DanganAddActivity extends FragmentActivity {
                                     }
                                 });
                     } else {
-                        submitJianceData("");
+                        submitJianceData("", title, date, miaozhong, xiangmu, jieguo, note, operator);
                     }
                 }
                 break;
 
                 case 6: {
+                    final String title = document_item0_edit.getText().toString();
+                    final String date = document_item1_edit.getText().toString();
+                    final int guanlileixing = Integer.parseInt(document_item2_edit.getTag() != null ? document_item2_edit.getTag().toString() : "-1");
+                    final String touruliang = document_item3_edit.getText().toString();
+                    final String note = document_note_edit.getText().toString();
+                    final String operator = document_operator_edit.getText().toString();
+                    if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(touruliang) || StringUtils.isEmpty(operator)) {
+                        showError("请填写完整信息");
+                        return;
+                    }
                     if (imagepath != null && imagepath.size() > 0) {
                         ArrayList<File> images = new ArrayList<File>();
                         for (String i : imagepath) {
@@ -905,7 +987,7 @@ public class DanganAddActivity extends FragmentActivity {
                                             ImageResult.Item item = uploadImgBean.data.get(0);
                                             Gson gson = new Gson();
                                             String file_urls = gson.toJson(item);
-                                            submitRichangweihuData(file_urls);
+                                            submitRichangweihuData(file_urls, title, date, guanlileixing, touruliang, note, operator);
                                         } else {
                                             showError(uploadImgBean.message);
                                         }
@@ -923,7 +1005,7 @@ public class DanganAddActivity extends FragmentActivity {
                                     }
                                 });
                     } else {
-                        submitRichangweihuData("");
+                        submitRichangweihuData("", title, date, guanlileixing, touruliang, note, operator);
                     }
                 }
                 break;
@@ -931,17 +1013,7 @@ public class DanganAddActivity extends FragmentActivity {
         }
     };
 
-    private void submitBinghaifangzhiData(String fileurl) {
-        String title = document_item0_edit.getText().toString();
-        String date = document_item1_edit.getText().toString();
-        String yongpin = document_item2_edit.getText().toString();
-        String operator = document_operator_edit.getText().toString();
-        String consumption = document_item4_edit.getText().toString();
-        String note = document_note_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(yongpin) || StringUtils.isEmpty(operator)) {
-            showError("请填写完整信息");
-            return;
-        }
+    private void submitBinghaifangzhiData(String fileurl, String title, String date, String yongpin, String operator, String consumption, String note) {
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_disease_prevention(access_token, filebag_numid, title, date, yongpin, operator, note, consumption, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -966,18 +1038,7 @@ public class DanganAddActivity extends FragmentActivity {
         });
     }
 
-    private void submitToumiaoData(String fileurl) {
-        String title = document_item0_edit.getText().toString();
-        String date = document_item1_edit.getText().toString();
-        String miaozhonglaiyuan = document_item2_edit.getText().toString();
-        int miaozhong = Integer.parseInt(document_item3_edit.getTag().toString());
-        String consumption = document_item4_edit.getText().toString();
-        String note = document_note_edit.getText().toString();
-        String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator) || miaozhong < 0) {
-            showError("请填写完整信息");
-            return;
-        }
+    private void submitToumiaoData(String fileurl, String title, String date, String miaozhonglaiyuan, int miaozhong, String consumption, String note, String operator) {
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_seedling(access_token, filebag_numid, miaozhong, title, date, miaozhonglaiyuan, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -1002,18 +1063,7 @@ public class DanganAddActivity extends FragmentActivity {
         });
     }
 
-    private void submitWeishiData(String fileurl, String feed_pic) {
-        String title = document_item0_edit.getText().toString();
-        String date = document_item1_edit.getText().toString();
-        String siliaomingcheng = document_item2_edit.getText().toString();
-        String goumaishang = document_item4_edit.getText().toString();
-        String consumption = document_item5_edit.getText().toString();
-        String note = document_note_edit.getText().toString();
-        String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(siliaomingcheng) || StringUtils.isEmpty(goumaishang) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator)) {
-            showError("请填写完整信息");
-            return;
-        }
+    private void submitWeishiData(String fileurl, String feed_pic, String title, String date, String siliaomingcheng, String goumaishang, String consumption, String note, String operator) {
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_feed(access_token, filebag_numid, title, date, consumption, operator, feed_pic, siliaomingcheng, goumaishang, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -1038,17 +1088,7 @@ public class DanganAddActivity extends FragmentActivity {
         });
     }
 
-    private void submitBulaoData(String fileurl) {
-        String title = document_item0_edit.getText().toString();
-        String date = document_item1_edit.getText().toString();
-        int miaozhong = Integer.parseInt(document_item3_edit.getTag().toString());
-        String consumption = document_item4_edit.getText().toString();
-        String note = document_note_edit.getText().toString();
-        String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(consumption) || StringUtils.isEmpty(operator) || miaozhong < 0) {
-            showError("请填写完整信息");
-            return;
-        }
+    private void submitBulaoData(String fileurl, String title, String date, int miaozhong, String consumption, String note, String operator) {
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_fishing(access_token, filebag_numid, miaozhong, title, date, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -1073,18 +1113,7 @@ public class DanganAddActivity extends FragmentActivity {
         });
     }
 
-    private void submitJianceData(String fileurl) {
-        String title = document_item0_edit.getText().toString();
-        String date = document_item1_edit.getText().toString();
-        int miaozhong = Integer.parseInt(document_item2_edit.getTag().toString());
-        String xiangmu = document_item3_edit.getText().toString();
-        int jieguo = Integer.parseInt(document_item4_edit.getTag().toString());
-        String note = document_note_edit.getText().toString();
-        String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(xiangmu) || StringUtils.isEmpty(operator) || miaozhong < 0 || jieguo < 0) {
-            showError("请填写完整信息");
-            return;
-        }
+    private void submitJianceData(String fileurl, String title, String date, int miaozhong, String xiangmu, int jieguo, String note, String operator) {
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_testing(access_token, filebag_numid, miaozhong, title, date, xiangmu, jieguo, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
@@ -1109,17 +1138,7 @@ public class DanganAddActivity extends FragmentActivity {
         });
     }
 
-    private void submitRichangweihuData(String fileurl) {
-        String title = document_item0_edit.getText().toString();
-        String date = document_item1_edit.getText().toString();
-        int guanlileixing = Integer.parseInt(document_item2_edit.getTag() != null ? document_item2_edit.getTag().toString() : "-1");
-        String touruliang = document_item3_edit.getText().toString();
-        String note = document_note_edit.getText().toString();
-        String operator = document_operator_edit.getText().toString();
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(date) || StringUtils.isEmpty(touruliang) || StringUtils.isEmpty(operator)) {
-            showError("请填写完整信息");
-            return;
-        }
+    private void submitRichangweihuData(String fileurl, String title, String date, int guanlileixing, String touruliang, String note, String operator) {
         RetrofitHelper.ServiceManager.getBaseService().doAdd_job_daily(access_token, filebag_numid, title, date, guanlileixing, touruliang, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override

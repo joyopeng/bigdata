@@ -157,9 +157,14 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
                             chitanglist = arg0.data.get(0).AqBreedingGardenList;
-                            numid = chitanglist.get(0).AqBreedingGarden.numid;
-                            numName = chitanglist.get(0).AqBreedingGarden.name;
-                            getChitangById(numid, 0);
+                            if (chitanglist.size() > 0) {
+                                numid = chitanglist.get(0).AqBreedingGarden.numid;
+                                numName = chitanglist.get(0).AqBreedingGarden.name;
+                                getChitangById(numid, 0);
+                            } else {
+                                base_nav_right.setVisibility(View.GONE);
+                                base_toolbar_title.setText("档案管理");
+                            }
                         }
                     }
                 }
@@ -453,6 +458,10 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                 type.name = entry.getValue();
                 types.add(type);
             }
+            OperatorType type = new OperatorType();
+            type.key = 0;
+            type.name = "全部";
+            types.add(type);
         }
 
     }

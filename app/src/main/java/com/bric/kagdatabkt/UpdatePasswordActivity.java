@@ -8,12 +8,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bric.kagdatabkt.entry.ResultEntry;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
 
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class UpdatePasswordActivity extends AppCompatActivity {
@@ -23,6 +27,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     private EditText new_password;
     private EditText repeate_new_password;
     private Button update_password_button;
+    private ImageView base_nav_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,13 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
+        base_nav_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         origin_password = (EditText) findViewById(R.id.origin_password);
         origin_password.setHint("填写原密码");
         origin_password.setBackgroundResource(0);
@@ -53,7 +65,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                                                           String new_pw = new_password.getText().toString();
                                                           String repeate_new_pw = repeate_new_password.getText().toString();
                                                           RetrofitHelper.ServiceManager.getBaseService().doUpdatePassword(user_id, access_token, oritin_pw, new_pw, repeate_new_pw)
-                                                                  .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
+                                                                  .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                                                                   new Observer<ResultEntry>() {
                                                                       @Override
                                                                       public void onCompleted() {
@@ -62,12 +74,15 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                                                                       @Override
                                                                       public void onError(Throwable arg0) {
                                                                           Log.v(TAG, arg0.getLocalizedMessage());
+                                                                          showError(arg0.getLocalizedMessage());
                                                                       }
 
                                                                       @Override
                                                                       public void onNext(ResultEntry arg0) {
                                                                           if (arg0.success == 0) {
                                                                               UpdatePasswordActivity.this.finish();
+                                                                          } else {
+                                                                              showError(arg0.message);
                                                                           }
                                                                       }
                                                                   }
@@ -77,4 +92,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         );
     }
 
+    private void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
 }

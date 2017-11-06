@@ -1,6 +1,7 @@
 package com.bric.kagdatabkt;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -206,16 +207,16 @@ public class DanganDetailActivity extends FragmentActivity {
             image_review_view.setVisibility(View.VISIBLE);
             for (int i = 0; i < aqjobs.size(); i++) {
                 if (i == 0) {
-                    Picasso.with(this).load(aqjobs.get(i)).into(preview_img1);
+                    Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img1);
                 }
                 if (i == 1) {
-                    Picasso.with(this).load(aqjobs.get(i)).into(preview_img2);
+                    Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img2);
                 }
                 if (i == 2) {
-                    Picasso.with(this).load(aqjobs.get(i)).into(preview_img3);
+                    Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img3);
                 }
                 if (i == 3) {
-                    Picasso.with(this).load(aqjobs.get(i)).into(preview_img4);
+                    Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img4);
                 }
             }
         }

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -76,7 +77,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     private RelativeLayout chitang_empty;
     private LinearLayout chitang_content;
     private String access_token;
-
+    private Button chitang_add_button;
     private ArrayList<ChitanglistResult.SubItem> chitanglist;
 
     @Override
@@ -123,6 +124,14 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 showTopDialog(v, 0.5f, IndicatorBuilder.GRAVITY_CENTER);
+            }
+        });
+
+        chitang_add_button = (Button) v.findViewById(R.id.chitang_add_button);
+        chitang_add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                base_nav_right.performClick();
             }
         });
     }

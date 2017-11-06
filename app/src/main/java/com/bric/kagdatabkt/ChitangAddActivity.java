@@ -3,6 +3,7 @@ package com.bric.kagdatabkt;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.foamtrace.photopicker.SelectModel;
 import com.foamtrace.photopicker.intent.PhotoPickerIntent;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -225,16 +227,16 @@ public class ChitangAddActivity extends AppCompatActivity {
                 upload_image_view.setVisibility(View.VISIBLE);
             for (int i = 0; i < paths.size(); i++) {
                 if (i == 0) {
-                    preview_img1.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img1);
                 }
                 if (i == 1) {
-                    preview_img2.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img2);
                 }
                 if (i == 2) {
-                    preview_img3.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img3);
                 }
                 if (i == 3) {
-                    preview_img4.setImageURI(Uri.fromFile(new File(paths.get(i))));
+                    Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img4);
                 }
             }
         }

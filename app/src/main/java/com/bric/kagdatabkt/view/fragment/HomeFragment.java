@@ -1,6 +1,7 @@
 package com.bric.kagdatabkt.view.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,13 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bric.kagdatabkt.DanganAddChoseActivity;
 import com.bric.kagdatabkt.LoginMainActivity;
 import com.bric.kagdatabkt.MainActivity;
 import com.bric.kagdatabkt.QrcodeListActivity;
 import com.bric.kagdatabkt.R;
+import com.bric.kagdatabkt.entry.ChitanglistResult;
 import com.bric.kagdatabkt.entry.LunboResult;
 import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.net.RetrofitHelper;
+import com.bric.kagdatabkt.utils.CommonConstField;
 import com.kcode.autoscrollviewpager.view.AutoScrollViewPager;
 import com.kcode.autoscrollviewpager.view.BaseViewPagerAdapter;
 import com.squareup.picasso.Picasso;
@@ -29,12 +33,15 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
+import static com.bric.kagdatabkt.utils.CommonConstField.NUMNAME_KEY;
+
 /**
  * Created by joyopeng on 17-9-12.
  */
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-
+    private static final String TAG = HomeFragment.class.getSimpleName();
 //    private String[] paths = {"https://ss3.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/image/h%3D200/sign=c493b482b47eca800d053ee7a1229712/8cb1cb1349540923abd671df9658d109b2de49d7.jpg",
 //            "https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D200/sign=ff0999f6d4160924c325a51be406359b/86d6277f9e2f070861ccd4a0ed24b899a801f241.jpg"};
 
@@ -91,7 +98,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
             break;
             case R.id.tianjiadangan: {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+                String access_token = sharedPreferences.getString(CommonConstField.ACCESS_TOKEN, "");
+                RetrofitHelper.ServiceManager.getBaseService().doGet_breeding_gardens(access_token)
+                        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                        new Observer<ChitanglistResult>() {
+                            @Override
+                            public void onCompleted() {
+                            }
 
+                            @Override
+                            public void onError(Throwable arg0) {
+                                Log.v(TAG, arg0.getLocalizedMessage());
+                            }
+
+                            @Override
+                            public void onNext(ChitanglistResult arg0) {
+                                if (arg0.success == 0) {
+                                    Log.v(TAG, arg0.message);
+                                    ArrayList<ChitanglistResult.SubItem> chitanglist = arg0.data.get(0).AqBreedingGardenList;
+                                    if (chitanglist.size() > 0) {
+                                        Intent addintent = new Intent(getActivity(), DanganAddChoseActivity.class);
+                                        addintent.putExtra(NUMID_KEY, chitanglist.get(0).AqBreedingGarden.numid);
+                                        addintent.putExtra(NUMNAME_KEY, chitanglist.get(0).AqBreedingGarden.name);
+                                        startActivityForResult(addintent, 0);
+                                    }
+                                }
+                            }
+                        }
+                );
             }
             break;
             case R.id.erweimashenqing: {

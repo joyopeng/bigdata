@@ -66,6 +66,7 @@
             android:text="亲,您还没有添加池塘额~" />
 
         <Button
+            android:id="@+id/chitang_add_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_chitang_emperty"

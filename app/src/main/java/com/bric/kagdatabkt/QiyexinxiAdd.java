@@ -3,6 +3,7 @@ package com.bric.kagdatabkt;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bric.kagdatabkt.entry.ImageResult;
 import com.bric.kagdatabkt.entry.QiyeResult;
@@ -141,10 +143,16 @@ public class QiyexinxiAdd extends AppCompatActivity {
                                         @Override
                                         public void onError(Throwable arg0) {
                                             Log.v(TAG, arg0.getLocalizedMessage());
+                                            showError(arg0.getLocalizedMessage());
                                         }
 
                                         @Override
                                         public void onNext(ResultEntry arg0) {
+                                            if (arg0.success == 0) {
+                                                finish();
+                                            } else {
+                                                showError(arg0.message);
+                                            }
                                             Log.v(TAG, "message = " + arg0.message);
                                         }
                                     });
@@ -204,32 +212,16 @@ public class QiyexinxiAdd extends AppCompatActivity {
                 yingyezhizhao_upload_image_view.setVisibility(View.VISIBLE);
             for (int i = 0; i < paths.size(); i++) {
                 if (i == 0) {
-                    if (paths.get(i).contains("http")) {
-                        Picasso.with(this).load(paths.get(i)).into(zhizhao_preview_img1);
-                    } else {
-                        zhizhao_preview_img1.setImageURI(Uri.fromFile(new File(paths.get(i))));
-                    }
+                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img1);
                 }
                 if (i == 1) {
-                    if (paths.get(i).contains("http")) {
-                        Picasso.with(this).load(paths.get(i)).into(zhizhao_preview_img2);
-                    } else {
-                        zhizhao_preview_img2.setImageURI(Uri.fromFile(new File(paths.get(i))));
-                    }
+                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img2);
                 }
                 if (i == 2) {
-                    if (paths.get(i).contains("http")) {
-                        Picasso.with(this).load(paths.get(i)).into(zhizhao_preview_img3);
-                    } else {
-                        zhizhao_preview_img3.setImageURI(Uri.fromFile(new File(paths.get(i))));
-                    }
+                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img3);
                 }
                 if (i == 3) {
-                    if (paths.get(i).contains("http")) {
-                        Picasso.with(this).load(paths.get(i)).into(zhizhao_preview_img4);
-                    } else {
-                        zhizhao_preview_img4.setImageURI(Uri.fromFile(new File(paths.get(i))));
-                    }
+                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img4);
                 }
             }
 
@@ -298,5 +290,9 @@ public class QiyexinxiAdd extends AppCompatActivity {
                 setImageViewLayout(imagepath, ZIZHI_TAG);
             }
         });
+    }
+
+    private void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }
