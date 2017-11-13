@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 String city = sharedPreferences.getString(CommonConstField.LOCATION_CITY, "苏州");
                 String district = sharedPreferences.getString(CommonConstField.LOCATION_DISTRICT, "相城区");
-                RetrofitHelper.ServiceManager.getBaseService().doRegister(username, password, mobile_code, city, district)
+                RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doRegister(username, password, mobile_code, city, district)
                         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         new Observer<RegisterResult>() {
                             @Override
@@ -113,9 +113,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
                                     String access_token = ((RegisterResult.Item) (arg0.data.get(0))).Token.access_token;
                                     String user_id = ((RegisterResult.Item) (arg0.data.get(0))).User.id;
+                                    String appkey = ((RegisterResult.Item) (arg0.data.get(0))).User.appkey;
                                     sharedPreferences.edit().putString(CommonConstField.ACCESS_TOKEN, access_token).commit();
                                     sharedPreferences.edit().putString(CommonConstField.USER_ID, user_id).commit();
                                     sharedPreferences.edit().putString(CommonConstField.USER_NAME, username).commit();
+                                    sharedPreferences.edit().putString(CommonConstField.APP_KEY, appkey).commit();
                                     Intent registerintent = new Intent(RegisterActivity.this, MainActivity.class);
                                     startActivity(registerintent);
                                     finish();
@@ -154,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void show() {
             super.show();
-            RetrofitHelper.ServiceManager.getBaseService().doGetQrcode(phonenumber.getText().toString(), "").subscribeOn(Schedulers.newThread())
+            RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGetQrcode(phonenumber.getText().toString(), "").subscribeOn(Schedulers.newThread())
                     .map(new Func1<ResponseBody, Bitmap>() {
                         @Override
                         public Bitmap call(ResponseBody arg0) {
@@ -205,7 +207,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.reget_qrcode: {
-                        RetrofitHelper.ServiceManager.getBaseService().doGetQrcode(phonenumber.getText().toString(), "").subscribeOn(Schedulers.newThread())
+                        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGetQrcode(phonenumber.getText().toString(), "").subscribeOn(Schedulers.newThread())
                                 .map(new Func1<ResponseBody, Bitmap>() {
                                     @Override
                                     public Bitmap call(ResponseBody arg0) {
@@ -244,7 +246,7 @@ public class RegisterActivity extends AppCompatActivity {
                             showError("请填写验证码");
                             return;
                         }
-                        RetrofitHelper.ServiceManager.getBaseService().doSendMsg(phonenumber.getText().toString(), qrcode_edit.getText().toString(), "reg")
+                        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doSendMsg(phonenumber.getText().toString(), qrcode_edit.getText().toString(), "reg")
                                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                                 new Observer<ResultEntry>() {
                                     @Override

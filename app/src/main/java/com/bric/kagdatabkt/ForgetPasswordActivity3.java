@@ -58,7 +58,7 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
                                                            if(StringUtils.isEmpty(pw)){
                                                                showError("填写新密码");
                                                            }
-                                                           RetrofitHelper.ServiceManager.getBaseService().doForgetPassword_2(account, pw, pw)
+                                                           RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doForgetPassword_2(account, pw, pw)
                                                                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                                                                    new Observer<ResultEntry>() {
                                                                        @Override

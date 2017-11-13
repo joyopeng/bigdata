@@ -44,6 +44,8 @@ public class CommonConstField {
     public static final int TABHOST_TAB_DANGAN_ID = 3;
     public static final int TABHOST_TAB_SETTING_ID = 2;
 
+    //error code
+    public static final int TOKEN_EXPIRED = -999;
     //prefrence
     public static final String COMMON_PREFRENCE = "common_preference";
     public static final String LOCATION_CITY = "location_city";
@@ -51,6 +53,7 @@ public class CommonConstField {
     public static final String ACCESS_TOKEN = "access_token";
     public static final String USER_ID = "userid";
     public static final String USER_NAME = "username";
+    public static final String APP_KEY = "appkey";
 
     public static final String NUMID_KEY = "numid_key";
     public static final String NUMNAME_KEY = "numname_key";

@@ -12,6 +12,8 @@ public class DanganlistResult extends ResultEntry<DanganlistResult.Item> {
     public class Item {
         public Gardens gardens;
         public ArrayList<Job> jobs;
+        public int page_count;
+        public int page;
     }
 
     public class Job {

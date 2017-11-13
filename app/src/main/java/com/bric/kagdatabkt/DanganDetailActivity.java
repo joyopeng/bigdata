@@ -177,7 +177,7 @@ public class DanganDetailActivity extends FragmentActivity {
     }
 
     private void fetchDanganData() {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_job_info(access_token, filebag_numid, job_type_id, jobid)
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGet_job_info(access_token, filebag_numid, job_type_id, jobid)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DanganDetailResult>() {
                     @Override

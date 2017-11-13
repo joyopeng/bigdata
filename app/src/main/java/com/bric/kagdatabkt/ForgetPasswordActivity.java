@@ -47,7 +47,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         final String account = sharedPreferences.getString(USER_NAME, "");
         phonenumber.setText(account);
         if (!StringUtils.isEmpty(account)) {
-            RetrofitHelper.ServiceManager.getBaseService().doGetQrcode(phonenumber.getText().toString(), "forget").subscribeOn(Schedulers.newThread())
+            RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGetQrcode(phonenumber.getText().toString(), "forget").subscribeOn(Schedulers.newThread())
                     .map(new Func1<ResponseBody, Bitmap>() {
                         @Override
                         public Bitmap call(ResponseBody arg0) {
@@ -103,7 +103,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     showError("填写账号");
                     return;
                 }
-                RetrofitHelper.ServiceManager.getBaseService().doGetQrcode(phonenumber.getText().toString(), "forget").subscribeOn(Schedulers.newThread())
+                RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGetQrcode(phonenumber.getText().toString(), "forget").subscribeOn(Schedulers.newThread())
                         .map(new Func1<ResponseBody, Bitmap>() {
                             @Override
                             public Bitmap call(ResponseBody arg0) {
@@ -144,7 +144,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 if (account == null) {
                     showError("请填写账号");
                 }
-                RetrofitHelper.ServiceManager.getBaseService().doGetQrcode(account, "forget").subscribeOn(Schedulers.newThread())
+                RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGetQrcode(account, "forget").subscribeOn(Schedulers.newThread())
                         .map(new Func1<ResponseBody, Bitmap>() {
                             @Override
                             public Bitmap call(ResponseBody arg0) {
@@ -183,7 +183,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                                    if (StringUtils.isEmpty(username) || StringUtils.isEmpty(verify)) {
                                                        showError("请填写账号或验证码");
                                                    }
-                                                   RetrofitHelper.ServiceManager.getBaseService().doSendMsg(username, verify, "forget")
+                                                   RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doSendMsg(username, verify, "forget")
                                                            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                                                            new Observer<ResultEntry>() {
                                                                @Override

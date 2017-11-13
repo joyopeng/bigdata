@@ -155,7 +155,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     }
 
     private void fetchChitangData() {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_breeding_gardens(access_token)
+        RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_breeding_gardens(access_token)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ChitanglistResult>() {
                     @Override
@@ -185,7 +185,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     }
 
     private void getChitangById(final String garden_numid) {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, 0, "1", "1")
+        RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_jobs(access_token, garden_numid, 0, 1, 1)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DanganlistResult>() {
                     @Override
@@ -229,7 +229,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
         chitang_zuijinzuoye.setText(job.control_date);
         Map<String, String> typeelement = ResourceUtils.getHashMapResource(getActivity(), R.xml.operate_type);
         chitang_caozuoleixing.setText(typeelement.get(job.aq_job_type_id));
-//                            chitang_jiangcedanwei.setText(job.);
+        chitang_jiangcedanwei.setText(job.operator);
         chitang_caozuoneirong.setText(job.remark);
     }
 

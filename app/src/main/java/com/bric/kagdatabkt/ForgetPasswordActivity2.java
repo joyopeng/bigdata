@@ -65,7 +65,7 @@ public class ForgetPasswordActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String verify = verify_code.getText().toString();
-                RetrofitHelper.ServiceManager.getBaseService().doForgetPassword_1(account, verify)
+                RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doForgetPassword_1(account, verify)
                         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         new Observer<ResultEntry>() {
                             @Override

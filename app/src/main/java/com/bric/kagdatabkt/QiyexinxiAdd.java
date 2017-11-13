@@ -134,7 +134,7 @@ public class QiyexinxiAdd extends AppCompatActivity {
                                     String cp_name = setting_edit_qiye_name.getText().toString();
                                     String cp_profile = setting_edit_qiye_jianjie.getText().toString();
                                     String cp_qualification = setting_edit_qiye_zizhi.getText().toString();
-                                    RetrofitHelper.ServiceManager.getBaseService().doAdd_user_info(access_token, cp_name, cp_profile, cp_qualification, file_urls).subscribeOn(Schedulers.io())
+                                    RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_user_info(access_token, cp_name, cp_profile, cp_qualification, file_urls).subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
                                         @Override
                                         public void onCompleted() {
@@ -202,26 +202,43 @@ public class QiyexinxiAdd extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             ArrayList<String> paths = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
             imagepath = paths;
-            setImageViewLayout(paths, requestCode);
+            setImageViewLayout(paths, requestCode, true);
         }
     }
 
-    private void setImageViewLayout(ArrayList<String> paths, int requestCode) {
+    private void setImageViewLayout(ArrayList<String> paths, int requestCode, boolean islocalfile) {
         if (requestCode == ZIZHI_TAG) {
             if (paths.size() > 0)
                 yingyezhizhao_upload_image_view.setVisibility(View.VISIBLE);
-            for (int i = 0; i < paths.size(); i++) {
-                if (i == 0) {
-                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img1);
+            if (islocalfile) {
+                for (int i = 0; i < paths.size(); i++) {
+                    if (i == 0) {
+                        Picasso.with(this).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img1);
+                    }
+                    if (i == 1) {
+                        Picasso.with(this).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img2);
+                    }
+                    if (i == 2) {
+                        Picasso.with(this).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img3);
+                    }
+                    if (i == 3) {
+                        Picasso.with(this).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img4);
+                    }
                 }
-                if (i == 1) {
-                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img2);
-                }
-                if (i == 2) {
-                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img3);
-                }
-                if (i == 3) {
-                    Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img4);
+            } else {
+                for (int i = 0; i < paths.size(); i++) {
+                    if (i == 0) {
+                        Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img1);
+                    }
+                    if (i == 1) {
+                        Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img2);
+                    }
+                    if (i == 2) {
+                        Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img3);
+                    }
+                    if (i == 3) {
+                        Picasso.with(this).load(paths.get(i)).fit().config(Bitmap.Config.RGB_565).into(zhizhao_preview_img4);
+                    }
                 }
             }
 
@@ -259,13 +276,13 @@ public class QiyexinxiAdd extends AppCompatActivity {
             builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
         }
         MultipartBody requestBody = builder.build();
-        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_user_info_pics(requestBody);
+        return RetrofitHelper.ServiceManager.getBaseImageService(getApplicationContext()).doAdd_user_info_pics(requestBody);
     }
 
     private void fetchData() {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
-        RetrofitHelper.ServiceManager.getBaseService().doGet_user_info(access_token).subscribeOn(Schedulers.io())
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGet_user_info(access_token).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QiyeResult>() {
             @Override
             public void onCompleted() {
@@ -287,7 +304,7 @@ public class QiyexinxiAdd extends AppCompatActivity {
                 for (QiyeResult.SubItem i : item.reports) {
                     imagepath.add(i.AqUserInfoReport.file_url);
                 }
-                setImageViewLayout(imagepath, ZIZHI_TAG);
+                setImageViewLayout(imagepath, ZIZHI_TAG, false);
             }
         });
     }

@@ -14,12 +14,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bric.kagdatabkt.DanganAddActivity;
 import com.bric.kagdatabkt.DanganAddChoseActivity;
@@ -33,6 +36,7 @@ import com.bric.kagdatabkt.utils.CommonConstField;
 import com.bric.kagdatabkt.utils.ResourceUtils;
 import com.bric.kagdatabkt.view.dialog.BaseAdapter;
 import com.bric.kagdatabkt.view.dialog.BaseViewHolder;
+import com.bric.kagdatabkt.view.dialog.FlipOverListView;
 import com.jiang.android.indicatordialog.IndicatorBuilder;
 import com.jiang.android.indicatordialog.IndicatorDialog;
 
@@ -60,11 +64,11 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private TextView base_toolbar_title;
     private ImageView base_nav_right;
     private TextView filebag_numid;
-    private ListView listView;
+    private FlipOverListView listView;
     private RelativeLayout dangan_empty;
     private LinearLayout dangan_content;
     private TextView jobs_filter;
-
+    private TextView hint_emperty_text2;
     private String access_token;
     private ArrayList<ChitanglistResult.SubItem> chitanglist;
     private ArrayList<DanganlistResult.Job> jobs;
@@ -72,6 +76,12 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private String numid;
     private String numName;
     private ArrayList<OperatorType> types = new ArrayList<>();
+    private int lastVisibleIndex;
+    private View footView;
+    private View lastView;
+    private int pageCount;
+    private int currentPage = 1;
+    private int currentJobId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +101,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         base_toolbar_title = (TextView) v.findViewById(R.id.base_toolbar_title);
         base_nav_right = (ImageView) v.findViewById(R.id.base_nav_right);
         filebag_numid = (TextView) v.findViewById(R.id.filebag_numid);
-        listView = (ListView) v.findViewById(R.id.dangan_jobs);
+        listView = (FlipOverListView) v.findViewById(R.id.dangan_jobs);
         dangan_empty = (RelativeLayout) v.findViewById(R.id.dangan_empty);
         dangan_content = (LinearLayout) v.findViewById(R.id.dangan_content);
         jobs_filter = (TextView) v.findViewById(R.id.jobs_filter);
@@ -118,14 +128,16 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                 showRightDialog(v, 0.2f, IndicatorBuilder.GRAVITY_RIGHT);
             }
         });
-
+        hint_emperty_text2 = (TextView) v.findViewById(R.id.hint_emperty_text2);
+        footView = getActivity().getLayoutInflater().inflate(R.layout.footview, null);
+        lastView = getActivity().getLayoutInflater().inflate(R.layout.lv_last_page_view, null);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             Log.v(TAG, "ok");
-            getChitangById(numid, 0);
+            getChitangById(numid, 0, currentPage);
         }
     }
 
@@ -140,7 +152,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     }
 
     private void fetchChitangData() {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_breeding_gardens(access_token)
+        RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_breeding_gardens(access_token)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ChitanglistResult>() {
                     @Override
@@ -160,7 +172,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                             if (chitanglist.size() > 0) {
                                 numid = chitanglist.get(0).AqBreedingGarden.numid;
                                 numName = chitanglist.get(0).AqBreedingGarden.name;
-                                getChitangById(numid, 0);
+                                getChitangById(numid, 0, currentPage);
                             } else {
                                 base_nav_right.setVisibility(View.GONE);
                                 base_toolbar_title.setText("档案管理");
@@ -171,8 +183,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         );
     }
 
-    private void getChitangById(final String garden_numid, int jobtype_id) {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_jobs(access_token, garden_numid, jobtype_id, "1", "20")
+    private void getChitangById(final String garden_numid, int jobtype_id, int page) {
+        RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_jobs(access_token, garden_numid, jobtype_id, page, 20)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<DanganlistResult>() {
                     @Override
@@ -197,29 +209,47 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
 
     private void fillData(DanganlistResult.Item item) {
         DanganlistResult.Gardens garden = item.gardens;
-        jobs = item.jobs;
-        base_toolbar_title.setText(garden.name);
-        numName = garden.name;
-        filebag_numid.setText(garden.numid);
-        if (jobs.size() > 0) {
-            dangan_empty.setVisibility(View.GONE);
-            dangan_content.setVisibility(View.VISIBLE);
-            listView.setAdapter(new MyAdspter());
-        } else {
-            dangan_empty.setVisibility(View.VISIBLE);
-            dangan_content.setVisibility(View.GONE);
-        }
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent addintent = new Intent(getActivity(), DanganDetailActivity.class);
-                addintent.putExtra(JOB_TYPE_ID_KEY, jobs.get(position).aq_job_type_id);
-                addintent.putExtra(NUMID_KEY, numid);
-                addintent.putExtra(JOB_ID, jobs.get(position).id);
-                startActivity(addintent);
-//                finish();
+        pageCount = item.page_count;
+        currentPage = item.page;
+        if (currentPage == 1) {
+            jobs = item.jobs;
+            base_toolbar_title.setText(garden.name);
+            numName = garden.name;
+            filebag_numid.setText(garden.numid);
+            if (jobs.size() > 0) {
+                dangan_empty.setVisibility(View.GONE);
+                dangan_content.setVisibility(View.VISIBLE);
+                listView.setAdapter(new MyAdspter());
+                if (pageCount > 1) {
+                    listView.setLoadingView(footView);
+                    listView.setOnFilpOverListener(filpOverListener);
+                }
+            } else {
+                dangan_empty.setVisibility(View.VISIBLE);
+                dangan_content.setVisibility(View.GONE);
+                hint_emperty_text2.setVisibility(View.GONE);
             }
-        });
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent addintent = new Intent(getActivity(), DanganDetailActivity.class);
+                    addintent.putExtra(JOB_TYPE_ID_KEY, jobs.get(position).aq_job_type_id);
+                    addintent.putExtra(NUMID_KEY, numid);
+                    addintent.putExtra(JOB_ID, jobs.get(position).id);
+                    startActivity(addintent);
+//                finish();
+                }
+            });
+        } else {
+            jobs.addAll(item.jobs);
+            Log.v(TAG, "job size =" + jobs.size());
+            ((MyAdspter) listView.getAdapter()).notifyDataSetChanged();
+            listView.setLocked(false);
+//            listView.setOnFilpOverListener(null);
+            if (currentPage == pageCount) {
+                listView.showEndPageView(lastView);
+            }
+        }
     }
 
 
@@ -264,7 +294,10 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onItemClick(View v, int position) {
                         numid = chitanglist.get(position).AqBreedingGarden.numid;
-                        getChitangById(numid, 0);
+                        jobs_filter.setText("全部");
+                        listView.removeFooterView(lastView);
+                        listView.setLocked(false);
+                        getChitangById(numid, 0, currentPage);
                         new Thread() {
                             public void run() {
                                 try {
@@ -329,7 +362,9 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onItemClick(View v, int position) {
                         jobs_filter.setText(types.get(position).name);
-                        getChitangById(numid, types.get(position).key);
+                        currentJobId = types.get(position).key;
+                        listView.removeFooterView(lastView);
+                        getChitangById(numid, currentJobId, currentPage);
                         new Thread() {
                             public void run() {
                                 try {
@@ -377,6 +412,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
 
         @Override
         public int getCount() {
+            Log.v(TAG, "job size =" + jobs.size());
             return jobs.size();
         }
 
@@ -419,6 +455,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             holder.control_date_value.setText(job.control_date);
             if ("5".equals(job.aq_job_type_id)) {
                 holder.operator_label.setText("检测单位:");
+            } else {
+                holder.operator_label.setText("操作人:");
             }
             holder.operator_value.setText(job.operator);
             return convertView;
@@ -471,4 +509,17 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         public int key;
     }
 
+    FlipOverListView.FilpOverListener filpOverListener = new FlipOverListView.FilpOverListener() {
+        @Override
+        public boolean filpOverEvent() {
+            int nextPage = currentPage + 1;
+            if (nextPage > pageCount) {
+                listView.setOnFilpOverListener(null);
+                return false;
+            } else {
+                getChitangById(numid, currentJobId, nextPage);
+            }
+            return true;
+        }
+    };
 }

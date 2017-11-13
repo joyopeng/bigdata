@@ -5,12 +5,15 @@ import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -560,18 +563,27 @@ public class DanganAddActivity extends FragmentActivity {
                 imagepath = paths;
                 if (paths.size() > 0)
                     upload_image_view.setVisibility(View.VISIBLE);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+                options.inSampleSize = 8;
                 for (int i = 0; i < paths.size(); i++) {
+//                    paths.set(i, getTruePath(paths.get(i)));
+                    Log.v(TAG, "paths url =" + paths.get(i));
                     if (i == 0) {
-                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img1);
+//                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).into(preview_img1);
+                        preview_img1.setImageBitmap(BitmapFactory.decodeFile(paths.get(i), options));
                     }
                     if (i == 1) {
-                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img2);
+//                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img2);
+                        preview_img2.setImageBitmap(BitmapFactory.decodeFile(paths.get(i), options));
                     }
                     if (i == 2) {
-                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img3);
+//                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img3);
+                        preview_img3.setImageBitmap(BitmapFactory.decodeFile(paths.get(i), options));
                     }
                     if (i == 3) {
-                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img4);
+//                        Picasso.with(getBaseContext()).load(new File(paths.get(i))).fit().config(Bitmap.Config.RGB_565).into(preview_img4);
+                        preview_img4.setImageBitmap(BitmapFactory.decodeFile(paths.get(i), options));
                     }
                 }
             }
@@ -584,7 +596,11 @@ public class DanganAddActivity extends FragmentActivity {
                 } else {
                     uri = photoUri;
                 }
-                Picasso.with(getBaseContext()).load(uri).resize(50, 50).centerCrop().into(take_picture);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+                options.inSampleSize = 10;
+//                Picasso.with(getBaseContext()).load(uri).resize(50, 50).centerCrop().into(take_picture);
+                take_picture.setImageBitmap(BitmapFactory.decodeFile(uri.getEncodedPath(), options));
                 take_picture.setTag(photoUri);
             }
         }
@@ -689,7 +705,7 @@ public class DanganAddActivity extends FragmentActivity {
     private void fillChoseData(String numid) {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         String access_token = sharedPreferences.getString(ACCESS_TOKEN, "");
-        RetrofitHelper.ServiceManager.getBaseService().doGet_breed_products(access_token, numid, String.valueOf(2))
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGet_breed_products(access_token, numid, String.valueOf(2))
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ProductResult>() {
                     @Override
@@ -1014,7 +1030,7 @@ public class DanganAddActivity extends FragmentActivity {
     };
 
     private void submitBinghaifangzhiData(String fileurl, String title, String date, String yongpin, String operator, String consumption, String note) {
-        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_disease_prevention(access_token, filebag_numid, title, date, yongpin, operator, note, consumption, fileurl).subscribeOn(Schedulers.io())
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_job_disease_prevention(access_token, filebag_numid, title, date, yongpin, operator, note, consumption, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
             public void onCompleted() {
@@ -1039,7 +1055,7 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void submitToumiaoData(String fileurl, String title, String date, String miaozhonglaiyuan, int miaozhong, String consumption, String note, String operator) {
-        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_seedling(access_token, filebag_numid, miaozhong, title, date, miaozhonglaiyuan, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_job_seedling(access_token, filebag_numid, miaozhong, title, date, miaozhonglaiyuan, operator, note, consumption, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
             public void onCompleted() {
@@ -1064,7 +1080,7 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void submitWeishiData(String fileurl, String feed_pic, String title, String date, String siliaomingcheng, String goumaishang, String consumption, String note, String operator) {
-        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_feed(access_token, filebag_numid, title, date, consumption, operator, feed_pic, siliaomingcheng, goumaishang, note, fileurl).subscribeOn(Schedulers.io())
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_job_feed(access_token, filebag_numid, title, date, consumption, operator, feed_pic, siliaomingcheng, goumaishang, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
             public void onCompleted() {
@@ -1089,7 +1105,7 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void submitBulaoData(String fileurl, String title, String date, int miaozhong, String consumption, String note, String operator) {
-        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_fishing(access_token, filebag_numid, miaozhong, title, date, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_job_fishing(access_token, filebag_numid, miaozhong, title, date, consumption, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
             public void onCompleted() {
@@ -1114,7 +1130,7 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void submitJianceData(String fileurl, String title, String date, int miaozhong, String xiangmu, int jieguo, String note, String operator) {
-        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_testing(access_token, filebag_numid, miaozhong, title, date, xiangmu, jieguo, operator, note, fileurl).subscribeOn(Schedulers.io())
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_job_testing(access_token, filebag_numid, miaozhong, title, date, xiangmu, jieguo, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
             public void onCompleted() {
@@ -1139,7 +1155,7 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void submitRichangweihuData(String fileurl, String title, String date, int guanlileixing, String touruliang, String note, String operator) {
-        RetrofitHelper.ServiceManager.getBaseService().doAdd_job_daily(access_token, filebag_numid, title, date, guanlileixing, touruliang, operator, note, fileurl).subscribeOn(Schedulers.io())
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_job_daily(access_token, filebag_numid, title, date, guanlileixing, touruliang, operator, note, fileurl).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResultEntry>() {
             @Override
             public void onCompleted() {
@@ -1174,7 +1190,7 @@ public class DanganAddActivity extends FragmentActivity {
             builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
         }
         MultipartBody requestBody = builder.build();
-        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_job_pics(requestBody);
+        return RetrofitHelper.ServiceManager.getBaseImageService(getApplicationContext()).doAdd_job_pics(requestBody);
     }
 
     private Observable<WeishiImageResult> uploadWeishiImageData(List<File> fileList, File weishi) {
@@ -1190,14 +1206,18 @@ public class DanganAddActivity extends FragmentActivity {
         if (weishi.exists())
             builder.addFormDataPart("feed_pic", weishi.getName(), RequestBody.create(MediaType.parse("image/jpeg"), weishi));
         MultipartBody requestBody = builder.build();
-        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_job_feed_pics(requestBody);
+        return RetrofitHelper.ServiceManager.getBaseImageService(getApplicationContext()).doAdd_job_feed_pics(requestBody);
     }
 
     private void showPreviewDialog() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+        options.inSampleSize = 8;
         Dialog dialog = new Dialog(this, R.style.Dialog_FullScreen);
         dialog.setContentView(R.layout.previe);
         ImageView imageView = dialog.findViewById(R.id.preview_view);
         Picasso.with(getBaseContext()).load(photoUri).config(Bitmap.Config.RGB_565).into(imageView);
+        imageView.setImageBitmap(BitmapFactory.decodeFile(photoUri.getPath(), options));
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setCancelable(true);
@@ -1217,4 +1237,16 @@ public class DanganAddActivity extends FragmentActivity {
     private void showError(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+
+    private String getTruePath(String absolutepath) {
+        File file = new File(absolutepath);
+        String filePath = file.getAbsolutePath();
+        String[] dataStr = filePath.split("/");
+        String fileTruePath = "/sdcard";
+        for (int i = 4; i < dataStr.length; i++) {
+            fileTruePath = fileTruePath + "/" + dataStr[i];
+        }
+        return fileTruePath;
+    }
+
 }

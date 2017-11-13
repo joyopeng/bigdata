@@ -1,5 +1,7 @@
 package com.bric.kagdatabkt.net;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.bric.kagdatabkt.entry.ChitanglistResult;
@@ -14,7 +16,11 @@ import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.entry.RegisterResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
 import com.bric.kagdatabkt.entry.WeishiImageResult;
+import com.bric.kagdatabkt.utils.CommonConstField;
+import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -25,17 +31,33 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import retrofit2.Call;
+import okhttp3.FormBody;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import okio.Buffer;
+import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
+
+import static com.bric.kagdatabkt.utils.CommonConstField.ACCESS_TOKEN;
+import static com.bric.kagdatabkt.utils.CommonConstField.APP_KEY;
+import static com.bric.kagdatabkt.utils.CommonConstField.TOKEN_EXPIRED;
+import static com.bric.kagdatabkt.utils.CommonConstField.USER_ID;
 
 /**
  * Created by joyopeng on 17-9-29.
@@ -69,6 +91,12 @@ public interface RetrofitHelper {
     Observable<RegisterResult> doLogin(
             @Query("username") String username,
             @Query("password") String password
+    );
+
+    @POST("Api4Users/refresh_token")
+    Call<RegisterResult> doRefresh_token(
+            @Query("user_id") String user_id,
+            @Query("appkey") String appkey
     );
 
     @POST("Api4Users/findPasswordStepOne")
@@ -108,29 +136,33 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Datas/get_breeding_gardens")
+    @FormUrlEncoded
     Observable<ChitanglistResult> doGet_breeding_gardens(
-            @Query("access_token") String access_token
+            @Field("access_token") String access_token
     );
 
     @POST("Api4Datas/get_jobs")
+    @FormUrlEncoded
     Observable<DanganlistResult> doGet_jobs(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("garden_numid") String garden_numid,
             @Query("job_type_id") int job_type_id,
-            @Query("page") String page,
-            @Query("limit") String limit
+            @Query("page") int page,
+            @Query("limit") int limit
 
     );
 
     @POST("Api4Datas/get_job_info")
+    @FormUrlEncoded
     Observable<DanganDetailResult> doGet_job_info(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("garden_numid") String garden_numid,
             @Query("job_type_id") int job_type_id,
             @Query("id") int id
     );
 
     @POST("Api4Datas/get_breed_products")
+    @FormUrlEncoded
     Observable<ProductResult> doGet_breed_products(
             @Query("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
@@ -139,23 +171,28 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Datas/get_apply_qrcode_list")
+    @FormUrlEncoded
     Observable<QrcodeListResult> doGet_apply_qrcode_list(
-            @Query("access_token") String access_token
+            @Field("access_token") String access_token
     );
 
     @POST("Api4Datas/get_apply_qrcode_info")
+    @FormUrlEncoded
     Observable<QrcodeInfoResult> doGet_apply_qrcode_list(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("job_fishing_id") int job_fishing_id
     );
 
     @POST("api4Datas/get_supplier_carousels")
+    @FormUrlEncoded
     Observable<LunboResult> doGet_supplier_carousels(
+            @Field("access_token") String access_token
     );
 
     @POST("Api4Ponds/add_reeding_garden")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_reeding_garden(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("garden_name") String garden_name,
             @Query("garden_address") String garden_address,
             @Query("lat") String lat,
@@ -168,8 +205,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Ponds/add_job_disease_prevention")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_disease_prevention(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
             @Query("title") String title,
             @Query("control_date") String control_date,
@@ -181,8 +219,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Ponds/add_job_seedling")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_seedling(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
             @Query("product_id") int product_id,
             @Query("title") String title,
@@ -195,8 +234,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Ponds/add_job_feed")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_feed(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
             @Query("title") String title,
             @Query("control_date") String control_date,
@@ -210,8 +250,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Ponds/add_job_fishing")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_fishing(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
             @Query("product_id") int product_id,
             @Query("title") String title,
@@ -223,8 +264,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Ponds/add_job_testing")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_testing(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
             @Query("product_id") int product_id,
             @Query("title") String title,
@@ -237,8 +279,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Ponds/add_job_daily")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_daily(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
             @Query("title") String title,
             @Query("control_date") String control_date,
@@ -250,8 +293,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Ponds/apply_qrcode")
+    @FormUrlEncoded
     Observable<ResultEntry> doApply_qrcode(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("job_fishing_id") int job_fishing_id,
             @Query("quantity") int quantity
     );
@@ -271,6 +315,7 @@ public interface RetrofitHelper {
 
 
     public class ServiceManager {
+        static Context content = null;
         private volatile static ServiceManager serviceManager;
         static final int DEFAULT_CONNECT_TIMEOUT = 16;
         static final int DEFAULT_READ_TIMEOUT = 150;
@@ -280,6 +325,7 @@ public interface RetrofitHelper {
         static final String IMAGE_BASE_DOMAIN = "http://192.168.3.155:8090/";
         private RetrofitHelper baseService;
         private RetrofitHelper imageService;
+        private RetrofitHelper freshService;
         SSLContext sc = null;
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
 
@@ -313,8 +359,9 @@ public interface RetrofitHelper {
                     .connectTimeout(DEFAULT_CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(DEFAULT_READ_TIMEOUT, TimeUnit.SECONDS)
 //                    .addInterceptor(VodApplication.getHttpParamsInterceptor())
-//                    .addNetworkInterceptor(VodApplication.getHttpTrafficInterceptor())
+//                    .addNetworkInterceptor(new TokenExpired(content))
 //                    .retryOnConnectionFailure(true)
+                    .addInterceptor(new TokenExpired(content))
                     .addInterceptor(interceptor)
                     .sslSocketFactory(sc.getSocketFactory())
                     .build();
@@ -330,8 +377,15 @@ public interface RetrofitHelper {
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(mClient)
                     .build();
+            Retrofit freshRetrofit = new Retrofit.Builder()
+                    .baseUrl(EPG_BASE_DOMAIN)
+                    .addConverterFactory(GsonConverterFactory.create())
+//                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                    .client(mClient)
+                    .build();
             baseService = epgRetrofit.create(RetrofitHelper.class);
             imageService = imageRetrofit.create(RetrofitHelper.class);
+            freshService = freshRetrofit.create(RetrofitHelper.class);
         }
 
         private static ServiceManager getInstance() {    //对获取实例的方法进行同步
@@ -343,15 +397,72 @@ public interface RetrofitHelper {
             return serviceManager;
         }
 
-        public static RetrofitHelper getBaseService() {
-
+        public static RetrofitHelper getBaseService(Context baseContent) {
+            if (content == null) {
+                content = baseContent;
+            }
             return getInstance().baseService;
         }
 
-        public static RetrofitHelper getBaseImageService() {
-
+        public static RetrofitHelper getBaseImageService(Context baseContent) {
+            if (content == null) {
+                content = baseContent;
+            }
             return getInstance().imageService;
+        }
 
+        public static RetrofitHelper getBaseFreshService() {
+            return getInstance().freshService;
+        }
+    }
+
+    public class TokenExpired implements Interceptor {
+        Context context;
+
+        public TokenExpired(Context c) {
+            context = c;
+        }
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            Response response = chain.proceed(request);
+            ResponseBody originbody = response.body();
+            BufferedSource source = originbody.source();
+            source.request(Long.MAX_VALUE); // Buffer the entire body.
+            Buffer buffer = source.buffer();
+            Charset charset = Charset.forName("UTF-8");
+            MediaType contentType = originbody.contentType();
+            if (contentType != null) {
+                charset = contentType.charset(charset);
+            }
+            String content = buffer.clone().readString(charset);
+            Gson g = new Gson();
+            ResultEntry entry = g.fromJson(content, ResultEntry.class);
+            int errorcode = entry.success;
+            if (errorcode == TOKEN_EXPIRED) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
+                String userid = sharedPreferences.getString(USER_ID, "");
+                String appkey = sharedPreferences.getString(APP_KEY, "");
+                Call<RegisterResult> call = RetrofitHelper.ServiceManager.getBaseFreshService().doRefresh_token(userid, appkey);
+                retrofit2.Response<RegisterResult> response1 = call.execute();
+                RegisterResult result = response1.body();
+                String token = result.data.get(0).Token.access_token;
+                sharedPreferences.edit().putString(ACCESS_TOKEN, token).commit();
+                FormBody oidFormBody = (FormBody) request.body();
+                FormBody.Builder newFormBody = new FormBody.Builder();
+                for (int i = 0; i < oidFormBody.size(); i++) {
+                    if (!"access_token".equals(oidFormBody.encodedName(i))) {
+                        newFormBody.addEncoded(oidFormBody.encodedName(i), oidFormBody.encodedValue(i));
+                    } else {
+                        newFormBody.addEncoded(oidFormBody.encodedName(i), token);
+                    }
+                }
+                Request newRequest = request.newBuilder().method(request.method(), newFormBody.build()).build();
+                response.close();
+                return chain.proceed(newRequest);
+            }
+            return response;
         }
     }
 }

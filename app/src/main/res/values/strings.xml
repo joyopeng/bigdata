@@ -23,8 +23,8 @@
     <string name="hint_chitang_xiaoduyongliang">填写消毒用量</string>
     <string name="label_chitang_xiaoduopera">操作人</string>
     <string name="hint_chitang_operator">填写操作人姓名</string>
-    <string name="label_chitang_tupian">图片或视频</string>
-    <string name="hint_chitang_tupian">上传图片或视频</string>
+    <string name="label_chitang_tupian">图片</string>
+    <string name="hint_chitang_tupian">上传图片</string>
     <string name="label_chitang_note">备注</string>
     <string name="hint_chitang_note">填写备注</string>
     <string name="title_chitang_toumiao">投苗信息录入</string>

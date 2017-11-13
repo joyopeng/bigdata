@@ -65,7 +65,7 @@ public class LoginMainActivity extends AppCompatActivity {
                         showError("请输入正确的密码");
                         return;
                     }
-                    RetrofitHelper.ServiceManager.getBaseService().doLogin(username, password)
+                    RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doLogin(username, password)
                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                             new Observer<RegisterResult>() {
                                 @Override
@@ -83,9 +83,11 @@ public class LoginMainActivity extends AppCompatActivity {
                                         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
                                         String access_token = ((RegisterResult.Item) (arg0.data.get(0))).Token.access_token;
                                         String user_id = ((RegisterResult.Item) (arg0.data.get(0))).User.id;
+                                        String appkey = ((RegisterResult.Item) (arg0.data.get(0))).User.appkey;
                                         sharedPreferences.edit().putString(CommonConstField.ACCESS_TOKEN, access_token).commit();
                                         sharedPreferences.edit().putString(CommonConstField.USER_ID, user_id).commit();
                                         sharedPreferences.edit().putString(CommonConstField.USER_NAME, username).commit();
+                                        sharedPreferences.edit().putString(CommonConstField.APP_KEY, appkey).commit();
                                         Intent registerintent = new Intent(LoginMainActivity.this, MainActivity.class);
                                         startActivity(registerintent);
                                         finish();

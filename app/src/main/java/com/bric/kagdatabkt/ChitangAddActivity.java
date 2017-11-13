@@ -179,7 +179,7 @@ public class ChitangAddActivity extends AppCompatActivity {
         bean.garden_tel = chitang_addpage_owenerphone.getText().toString();
         bean.garden_profile = chitang_addpage_discription_label.getText().toString();
         bean.file_urls = fileurls;
-        RetrofitHelper.ServiceManager.getBaseService().doAdd_reeding_garden(
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doAdd_reeding_garden(
                 bean.access_token, bean.garden_name,
                 bean.garden_address, lat, lng, bean.garden_area, bean.garden_charge,
                 bean.garden_tel, bean.garden_profile, bean.file_urls).subscribeOn(Schedulers.io())
@@ -215,7 +215,7 @@ public class ChitangAddActivity extends AppCompatActivity {
             builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
         }
         MultipartBody requestBody = builder.build();
-        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_reeding_garden_pics(requestBody);
+        return RetrofitHelper.ServiceManager.getBaseImageService(getApplicationContext()).doAdd_reeding_garden_pics(requestBody);
     }
 
     @Override
@@ -253,7 +253,7 @@ public class ChitangAddActivity extends AppCompatActivity {
             builder.addFormDataPart("file_url[" + i++ + "]", file.getName(), RequestBody.create(MediaType.parse("image/jpeg"), file));
         }
         MultipartBody requestBody = builder.build();
-        return RetrofitHelper.ServiceManager.getBaseImageService().doAdd_reeding_garden_pics(requestBody);
+        return RetrofitHelper.ServiceManager.getBaseImageService(getApplicationContext()).doAdd_reeding_garden_pics(requestBody);
     }
 
     /***

@@ -22,8 +22,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="15dp"
             android:src="@drawable/back"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/base_toolbar_title"
@@ -51,8 +50,7 @@
         android:id="@+id/setting_persion_info_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        >
+        android:background="@color/colorWhite">
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,8 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin"
-        android:background="@color/colorWhite"
-        >
+        android:background="@color/colorWhite">
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,8 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_big_margin"
-        android:background="@color/colorWhite"
-        >
+        android:background="@color/colorWhite">
 
         <TextView
             android:layout_width="wrap_content"
@@ -132,8 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_big_margin"
-        android:background="@color/colorWhite"
-        >
+        android:background="@color/colorWhite">
 
         <TextView
             android:layout_width="wrap_content"
@@ -145,16 +140,28 @@
             android:text="@string/setting_label_clear_cache"
             android:textSize="@dimen/label_size" />
 
+
+        <TextView
+            android:id="@+id/cached_size"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginRight="@dimen/dangan_right_margin"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
+            android:gravity="center_vertical"
+            android:text="@string/setting_label_clear_cache"
+            />
+
     </RelativeLayout>
 
     <Button
         android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
-        android:text="退出登录"
-        android:textColor="@color/colorWhite"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dangan_item_top_big_margin"
         android:background="@color/skyblue"
-        />
+        android:text="退出登录"
+        android:textColor="@color/colorWhite" />
 </LinearLayout>

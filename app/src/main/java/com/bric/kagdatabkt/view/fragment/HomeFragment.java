@@ -13,13 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bric.kagdatabkt.DanganAddChoseActivity;
-import com.bric.kagdatabkt.LoginMainActivity;
 import com.bric.kagdatabkt.MainActivity;
 import com.bric.kagdatabkt.QrcodeListActivity;
 import com.bric.kagdatabkt.R;
 import com.bric.kagdatabkt.entry.ChitanglistResult;
 import com.bric.kagdatabkt.entry.LunboResult;
-import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
 import com.kcode.autoscrollviewpager.view.AutoScrollViewPager;
@@ -100,7 +98,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.tianjiadangan: {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
                 String access_token = sharedPreferences.getString(CommonConstField.ACCESS_TOKEN, "");
-                RetrofitHelper.ServiceManager.getBaseService().doGet_breeding_gardens(access_token)
+                RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_breeding_gardens(access_token)
                         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         new Observer<ChitanglistResult>() {
                             @Override
@@ -147,7 +145,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     };
 
     private void initData() {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_supplier_carousels()
+        RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_supplier_carousels("")
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<LunboResult>() {
                     @Override

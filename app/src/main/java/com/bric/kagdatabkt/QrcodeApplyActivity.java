@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.entry.QrcodeInfoResult;
 import com.bric.kagdatabkt.entry.QrcodeListResult;
 import com.bric.kagdatabkt.entry.ResultEntry;
@@ -74,8 +76,12 @@ public class QrcodeApplyActivity extends AppCompatActivity {
         qrcode_apply_button.setOnClickListener(new View.OnClickListener() {
                                                    @Override
                                                    public void onClick(View view) {
+                                                       if (StringUtils.isEmpty(qrcode_apply_count.getText().toString())) {
+                                                           showError("填写申请数量");
+                                                           return;
+                                                       }
                                                        int count = Integer.parseInt(qrcode_apply_count.getText().toString());
-                                                       RetrofitHelper.ServiceManager.getBaseService().doApply_qrcode(access_token, job_fishing_id, count)
+                                                       RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doApply_qrcode(access_token, job_fishing_id, count)
                                                                .subscribeOn(Schedulers.io()).observeOn(Schedulers.computation()).subscribe(
                                                                new Observer<ResultEntry>() {
                                                                    @Override
@@ -101,7 +107,7 @@ public class QrcodeApplyActivity extends AppCompatActivity {
     }
 
     private void fetchData() {
-        RetrofitHelper.ServiceManager.getBaseService().doGet_apply_qrcode_list(access_token, job_fishing_id)
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGet_apply_qrcode_list(access_token, job_fishing_id)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<QrcodeInfoResult>() {
                     @Override
@@ -123,5 +129,9 @@ public class QrcodeApplyActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void showError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }

@@ -73,7 +73,7 @@ public class QrcodeListActivity extends AppCompatActivity {
     private void fetchChitangData() {
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
         String access_token = sharedPreferences.getString(CommonConstField.ACCESS_TOKEN, "");
-        RetrofitHelper.ServiceManager.getBaseService().doGet_apply_qrcode_list(access_token)
+        RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doGet_apply_qrcode_list(access_token)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<QrcodeListResult>() {
                     @Override

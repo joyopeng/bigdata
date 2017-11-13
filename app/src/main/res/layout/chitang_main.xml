@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="检测信息" />
+                android:text="监测信息" />
         </RelativeLayout>
 
         <com.baidu.mapapi.map.MapView
@@ -352,7 +352,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="检测单位:" />
+                    android:text="操作人:" />
 
                 <TextView
                     android:id="@+id/chitang_jiangcedanwei"

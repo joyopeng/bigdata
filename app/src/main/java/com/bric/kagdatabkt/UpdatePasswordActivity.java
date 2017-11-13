@@ -64,7 +64,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                                                           String oritin_pw = origin_password.getText().toString();
                                                           String new_pw = new_password.getText().toString();
                                                           String repeate_new_pw = repeate_new_password.getText().toString();
-                                                          RetrofitHelper.ServiceManager.getBaseService().doUpdatePassword(user_id, access_token, oritin_pw, new_pw, repeate_new_pw)
+                                                          RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doUpdatePassword(user_id, access_token, oritin_pw, new_pw, repeate_new_pw)
                                                                   .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                                                                   new Observer<ResultEntry>() {
                                                                       @Override
