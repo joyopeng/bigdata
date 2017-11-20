@@ -213,7 +213,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         currentPage = item.page;
         if (currentPage == 1) {
             jobs = item.jobs;
-            base_toolbar_title.setText(garden.name);
+            base_toolbar_title.setText(garden.name+"管理");
             numName = garden.name;
             filebag_numid.setText(garden.numid);
             if (jobs.size() > 0) {

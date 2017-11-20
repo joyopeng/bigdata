@@ -182,6 +182,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                                    String verify = verify_code.getText().toString();
                                                    if (StringUtils.isEmpty(username) || StringUtils.isEmpty(verify)) {
                                                        showError("请填写账号或验证码");
+                                                       return;
                                                    }
                                                    RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doSendMsg(username, verify, "forget")
                                                            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(

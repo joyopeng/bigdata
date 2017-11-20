@@ -1,12 +1,16 @@
 package com.bric.kagdatabkt;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -108,6 +112,30 @@ public class DanganDetailActivity extends FragmentActivity {
         preview_img2 = (ImageView) findViewById(R.id.preview_img2);
         preview_img3 = (ImageView) findViewById(R.id.preview_img3);
         preview_img4 = (ImageView) findViewById(R.id.preview_img4);
+        preview_img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPreviewDialog(v.getTag().toString());
+            }
+        });
+        preview_img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPreviewDialog(v.getTag().toString());
+            }
+        });
+        preview_img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPreviewDialog(v.getTag().toString());
+            }
+        });
+        preview_img4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPreviewDialog(v.getTag().toString());
+            }
+        });
     }
 
     private void gettypeNameBykey(int key) {
@@ -137,7 +165,7 @@ public class DanganDetailActivity extends FragmentActivity {
                 detail_item2_label.setText("喂食日期:");
                 detail_item3_label.setText("饲料名称:");
                 detail_item4_label.setText("购买商:");
-                detail_item5_label.setText("投苗量:");
+                detail_item5_label.setText("用量:");
                 detail_item6_label.setText("操作人:");
                 break;
             case CommonConstField.DANGAN_CONTENT_TYPE_BURAO:
@@ -173,6 +201,8 @@ public class DanganDetailActivity extends FragmentActivity {
                 detail_item6.setVisibility(View.GONE);
                 break;
         }
+        if (name.contains("录入"))
+            name = name.replace("录入", "");
         base_toolbar_title.setText(name);
     }
 
@@ -208,15 +238,19 @@ public class DanganDetailActivity extends FragmentActivity {
             for (int i = 0; i < aqjobs.size(); i++) {
                 if (i == 0) {
                     Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img1);
+                    preview_img1.setTag(aqjobs.get(i));
                 }
                 if (i == 1) {
                     Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img2);
+                    preview_img2.setTag(aqjobs.get(i));
                 }
                 if (i == 2) {
                     Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img3);
+                    preview_img3.setTag(aqjobs.get(i));
                 }
                 if (i == 3) {
                     Picasso.with(this).load(aqjobs.get(i)).config(Bitmap.Config.RGB_565).into(preview_img4);
+                    preview_img4.setTag(aqjobs.get(i));
                 }
             }
         }
@@ -277,5 +311,29 @@ public class DanganDetailActivity extends FragmentActivity {
             }
             break;
         }
+    }
+
+    private void showPreviewDialog(String photoUri) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ALPHA_8;
+        options.inSampleSize = 8;
+        final Dialog dialog = new Dialog(this, R.style.Dialog_FullScreen);
+        dialog.setContentView(R.layout.previe);
+        ImageView imageView = dialog.findViewById(R.id.preview_view);
+        Picasso.with(getBaseContext()).load(photoUri).config(Bitmap.Config.RGB_565).into(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
     }
 }

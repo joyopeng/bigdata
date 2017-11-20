@@ -10,10 +10,11 @@
         android:required="true" />
 
     <!-- Required -->
+    <!--
     <permission
         android:name="com.bric.kagdatabkt.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-
+    -->
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.bric.kagdatabkt.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -87,8 +88,7 @@
         <activity
             android:name=".LoginMainActivity"
             android:label="@string/title_activity_qiyexinxi_add"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
 
         <activity
             android:name=".RegisterActivity"

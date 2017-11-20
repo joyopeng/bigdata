@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.entry.ResultEntry;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
@@ -65,6 +66,10 @@ public class ForgetPasswordActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String verify = verify_code.getText().toString();
+                if(StringUtils.isEmpty(verify)){
+                    showError("填写验证码");
+                    return;
+                }
                 RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doForgetPassword_1(account, verify)
                         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         new Observer<ResultEntry>() {

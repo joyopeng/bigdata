@@ -1,6 +1,5 @@
 package com.bric.kagdatabkt;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -9,12 +8,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.model.LatLng;
 import com.bric.kagdatabkt.utils.CommonConstField;
 import com.bric.kagdatabkt.utils.LocationService;
 
-import cn.jpush.android.api.JPushInterface;
+//import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by joyopeng on 17-9-18.
@@ -28,9 +26,9 @@ public class RootApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        JPushInterface.setDebugMode(true);//正式版的时候设置false，关闭调试
-        JPushInterface.init(this);
-        JPushInterface.onResume(this);
+//        JPushInterface.setDebugMode(true);//正式版的时候设置false，关闭调试
+//        JPushInterface.init(this);
+//        JPushInterface.onResume(this);
         SDKInitializer.initialize(this);
         // -----------location config ------------
         locationService = new LocationService(getApplicationContext());

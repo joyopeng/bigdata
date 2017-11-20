@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.StringUtils;
@@ -17,21 +18,16 @@ import com.bric.kagdatabkt.view.fragment.Chitangfragment;
 import com.bric.kagdatabkt.view.fragment.Danganfragment;
 import com.bric.kagdatabkt.view.fragment.HomeFragment;
 import com.bric.kagdatabkt.view.fragment.Settingfragment;
+import com.bric.kagdatabkt.view.layout.TabLayout;
 
 import static com.bric.kagdatabkt.utils.CommonConstField.USER_NAME;
 
 public class MainActivity extends FragmentActivity {
 
-    //    private ImageView base_nav_right;
-//    private TextView base_toolbar_title;
-    private ImageView homepage_tab_img;
-    private TextView homepage_tab_text;
-    private ImageView chitang_tab_img;
-    private TextView chitang_tab_text;
-    private ImageView dangan_tab_img;
-    private TextView dangan_tab_text;
-    private ImageView seting_tab_img;
-    private TextView seting_tab_text;
+    private TabLayout tab_home;
+    private TabLayout tab_chitang;
+    private TabLayout tab_dangan;
+    private TabLayout tab_setting;
     private FragmentManager mFM = null;
 
     private int currentTabid;
@@ -52,112 +48,101 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
-//        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
-//        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
-        homepage_tab_img = (ImageView) findViewById(R.id.homepage_tab_img);
-        homepage_tab_text = (TextView) findViewById(R.id.homepage_tab_text);
-        chitang_tab_img = (ImageView) findViewById(R.id.chitang_tab_img);
-        chitang_tab_text = (TextView) findViewById(R.id.chitang_tab_text);
-        dangan_tab_img = (ImageView) findViewById(R.id.dangan_tab_img);
-        dangan_tab_text = (TextView) findViewById(R.id.dangan_tab_text);
-        seting_tab_img = (ImageView) findViewById(R.id.seting_tab_img);
-        seting_tab_text = (TextView) findViewById(R.id.tabhost_text);
+        tab_home = (TabLayout) findViewById(R.id.tab_home);
+        tab_chitang = (TabLayout) findViewById(R.id.tab_chitang);
+        tab_dangan = (TabLayout) findViewById(R.id.tab_dangan);
+        tab_setting = (TabLayout) findViewById(R.id.tab_setting);
+        tab_home.setText(R.string.top_page);
+        tab_home.setIcon(R.drawable.homepage_tab_default);
+        tab_chitang.setText(R.string.title_chitang);
+        tab_chitang.setIcon(R.drawable.chitang_tab_normal);
+        tab_dangan.setText(R.string.title_dangan);
+        tab_dangan.setIcon(R.drawable.dangan_tab_normal);
+        tab_setting.setText(R.string.title_wode);
+        tab_setting.setIcon(R.drawable.seting_tab_normal);
     }
 
     private void initActionListener() {
-        homepage_tab_img.setOnClickListener(new View.OnClickListener() {
+        tab_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View var1) {
                 var1.requestFocus();
             }
         });
-        chitang_tab_img.setOnClickListener(new View.OnClickListener() {
+        tab_chitang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View var1) {
                 var1.requestFocus();
             }
         });
-        dangan_tab_img.setOnClickListener(new View.OnClickListener() {
+        tab_dangan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View var1) {
                 var1.requestFocus();
             }
         });
-        seting_tab_img.setOnClickListener(new View.OnClickListener() {
+        tab_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View var1) {
                 var1.requestFocus();
             }
         });
 
-        homepage_tab_img.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        tab_home.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    view.setBackgroundResource(R.drawable.homepage_tab_focus);
-                    homepage_tab_text.setTextColor(getResources().getColor(R.color.skyblue));
+                    tab_home.setIcon(R.drawable.homepage_tab_focus);
+                    tab_home.setTextColor(getResources().getColor(R.color.skyblue));
                     changeHomepage();
                 } else {
-                    view.setBackgroundResource(R.drawable.homepage_tab_default);
-                    homepage_tab_text.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tab_home.setIcon(R.drawable.homepage_tab_default);
+                    tab_home.setTextColor(getResources().getColor(R.color.lightgrey));
                 }
             }
         });
 
-        chitang_tab_img.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        tab_chitang.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    view.setBackgroundResource(R.drawable.chitang_tab_focus);
-                    chitang_tab_text.setTextColor(getResources().getColor(R.color.skyblue));
+                    tab_chitang.setIcon(R.drawable.chitang_tab_focus);
+                    tab_chitang.setTextColor(getResources().getColor(R.color.skyblue));
                     changechitang();
                 } else {
-                    view.setBackgroundResource(R.drawable.chitang_tab_normal);
-                    chitang_tab_text.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tab_chitang.setIcon(R.drawable.chitang_tab_normal);
+                    tab_chitang.setTextColor(getResources().getColor(R.color.lightgrey));
                 }
             }
         });
 
-        dangan_tab_img.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        tab_dangan.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    view.setBackgroundResource(R.drawable.dangan_tab_focus);
-                    dangan_tab_text.setTextColor(getResources().getColor(R.color.skyblue));
+                    tab_dangan.setIcon(R.drawable.dangan_tab_focus);
+                    tab_dangan.setTextColor(getResources().getColor(R.color.skyblue));
                     changdangan();
                 } else {
-                    view.setBackgroundResource(R.drawable.dangan_tab_normal);
-                    dangan_tab_text.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tab_dangan.setIcon(R.drawable.dangan_tab_normal);
+                    tab_dangan.setTextColor(getResources().getColor(R.color.lightgrey));
                 }
             }
         });
 
-        seting_tab_img.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        tab_setting.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    view.setBackgroundResource(R.drawable.seting_tab_focus);
-                    seting_tab_text.setTextColor(getResources().getColor(R.color.skyblue));
+                    tab_setting.setIcon(R.drawable.seting_tab_focus);
+                    tab_setting.setTextColor(getResources().getColor(R.color.skyblue));
                     changSeting();
                 } else {
-                    view.setBackgroundResource(R.drawable.seting_tab_normal);
-                    seting_tab_text.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tab_setting.setIcon(R.drawable.seting_tab_normal);
+                    tab_setting.setTextColor(getResources().getColor(R.color.lightgrey));
                 }
             }
         });
-
-//        base_nav_right.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent addintent = new Intent(MainActivity.this, ChitangAddActivity.class);
-//                if (currentTabid == CommonConstField.TABHOST_TAB_CHITANG_ID) {
-//                    addintent = new Intent(MainActivity.this, ChitangAddActivity.class);
-//                } else if (currentTabid == CommonConstField.TABHOST_TAB_DANGAN_ID) {
-//                    addintent = new Intent(MainActivity.this, DanganAddChoseActivity.class);
-//                }
-//                startActivity(addintent);
-//            }
-//        });
     }
 
     private void changeHomepage() {
@@ -202,10 +187,10 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void trigedanganClick() {
-        dangan_tab_img.performClick();
+        tab_dangan.performClick();
     }
 
     public void trigechitangClick() {
-        chitang_tab_img.performClick();
+        tab_chitang.performClick();
     }
 }

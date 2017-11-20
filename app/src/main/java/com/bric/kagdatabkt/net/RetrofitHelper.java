@@ -50,6 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -100,21 +101,24 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Users/findPasswordStepOne")
+    @FormUrlEncoded
     Observable<ResultEntry> doForgetPassword_1(
-            @Query("username") String username,
+            @Field("username") String username,
             @Query("mobile_code") String mobile_code
     );
 
     @POST("Api4Users/findPasswordStepTwo")
+    @FormUrlEncoded
     Observable<ResultEntry> doForgetPassword_2(
-            @Query("username") String username,
+            @Field("username") String username,
             @Query("password") String password,
             @Query("repassword") String repassword
     );
 
     @POST("Api4Users/updatePassword")
+    @FormUrlEncoded
     Observable<ResultEntry> doUpdatePassword(
-            @Query("userid") String userid,
+            @Field("userid") String userid,
             @Query("access_token") String access_token,
             @Query("oldpassword") String oldpassword,
             @Query("newpassword") String newpassword,
@@ -122,8 +126,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Users/add_user_info")
+    @FormUrlEncoded
     Observable<ResultEntry> doAdd_user_info(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("company_name") String company_name,
             @Query("company_profile") String company_profile,
             @Query("company_qualification") String company_qualification,
@@ -131,8 +136,9 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Users/get_user_info")
+    @FormUrlEncoded
     Observable<QiyeResult> doGet_user_info(
-            @Query("access_token") String access_token
+            @Field("access_token") String access_token
     );
 
     @POST("Api4Datas/get_breeding_gardens")
@@ -164,7 +170,7 @@ public interface RetrofitHelper {
     @POST("Api4Datas/get_breed_products")
     @FormUrlEncoded
     Observable<ProductResult> doGet_breed_products(
-            @Query("access_token") String access_token,
+            @Field("access_token") String access_token,
             @Query("filebag_numid") String filebag_numid,
             @Query("job_type_id") String job_type_id
 
@@ -426,7 +432,11 @@ public interface RetrofitHelper {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
+            if (request.url().toString().contains("getCaptImg")) {
+                return chain.proceed(request);
+            }
             Response response = chain.proceed(request);
+            okhttp3.Headers headers = response.headers();
             ResponseBody originbody = response.body();
             BufferedSource source = originbody.source();
             source.request(Long.MAX_VALUE); // Buffer the entire body.

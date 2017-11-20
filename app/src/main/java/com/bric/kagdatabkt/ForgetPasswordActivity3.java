@@ -55,8 +55,8 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
                                                        @Override
                                                        public void onClick(View view) {
                                                            String pw = password.getText().toString();
-                                                           if(StringUtils.isEmpty(pw)){
-                                                               showError("填写新密码");
+                                                           if (StringUtils.isEmpty(pw) || pw.length() > 20 || pw.length() < 6) {
+                                                               showError("密码长度在不在6~20位之间");
                                                            }
                                                            RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doForgetPassword_2(account, pw, pw)
                                                                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(

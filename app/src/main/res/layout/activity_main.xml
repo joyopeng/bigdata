@@ -12,122 +12,52 @@
         <FrameLayout
             android:id="@+id/base_content"
             android:layout_width="match_parent"
-            android:layout_height="555dp"
-             />
+            android:layout_height="555dp" />
 
         <LinearLayout
             android:id="@+id/tab_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:gravity="bottom"
-            android:orientation="horizontal"
             android:background="@color/colorWhite"
-            >
+            android:gravity="bottom"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_marginTop="10dp"
+            <com.bric.kagdatabkt.view.layout.TabLayout
+                android:id="@+id/tab_home"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/homepage_tab_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:clickable="true"
-                    android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    android:background="@drawable/homepage_tab"
-                    />
-
-                <TextView
-                    android:id="@+id/homepage_tab_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/top_page" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true" />
+
+            <com.bric.kagdatabkt.view.layout.TabLayout
+                android:id="@+id/tab_chitang"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/chitang_tab_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/chitang_tab"
-                    android:clickable="true"
-                    android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    />
-
-                <TextView
-                    android:id="@+id/chitang_tab_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/homepage_text_chitang" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true" />
+
+            <com.bric.kagdatabkt.view.layout.TabLayout
+                android:id="@+id/tab_dangan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/dangan_tab_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/dangan_tab"
-                    android:clickable="true"
-                    android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    />
-
-                <TextView
-                    android:id="@+id/dangan_tab_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/homepage_text_dangan" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true" />
+
+            <com.bric.kagdatabkt.view.layout.TabLayout
+                android:id="@+id/tab_setting"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/seting_tab_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/seting_tab"
-                    android:clickable="true"
-                    android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    />
-
-                <TextView
-                    android:id="@+id/tabhost_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/tabhost_text_seting" />
-            </LinearLayout>
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

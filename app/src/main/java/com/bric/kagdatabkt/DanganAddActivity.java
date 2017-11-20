@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -600,7 +601,7 @@ public class DanganAddActivity extends FragmentActivity {
                 options.inPreferredConfig = Bitmap.Config.ALPHA_8;
                 options.inSampleSize = 10;
 //                Picasso.with(getBaseContext()).load(uri).resize(50, 50).centerCrop().into(take_picture);
-                take_picture.setImageBitmap(BitmapFactory.decodeFile(uri.getEncodedPath(), options));
+                take_picture.setBackground(Drawable.createFromPath(uri.getEncodedPath()));
                 take_picture.setTag(photoUri);
             }
         }
@@ -1216,7 +1217,6 @@ public class DanganAddActivity extends FragmentActivity {
         Dialog dialog = new Dialog(this, R.style.Dialog_FullScreen);
         dialog.setContentView(R.layout.previe);
         ImageView imageView = dialog.findViewById(R.id.preview_view);
-        Picasso.with(getBaseContext()).load(photoUri).config(Bitmap.Config.RGB_565).into(imageView);
         imageView.setImageBitmap(BitmapFactory.decodeFile(photoUri.getPath(), options));
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCanceledOnTouchOutside(true);

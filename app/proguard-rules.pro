@@ -23,3 +23,22 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#### -- Picasso --
+-dontwarn com.squareup.picasso.**
+#### -- OkHttp --
+-dontwarn com.squareup.okhttp.internal.**
+#### -- retrofit --
+-dontwarn retrofit2.**
+#### -- rxjava --
+-dontwarn rx.**
+-dontwarn com.baidu.**
+#### -- Apache Commons --
+-dontwarn org.apache.commons.logging.**
+-ignorewarnings
+-keep class com.baidu.** { *; }
+-keep class vi.com.gdi.bgl.**{*;}
+-keep class com.squareup.okhttp.**{*;}
+-keep class rx.**{*;}
+-keep class retrofit2.**{*;}
+-keep class com.bric.kagdatabkt.entry.**{*;}
+
