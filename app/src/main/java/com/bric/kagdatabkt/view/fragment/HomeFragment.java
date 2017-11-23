@@ -51,7 +51,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout danganguanli;
     private LinearLayout tianjiadangan;
     private LinearLayout erweimashenqing;
-
+    private TextView base_toolbar_title;
+    private ImageView base_nav_back;
+    private ImageView base_nav_right;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +64,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init(View v) {
+        base_toolbar_title = (TextView) v.findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText(R.string.app_title);
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
+        base_nav_right = (ImageView) v.findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_nav_back = (ImageView) v.findViewById(R.id.base_nav_back);
+        base_nav_back.setVisibility(View.GONE);
         viewPager = (AutoScrollViewPager) v.findViewById(R.id.viewPager);
         chitanggaikuang = (LinearLayout) v.findViewById(R.id.chitanggaikuang);
         danganguanli = (LinearLayout) v.findViewById(R.id.danganguanli);

@@ -28,6 +28,8 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     private EditText repeate_new_password;
     private Button update_password_button;
     private ImageView base_nav_back;
+    private TextView base_toolbar_title;
+    private ImageView base_nav_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,11 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("修改密码");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         origin_password = (EditText) findViewById(R.id.origin_password);
         origin_password.setHint("填写原密码");
         origin_password.setBackgroundResource(0);

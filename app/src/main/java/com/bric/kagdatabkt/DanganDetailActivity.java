@@ -35,6 +35,7 @@ public class DanganDetailActivity extends FragmentActivity {
     private static final String TAG = DanganDetailActivity.class.getSimpleName();
     private TextView base_toolbar_title;
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
     private HashMap<Integer, String> dailytype = new HashMap();
     private TextView detail_item1_label;
     private TextView detail_item1_value;
@@ -84,6 +85,7 @@ public class DanganDetailActivity extends FragmentActivity {
 
     private void initView() {
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
         base_nav_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +93,8 @@ public class DanganDetailActivity extends FragmentActivity {
                 finish();
             }
         });
-
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
         detail_item1_label = (TextView) findViewById(R.id.detail_item1_label);
         detail_item1_value = (TextView) findViewById(R.id.detail_item1_value);
         detail_item2_label = (TextView) findViewById(R.id.detail_item2_label);

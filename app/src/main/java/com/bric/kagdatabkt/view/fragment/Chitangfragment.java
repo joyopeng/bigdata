@@ -1,19 +1,24 @@
 package com.bric.kagdatabkt.view.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +43,7 @@ import com.bric.kagdatabkt.view.dialog.BaseAdapter;
 import com.bric.kagdatabkt.view.dialog.BaseViewHolder;
 import com.jiang.android.indicatordialog.IndicatorBuilder;
 import com.jiang.android.indicatordialog.IndicatorDialog;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,6 +85,8 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     private String access_token;
     private Button chitang_add_button;
     private ArrayList<ChitanglistResult.SubItem> chitanglist;
+    private ImageView base_nav_back;
+    private Dialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,8 +101,10 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
 
     private void init(View v) {
         base_toolbar_title = (TextView) v.findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText(R.string.title_chitang);
         base_nav_right = (ImageView) v.findViewById(R.id.base_nav_right);
-
+        base_nav_back = (ImageView) v.findViewById(R.id.base_nav_back);
+        base_nav_back.setVisibility(View.GONE);
         chitangaddressmap = (MapView) v.findViewById(R.id.chitangaddressmap);
         chitang_title = (TextView) v.findViewById(R.id.chitang_title);
         chitang_area = (TextView) v.findViewById(R.id.chitang_area);
@@ -155,6 +165,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
     }
 
     private void fetchChitangData() {
+        showProgressDialog();
         RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_breeding_gardens(access_token)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ChitanglistResult>() {
@@ -178,6 +189,8 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
                                 chitang_empty.setVisibility(View.VISIBLE);
                                 chitang_content.setVisibility(View.GONE);
                             }
+                        } else {
+                            showError(arg0.message);
                         }
                     }
                 }
@@ -199,6 +212,8 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onNext(DanganlistResult arg0) {
+                        if (dialog != null && dialog.isShowing())
+                            dialog.dismiss();
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
                             fillData(arg0.data.get(0));
@@ -210,7 +225,7 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
 
     private void fillData(DanganlistResult.Item item) {
         DanganlistResult.Gardens garden = item.gardens;
-        base_toolbar_title.setText(garden.name+"概况");
+        base_toolbar_title.setText(garden.name + "概况");
         LatLng latlng = new LatLng(Double.parseDouble(garden.lat), Double.parseDouble(garden.lng));
         MapStatusUpdate mapStatus = MapStatusUpdateFactory.newLatLngZoom(latlng, 19.0f);
         chitangaddressmap.getMap().setMapStatus(mapStatus);
@@ -295,5 +310,20 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
 
         dialog.setCanceledOnTouchOutside(true);
         dialog.show(v);
+    }
+
+    private void showProgressDialog() {
+        dialog = new Dialog(getActivity(), R.style.Dialog_FullScreen);
+        dialog.setContentView(R.layout.progress_view);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    private void showError(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 }

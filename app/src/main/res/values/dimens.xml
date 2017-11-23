@@ -19,5 +19,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="homepage_fragment_text_width">40dp</dimen>
     <dimen name="homepage_fragment_icon_leftmergin">25dp</dimen>
-
+    <dimen name="px_320">320dp</dimen>
 </resources>

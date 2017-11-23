@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/base_tool_bar"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/skyblue"
+    android:navigationContentDescription="back"
+    android:paddingTop="20dp">
+
+    <ImageView
+        android:id="@+id/base_nav_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp"
+        android:src="@drawable/back"
+        />
+
+    <TextView
+        android:id="@+id/base_toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableRight="@drawable/arrow_down"
+        android:drawablePadding="@dimen/px_26"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="档案管理"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/base_nav_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/px_20"
+        android:layout_marginBottom="@dimen/px_20"
+        android:background="@drawable/add_item"
+        android:clickable="true"
+        android:visibility="visible" />
+</android.support.v7.widget.Toolbar>

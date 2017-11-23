@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.utils.StringUtils;
@@ -36,8 +37,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private ImageView forgetpassword_1_qrcodeview;
     private Button register_button;
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
     private Button button_getqrcode_button;
-
+    private TextView base_toolbar_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,11 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("找回密码");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         phonenumber = (EditText) findViewById(R.id.forgetpassword_1_phonenumber);
         verify_code = (EditText) findViewById(R.id.forgetpassword_1_verify_code);
         phonenumber.setHint(R.string.hint_phonenumber);
@@ -202,6 +209,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                                                        Intent registerintent = new Intent(ForgetPasswordActivity.this, ForgetPasswordActivity2.class);
                                                                        registerintent.putExtra(USER_NAME, phonenumber.getText().toString());
                                                                        startActivity(registerintent);
+                                                                       ForgetPasswordActivity.this.finish();
                                                                    } else {
                                                                        showError(arg0.message);
                                                                    }

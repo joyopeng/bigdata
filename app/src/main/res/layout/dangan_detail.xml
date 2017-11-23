@@ -11,43 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <!--头部-->
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/base_tool_bar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/skyblue"
-            android:navigationContentDescription="back">
-
-            <ImageView
-                android:id="@+id/base_nav_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/dangan_left_margin"
-                android:paddingRight="@dimen/dangan_right_margin"
-                android:src="@drawable/back" />
-
-            <TextView
-                android:id="@+id/base_toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/chitang_addpage_title"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/base_nav_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/dangan_right_margin"
-                android:background="@color/colorAccent"
-                android:clickable="true"
-                android:textColor="@color/colorWhite"
-                android:visibility="visible" />
-        </android.support.v7.widget.Toolbar>
+        <include layout="@layout/toolbar" />
 
         <LinearLayout
             android:id="@+id/detail_item1"

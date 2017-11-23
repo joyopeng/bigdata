@@ -31,7 +31,8 @@ public class QrcodeApplyActivity extends AppCompatActivity {
 
     private static final String TAG = QrcodeApplyActivity.class.getSimpleName();
     private ImageView base_nav_back;
-
+    private TextView base_toolbar_title;
+    private ImageView base_nav_right;
     private EditText qrcode_numid;
     private EditText qrcode_product_name;
     private EditText qrcode_apply_count;
@@ -61,6 +62,11 @@ public class QrcodeApplyActivity extends AppCompatActivity {
                 finish();
             }
         });
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("申请二维码");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
         qrcode_numid = (EditText) findViewById(R.id.qrcode_numid);
         qrcode_product_name = (EditText) findViewById(R.id.qrcode_product_name);
         qrcode_apply_count = (EditText) findViewById(R.id.qrcode_apply_count);

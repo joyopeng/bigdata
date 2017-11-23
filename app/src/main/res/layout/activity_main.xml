@@ -12,7 +12,7 @@
         <FrameLayout
             android:id="@+id/base_content"
             android:layout_width="match_parent"
-            android:layout_height="555dp" />
+            android:layout_height="577dp" />
 
         <LinearLayout
             android:id="@+id/tab_container"

@@ -68,71 +68,73 @@ public interface RetrofitHelper {
 
     @POST("Api4Users/getCaptImg")
     Observable<ResponseBody> doGetQrcode(
-            @Query("username") String username,
-            @Query("type") String type
+            @Field("username") String username,
+            @Field("type") String type
     );
 
     @POST("Api4Users/sendMsg")
     Observable<ResultEntry> doSendMsg(
-            @Query("username") String username,
-            @Query("Captcha") String Captcha,
-            @Query("type") String type
+            @Field("username") String username,
+            @Field("Captcha") String Captcha,
+            @Field("type") String type
     );
 
     @POST("Api4Users/register")
     Observable<RegisterResult> doRegister(
-            @Query("username") String username,
-            @Query("password") String password,
-            @Query("mobile_code") String mobile_code,
-            @Query("city") String city,
-            @Query("district") String district
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("mobile_code") String mobile_code,
+            @Field("city") String city,
+            @Field("district") String district
     );
 
     @POST("Api4Users/login")
+    @FormUrlEncoded
     Observable<RegisterResult> doLogin(
-            @Query("username") String username,
-            @Query("password") String password
+            @Field("username") String username,
+            @Field("password") String password
     );
 
     @POST("Api4Users/refresh_token")
+    @FormUrlEncoded
     Call<RegisterResult> doRefresh_token(
-            @Query("user_id") String user_id,
-            @Query("appkey") String appkey
+            @Field("user_id") String user_id,
+            @Field("appkey") String appkey
     );
 
     @POST("Api4Users/findPasswordStepOne")
     @FormUrlEncoded
     Observable<ResultEntry> doForgetPassword_1(
             @Field("username") String username,
-            @Query("mobile_code") String mobile_code
+            @Field("mobile_code") String mobile_code
     );
 
     @POST("Api4Users/findPasswordStepTwo")
     @FormUrlEncoded
     Observable<ResultEntry> doForgetPassword_2(
             @Field("username") String username,
-            @Query("password") String password,
-            @Query("repassword") String repassword
+            @Field("password") String password,
+            @Field("repassword") String repassword
     );
 
     @POST("Api4Users/updatePassword")
     @FormUrlEncoded
     Observable<ResultEntry> doUpdatePassword(
             @Field("userid") String userid,
-            @Query("access_token") String access_token,
-            @Query("oldpassword") String oldpassword,
-            @Query("newpassword") String newpassword,
-            @Query("renewpassword") String renewpassword
+            @Field("access_token") String access_token,
+            @Field("oldpassword") String oldpassword,
+            @Field("newpassword") String newpassword,
+            @Field("renewpassword") String renewpassword
     );
 
     @POST("Api4Users/add_user_info")
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_user_info(
             @Field("access_token") String access_token,
-            @Query("company_name") String company_name,
-            @Query("company_profile") String company_profile,
-            @Query("company_qualification") String company_qualification,
-            @Query("file_urls") String file_urls
+            @Field("company_name") String company_name,
+            @Field("company_profile") String company_profile,
+            @Field("company_qualification") String company_qualification,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Users/get_user_info")
@@ -151,10 +153,10 @@ public interface RetrofitHelper {
     @FormUrlEncoded
     Observable<DanganlistResult> doGet_jobs(
             @Field("access_token") String access_token,
-            @Query("garden_numid") String garden_numid,
-            @Query("job_type_id") int job_type_id,
-            @Query("page") int page,
-            @Query("limit") int limit
+            @Field("garden_numid") String garden_numid,
+            @Field("job_type_id") int job_type_id,
+            @Field("page") int page,
+            @Field("limit") int limit
 
     );
 
@@ -162,17 +164,17 @@ public interface RetrofitHelper {
     @FormUrlEncoded
     Observable<DanganDetailResult> doGet_job_info(
             @Field("access_token") String access_token,
-            @Query("garden_numid") String garden_numid,
-            @Query("job_type_id") int job_type_id,
-            @Query("id") int id
+            @Field("garden_numid") String garden_numid,
+            @Field("job_type_id") int job_type_id,
+            @Field("id") int id
     );
 
     @POST("Api4Datas/get_breed_products")
     @FormUrlEncoded
     Observable<ProductResult> doGet_breed_products(
             @Field("access_token") String access_token,
-            @Query("filebag_numid") String filebag_numid,
-            @Query("job_type_id") String job_type_id
+            @Field("filebag_numid") String filebag_numid,
+            @Field("job_type_id") String job_type_id
 
     );
 
@@ -186,7 +188,7 @@ public interface RetrofitHelper {
     @FormUrlEncoded
     Observable<QrcodeInfoResult> doGet_apply_qrcode_list(
             @Field("access_token") String access_token,
-            @Query("job_fishing_id") int job_fishing_id
+            @Field("job_fishing_id") int job_fishing_id
     );
 
     @POST("api4Datas/get_supplier_carousels")
@@ -199,111 +201,111 @@ public interface RetrofitHelper {
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_reeding_garden(
             @Field("access_token") String access_token,
-            @Query("garden_name") String garden_name,
-            @Query("garden_address") String garden_address,
-            @Query("lat") String lat,
-            @Query("lng") String lng,
-            @Query("garden_area") String garden_area,
-            @Query("garden_charge") String garden_charge,
-            @Query("garden_tel") String garden_tel,
-            @Query("garden_profile") String garden_profile,
-            @Query("file_urls") String file_urls
+            @Field("garden_name") String garden_name,
+            @Field("garden_address") String garden_address,
+            @Field("lat") String lat,
+            @Field("lng") String lng,
+            @Field("garden_area") String garden_area,
+            @Field("garden_charge") String garden_charge,
+            @Field("garden_tel") String garden_tel,
+            @Field("garden_profile") String garden_profile,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Ponds/add_job_disease_prevention")
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_disease_prevention(
             @Field("access_token") String access_token,
-            @Query("filebag_numid") String filebag_numid,
-            @Query("title") String title,
-            @Query("control_date") String control_date,
-            @Query("supplies") String supplies,
-            @Query("operator") String operator,
-            @Query("remark") String remark,
-            @Query("consumption") String consumption,
-            @Query("file_urls") String file_urls
+            @Field("filebag_numid") String filebag_numid,
+            @Field("title") String title,
+            @Field("control_date") String control_date,
+            @Field("supplies") String supplies,
+            @Field("operator") String operator,
+            @Field("remark") String remark,
+            @Field("consumption") String consumption,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Ponds/add_job_seedling")
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_seedling(
             @Field("access_token") String access_token,
-            @Query("filebag_numid") String filebag_numid,
-            @Query("product_id") int product_id,
-            @Query("title") String title,
-            @Query("control_date") String control_date,
-            @Query("source") String source,
-            @Query("operator") String operator,
-            @Query("remark") String remark,
-            @Query("consumption") String consumption,
-            @Query("file_urls") String file_urls
+            @Field("filebag_numid") String filebag_numid,
+            @Field("product_id") int product_id,
+            @Field("title") String title,
+            @Field("control_date") String control_date,
+            @Field("source") String source,
+            @Field("operator") String operator,
+            @Field("remark") String remark,
+            @Field("consumption") String consumption,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Ponds/add_job_feed")
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_feed(
             @Field("access_token") String access_token,
-            @Query("filebag_numid") String filebag_numid,
-            @Query("title") String title,
-            @Query("control_date") String control_date,
-            @Query("consumption") String consumption,
-            @Query("operator") String operator,
-            @Query("feed_pic") String feed_pic,
-            @Query("feed_name") String feed_name,
-            @Query("buyer") String buyer,
-            @Query("remark") String remark,
-            @Query("file_urls") String file_urls
+            @Field("filebag_numid") String filebag_numid,
+            @Field("title") String title,
+            @Field("control_date") String control_date,
+            @Field("consumption") String consumption,
+            @Field("operator") String operator,
+            @Field("feed_pic") String feed_pic,
+            @Field("feed_name") String feed_name,
+            @Field("buyer") String buyer,
+            @Field("remark") String remark,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Ponds/add_job_fishing")
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_fishing(
             @Field("access_token") String access_token,
-            @Query("filebag_numid") String filebag_numid,
-            @Query("product_id") int product_id,
-            @Query("title") String title,
-            @Query("control_date") String control_date,
-            @Query("consumption") String consumption,
-            @Query("operator") String operator,
-            @Query("remark") String remark,
-            @Query("file_urls") String file_urls
+            @Field("filebag_numid") String filebag_numid,
+            @Field("product_id") int product_id,
+            @Field("title") String title,
+            @Field("control_date") String control_date,
+            @Field("consumption") String consumption,
+            @Field("operator") String operator,
+            @Field("remark") String remark,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Ponds/add_job_testing")
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_testing(
             @Field("access_token") String access_token,
-            @Query("filebag_numid") String filebag_numid,
-            @Query("product_id") int product_id,
-            @Query("title") String title,
-            @Query("control_date") String control_date,
-            @Query("project_name") String project_name,
-            @Query("result") int result,
-            @Query("operator") String operator,
-            @Query("remark") String remark,
-            @Query("file_urls") String file_urls
+            @Field("filebag_numid") String filebag_numid,
+            @Field("product_id") int product_id,
+            @Field("title") String title,
+            @Field("control_date") String control_date,
+            @Field("project_name") String project_name,
+            @Field("result") int result,
+            @Field("operator") String operator,
+            @Field("remark") String remark,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Ponds/add_job_daily")
     @FormUrlEncoded
     Observable<ResultEntry> doAdd_job_daily(
             @Field("access_token") String access_token,
-            @Query("filebag_numid") String filebag_numid,
-            @Query("title") String title,
-            @Query("control_date") String control_date,
-            @Query("daily_type_id") int daily_type_id,
-            @Query("consumption") String consumption,
-            @Query("operator") String operator,
-            @Query("remark") String remark,
-            @Query("file_urls") String file_urls
+            @Field("filebag_numid") String filebag_numid,
+            @Field("title") String title,
+            @Field("control_date") String control_date,
+            @Field("daily_type_id") int daily_type_id,
+            @Field("consumption") String consumption,
+            @Field("operator") String operator,
+            @Field("remark") String remark,
+            @Field("file_urls") String file_urls
     );
 
     @POST("Api4Ponds/apply_qrcode")
     @FormUrlEncoded
     Observable<ResultEntry> doApply_qrcode(
             @Field("access_token") String access_token,
-            @Query("job_fishing_id") int job_fishing_id,
-            @Query("quantity") int quantity
+            @Field("job_fishing_id") int job_fishing_id,
+            @Field("quantity") int quantity
     );
 
     @POST("Api4Aquatics/add_reeding_garden_pics")
@@ -327,8 +329,8 @@ public interface RetrofitHelper {
         static final int DEFAULT_READ_TIMEOUT = 150;
         //        static final String EPG_BASE_DOMAIN = "http:///nma.yy/";
 //        static final String IMAGE_BASE_DOMAIN = "http://nmu.yy/";
-        static final String EPG_BASE_DOMAIN = "http:///192.168.3.155:8089/";
-        static final String IMAGE_BASE_DOMAIN = "http://192.168.3.155:8090/";
+        static final String EPG_BASE_DOMAIN = "http://118.190.66.64:10001/";
+        static final String IMAGE_BASE_DOMAIN = "http://118.190.66.64:10003/";
         private RetrofitHelper baseService;
         private RetrofitHelper imageService;
         private RetrofitHelper freshService;

@@ -1,6 +1,7 @@
 package com.bric.kagdatabkt.view.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,9 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -63,12 +66,14 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private final String TAG = Danganfragment.class.getSimpleName();
     private TextView base_toolbar_title;
     private ImageView base_nav_right;
+    private ImageView base_nav_back;
     private TextView filebag_numid;
     private FlipOverListView listView;
     private RelativeLayout dangan_empty;
     private LinearLayout dangan_content;
     private TextView jobs_filter;
     private TextView hint_emperty_text2;
+    private TextView hint_emperty_text1;
     private String access_token;
     private ArrayList<ChitanglistResult.SubItem> chitanglist;
     private ArrayList<DanganlistResult.Job> jobs;
@@ -82,6 +87,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private int pageCount;
     private int currentPage = 1;
     private int currentJobId;
+    private Dialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,6 +106,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         // headerIV = (ImageView) v.findViewById(R.id.person2_header_iv);
         base_toolbar_title = (TextView) v.findViewById(R.id.base_toolbar_title);
         base_nav_right = (ImageView) v.findViewById(R.id.base_nav_right);
+        base_nav_back = (ImageView) v.findViewById(R.id.base_nav_back);
+        base_nav_back.setVisibility(View.GONE);
         filebag_numid = (TextView) v.findViewById(R.id.filebag_numid);
         listView = (FlipOverListView) v.findViewById(R.id.dangan_jobs);
         dangan_empty = (RelativeLayout) v.findViewById(R.id.dangan_empty);
@@ -129,6 +137,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             }
         });
         hint_emperty_text2 = (TextView) v.findViewById(R.id.hint_emperty_text2);
+        hint_emperty_text1 = (TextView) v.findViewById(R.id.hint_emperty_text1);
         footView = getActivity().getLayoutInflater().inflate(R.layout.footview, null);
         lastView = getActivity().getLayoutInflater().inflate(R.layout.lv_last_page_view, null);
     }
@@ -152,6 +161,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     }
 
     private void fetchChitangData() {
+        showProgressDialog();
         RetrofitHelper.ServiceManager.getBaseService(getActivity().getApplicationContext()).doGet_breeding_gardens(access_token)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Observer<ChitanglistResult>() {
@@ -177,6 +187,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                                 base_nav_right.setVisibility(View.GONE);
                                 base_toolbar_title.setText("档案管理");
                             }
+                        }else{
+                            showError(arg0.message);
                         }
                     }
                 }
@@ -198,6 +210,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onNext(DanganlistResult arg0) {
+                        if (dialog != null && dialog.isShowing())
+                            dialog.dismiss();
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
                             fillData(arg0.data.get(0));
@@ -213,7 +227,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         currentPage = item.page;
         if (currentPage == 1) {
             jobs = item.jobs;
-            base_toolbar_title.setText(garden.name+"管理");
+            base_toolbar_title.setText(garden.name + "管理");
             numName = garden.name;
             filebag_numid.setText(garden.numid);
             if (jobs.size() > 0) {
@@ -227,6 +241,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             } else {
                 dangan_empty.setVisibility(View.VISIBLE);
                 dangan_content.setVisibility(View.GONE);
+                hint_emperty_text1.setText("亲,您还没有添加档案额~");
                 hint_emperty_text2.setVisibility(View.GONE);
             }
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -522,4 +537,20 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             return true;
         }
     };
+
+
+    private void showProgressDialog() {
+        dialog = new Dialog(getActivity(), R.style.Dialog_FullScreen);
+        dialog.setContentView(R.layout.progress_view);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    private void showError(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+    }
 }

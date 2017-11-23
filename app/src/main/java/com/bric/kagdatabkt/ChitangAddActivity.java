@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -54,6 +55,8 @@ public class ChitangAddActivity extends AppCompatActivity {
     private static final String TAG = ChitangAddActivity.class.getSimpleName();
 
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
+    private TextView base_toolbar_title;
     private MapView mMapView;
     private RelativeLayout rootview;
     private LocationService locationService;
@@ -87,7 +90,6 @@ public class ChitangAddActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
         base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
         base_nav_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +97,11 @@ public class ChitangAddActivity extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText(R.string.title_add_chitang);
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         chitang_addpage_name = (EditText) findViewById(R.id.chitang_addpage_name);
         chitang_addpage_address = (EditText) findViewById(R.id.chitang_addpage_address);
         chitang_addpage_area = (EditText) findViewById(R.id.chitang_addpage_area);

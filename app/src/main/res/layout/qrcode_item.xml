@@ -25,26 +25,28 @@
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dangan_item_top_margin">
 
         <ImageView
             android:id="@+id/qrcode_report"
-            android:layout_width="70dip"
+            android:layout_width="0dip"
             android:layout_height="70dip"
             android:padding="1dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
             android:layout_marginRight="7dp"
+            android:layout_weight="2"
             />
 
         <LinearLayout
             android:id="@+id/qr_center_item"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
+            android:layout_weight="4"
             android:layout_toRightOf="@id/qrcode_report"
             android:orientation="vertical">
 
@@ -111,9 +113,10 @@
 
         <Button
             android:id="@+id/qrcode_submit"
-            android:layout_width="64dp"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
             android:layout_toRightOf="@id/qr_center_item"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
@@ -121,5 +124,5 @@
             android:background="@color/skyblue"
             android:text="申请"
             android:textColor="@color/colorWhite" />
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

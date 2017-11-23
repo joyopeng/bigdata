@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,6 +35,9 @@ public class Settingfragment extends Fragment implements View.OnClickListener {
     private RelativeLayout setting_clear_cache_item;
     private TextView cached_size;
     private Button exit;
+    private TextView base_toolbar_title;
+    private ImageView base_nav_right;
+    private ImageView base_nav_back;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +61,13 @@ public class Settingfragment extends Fragment implements View.OnClickListener {
     }
 
     private void init(View v) {
+        base_toolbar_title = (TextView) v.findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("个人信息");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
+        base_nav_right = (ImageView) v.findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_nav_back = (ImageView) v.findViewById(R.id.base_nav_back);
+        base_nav_back.setVisibility(View.GONE);
         setting_persion_info_item = (RelativeLayout) v.findViewById(R.id.setting_persion_info_item);
         setting_login_password_item = (RelativeLayout) v.findViewById(R.id.setting_login_password_item);
         setting_get_qrcode_item = (RelativeLayout) v.findViewById(R.id.setting_get_qrcode_item);

@@ -43,7 +43,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
     private String filebag_numid;
     private String filebag_numName;
     private ImageView base_nav_back;
-
+    private ImageView base_nav_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +52,7 @@ public class DanganAddChoseActivity extends FragmentActivity {
         filebag_numName = getIntent().getStringExtra(NUMNAME_KEY);
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
         base_toolbar_title.setText(filebag_numName);
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         typelistview = (ListView) findViewById(R.id.typelistview);
         addoperator_documentid = (TextView) findViewById(R.id.addoperator_documentid);
         addoperator_documentid.setText(filebag_numid);
@@ -62,7 +63,8 @@ public class DanganAddChoseActivity extends FragmentActivity {
                 finish();
             }
         });
-
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
         typelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -79,7 +81,6 @@ public class DanganAddChoseActivity extends FragmentActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            Log.v("aaaa", "ok");
             setResult(Activity.RESULT_OK);
             finish();
         }

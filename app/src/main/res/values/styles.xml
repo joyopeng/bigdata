@@ -36,6 +36,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/aliceblue</item>
         <item name="windowActionBar">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="TimePickerDialog" parent="android:style/Theme.Dialog">

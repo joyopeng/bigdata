@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bric.kagdatabkt.entry.ImageResult;
@@ -52,6 +53,8 @@ public class QiyexinxiAdd extends AppCompatActivity {
     private static final int ZIZHI_TAG = 1;
     private static final int RONGYU_TAG = 2;
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
+    private TextView base_toolbar_title;
     private EditText setting_edit_qiye_name;
     private EditText setting_edit_qiye_zizhi;
     private EditText setting_edit_qiye_jianjie;
@@ -88,6 +91,11 @@ public class QiyexinxiAdd extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("个人信息");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         setting_edit_qiye_name = (EditText) findViewById(R.id.setting_edit_qiye_name);
         setting_edit_qiye_name.setHint(R.string.setting_hint_qiye_name);
         setting_edit_qiye_name.setBackgroundResource(0);

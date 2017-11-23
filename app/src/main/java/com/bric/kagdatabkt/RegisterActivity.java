@@ -45,9 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText register_password;
     private Button register_button;
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
     private TextView login_forgetpassword;
     private TextView login_register;
     private Button button_getqrcode;
+    private TextView base_toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,11 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("注册");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         phonenumber = (EditText) findViewById(R.id.register_phonenumber);
         verify_code = (EditText) findViewById(R.id.verify_code);
         register_password = (EditText) findViewById(R.id.register_password);

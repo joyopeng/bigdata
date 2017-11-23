@@ -36,7 +36,8 @@ public class ForgetPasswordActivity2 extends AppCompatActivity {
     private Button forgetpassword_button_send_msg;
     private Button forgetpassword2_button;
     private ImageView base_nav_back;
-
+    private ImageView base_nav_right;
+    private TextView base_toolbar_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,11 @@ public class ForgetPasswordActivity2 extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("找回密码");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         forgetpassword_2_title = (TextView) findViewById(R.id.forgetpassword_2_title);
         verify_code = (EditText) findViewById(R.id.forgetpassword_1_verify_code);
         verify_code.setHint(R.string.hint_identifying_code);
@@ -88,6 +94,7 @@ public class ForgetPasswordActivity2 extends AppCompatActivity {
                                     Intent registerintent = new Intent(ForgetPasswordActivity2.this, ForgetPasswordActivity3.class);
                                     registerintent.putExtra(USER_NAME, account);
                                     startActivity(registerintent);
+                                    ForgetPasswordActivity2.this.finish();
                                 } else {
                                     showError(arg0.message);
                                 }

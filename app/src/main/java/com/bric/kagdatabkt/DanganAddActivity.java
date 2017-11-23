@@ -16,6 +16,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -40,6 +43,7 @@ import com.bric.kagdatabkt.entry.ResultEntry;
 import com.bric.kagdatabkt.entry.WeishiImageResult;
 import com.bric.kagdatabkt.net.RetrofitHelper;
 import com.bric.kagdatabkt.utils.CommonConstField;
+import com.bric.kagdatabkt.view.layout.LableTextView;
 import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.foamtrace.photopicker.SelectModel;
 import com.foamtrace.photopicker.intent.PhotoPickerIntent;
@@ -72,32 +76,33 @@ public class DanganAddActivity extends FragmentActivity {
     private String title;
 
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
     private RelativeLayout document_item0;
-    private TextView document_item0_label;
+    private LableTextView document_item0_label;
     private EditText document_item0_edit;
     private RelativeLayout document_item1;
-    private TextView document_item1_label;
+    private LableTextView document_item1_label;
     private EditText document_item1_edit;
     private ImageView document_item1_arrow;
     private RelativeLayout document_item2;
-    private TextView document_item2_label;
+    private LableTextView document_item2_label;
     private EditText document_item2_edit;
     private ImageView document_item2_arrow;
     private ImageView take_picture;
     private RelativeLayout document_item3;
-    private TextView document_item3_label;
+    private LableTextView document_item3_label;
     private EditText document_item3_edit;
     private ImageView document_item3_arrow;
     private RelativeLayout document_item4;
-    private TextView document_item4_label;
+    private LableTextView document_item4_label;
     private EditText document_item4_edit;
     private ImageView document_item4_arrow;
     private RelativeLayout document_item5;
-    private TextView document_item5_label;
+    private LableTextView document_item5_label;
     private EditText document_item5_edit;
     private ImageView document_item5_arrow;
     //common field
-    private TextView document_operator_label;
+    private LableTextView document_operator_label;
     private EditText document_operator_edit;
     private TextView document_media_label;
     private EditText document_media_edit;
@@ -151,6 +156,7 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void initView() {
         base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         base_nav_back = (ImageView) findViewById(R.id.base_nav_back);
         base_nav_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,31 +164,33 @@ public class DanganAddActivity extends FragmentActivity {
                 finish();
             }
         });
-        document_item0_label = (TextView) findViewById(R.id.document_item0_label);
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        document_item0_label = (LableTextView) findViewById(R.id.document_item0_label);
         document_item0_edit = (EditText) findViewById(R.id.document_item0_edit);
         document_item1 = (RelativeLayout) findViewById(R.id.document_item1);
-        document_item1_label = (TextView) findViewById(R.id.document_item1_label);
+        document_item1_label = (LableTextView) findViewById(R.id.document_item1_label);
         document_item1_edit = (EditText) findViewById(R.id.document_item1_edit);
         document_item1_arrow = (ImageView) findViewById(R.id.document_item1_arrow);
         document_item2 = (RelativeLayout) findViewById(R.id.document_item2);
-        document_item2_label = (TextView) findViewById(R.id.document_item2_label);
+        document_item2_label = (LableTextView) findViewById(R.id.document_item2_label);
         document_item2_edit = (EditText) findViewById(R.id.document_item2_edit);
         document_item2_arrow = (ImageView) findViewById(R.id.document_item2_arrow);
         document_item3 = (RelativeLayout) findViewById(R.id.document_item3);
         take_picture = (ImageView) findViewById(R.id.take_picture);
-        document_item3_label = (TextView) findViewById(R.id.document_item3_label);
+        document_item3_label = (LableTextView) findViewById(R.id.document_item3_label);
         document_item3_edit = (EditText) findViewById(R.id.document_item3_edit);
         document_item3_arrow = (ImageView) findViewById(R.id.document_item3_arrow);
         document_item4 = (RelativeLayout) findViewById(R.id.document_item4);
-        document_item4_label = (TextView) findViewById(R.id.document_item4_label);
+        document_item4_label = (LableTextView) findViewById(R.id.document_item4_label);
         document_item4_edit = (EditText) findViewById(R.id.document_item4_edit);
         document_item4_arrow = (ImageView) findViewById(R.id.document_item4_arrow);
         document_item5 = (RelativeLayout) findViewById(R.id.document_item5);
-        document_item5_label = (TextView) findViewById(R.id.document_item5_label);
+        document_item5_label = (LableTextView) findViewById(R.id.document_item5_label);
         document_item5_edit = (EditText) findViewById(R.id.document_item5_edit);
         document_item5_arrow = (ImageView) findViewById(R.id.document_item5_arrow);
         //common field
-        document_operator_label = (TextView) findViewById(R.id.document_operator_label);
+        document_operator_label = (LableTextView) findViewById(R.id.document_operator_label);
         document_operator_edit = (EditText) findViewById(R.id.document_operator_edit);
         document_media_label = (TextView) findViewById(R.id.document_media_label);
         document_media_edit = (EditText) findViewById(R.id.document_media_edit);
@@ -238,25 +246,27 @@ public class DanganAddActivity extends FragmentActivity {
 
     private void initCommonprop() {
         //common field
+        document_item0_label.setText("档案名称");
         document_item0_edit.setHint("请输入档案名称");
         document_item0_edit.setBackgroundResource(0);
+        document_operator_label.setText("操作人");
         document_operator_edit.setBackgroundResource(0);
         document_note_edit.setBackgroundResource(0);
     }
 
     private void setXiaoduprop() {
-        document_item1_label.setText(R.string.label_chitang_xiaodudate);
+        document_item1_label.setCusText(R.string.label_chitang_xiaodudate);
         document_item1_edit.setKeyListener(null);
         document_item1_edit.setBackgroundResource(0);
-        document_item2_label.setText(R.string.label_chitang_xiaoduchi);
+        document_item2_label.setCusText(R.string.label_chitang_xiaoduchi);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_xiaoduchi);
         document_item3.setVisibility(View.GONE);
-        document_item3_label.setText(R.string.label_chitang_xiaodushiji);
+        document_item3_label.setCusText(R.string.label_chitang_xiaodushiji);
         document_item3_edit.setEnabled(false);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_xiaodushiji);
-        document_item4_label.setText(R.string.label_chitang_xiaoduyongliang);
+        document_item4_label.setCusText(R.string.label_chitang_xiaoduyongliang);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_xiaoduyongliang);
         document_item4_arrow.setVisibility(View.GONE);
@@ -267,16 +277,16 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void setToumiaoprop() {
-        document_item1_label.setText(R.string.label_chitang_toumiaodate);
+        document_item1_label.setCusText(R.string.label_chitang_toumiaodate);
         document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
-        document_item2_label.setText(R.string.label_chitang_source);
+        document_item2_label.setCusText(R.string.label_chitang_source);
 //        document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_source);
         document_item2_arrow.setVisibility(View.GONE);
-        document_item3_label.setText(R.string.label_chitang_miaozhong_catogery);
+        document_item3_label.setCusText(R.string.label_chitang_miaozhong_catogery);
 //        document_item3_edit.setEnabled(false);
         document_item3_edit.setFocusable(false);
         document_item3_edit.setSelected(false);
@@ -302,7 +312,7 @@ public class DanganAddActivity extends FragmentActivity {
                 }
             }
         });
-        document_item4_label.setText(R.string.label_chitang_miaozhong_amount);
+        document_item4_label.setCusText(R.string.label_chitang_miaozhong_amount);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_miaozhong_amount);
         document_item4_arrow.setVisibility(View.GONE);
@@ -313,43 +323,43 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void setWeishiprop() {
-        document_item1_label.setText(R.string.label_chitang_weishidate);
+        document_item1_label.setCusText(R.string.label_chitang_weishidate);
         document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
-        document_item2_label.setText(R.string.label_chitang_weishichi);
+        document_item2_label.setCusText(R.string.label_chitang_weishichi);
 //        document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_weishichi);
         take_picture.setVisibility(View.VISIBLE);
 
         document_item3.setVisibility(View.GONE);
-        document_item3_label.setText(R.string.label_chitang_weishisiliao);
+        document_item3_label.setCusText(R.string.label_chitang_weishisiliao);
 //        document_item3_edit.setEnabled(false);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_weishisiliao);
         document_item3_arrow.setVisibility(View.GONE);
-        document_item4_label.setText(R.string.label_chitang_weishigoumaishang);
+        document_item4_label.setCusText(R.string.label_chitang_weishigoumaishang);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_weishigoumaishang);
         document_item4_arrow.setVisibility(View.GONE);
-        document_item5_label.setText(R.string.label_chitang_weishiamount);
+        document_item5_label.setCusText(R.string.label_chitang_weishiamount);
         document_item5_edit.setHint(R.string.hint_chitang_weishiamount);
         document_item5_edit.setBackgroundResource(0);
         document_item5_arrow.setVisibility(View.GONE);
     }
 
     private void setBulaoprop() {
-        document_item1_label.setText(R.string.label_chitang_pulaodate);
+        document_item1_label.setCusText(R.string.label_chitang_pulaodate);
         document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
         document_item2.setVisibility(View.GONE);
-        document_item2_label.setText(R.string.label_chitang_pulaochi);
+        document_item2_label.setCusText(R.string.label_chitang_pulaochi);
         document_item2_edit.setEnabled(false);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_pulaochi);
-        document_item3_label.setText(R.string.label_chitang_pulaocatogery);
+        document_item3_label.setCusText(R.string.label_chitang_pulaocatogery);
         document_item3_edit.setFocusable(false);
         document_item3_edit.setSelected(false);
         document_item3_edit.setBackgroundResource(0);
@@ -374,7 +384,7 @@ public class DanganAddActivity extends FragmentActivity {
                 }
             }
         });
-        document_item4_label.setText(R.string.label_chitang_pulaoamount);
+        document_item4_label.setCusText(R.string.label_chitang_pulaoamount);
         document_item4_edit.setBackgroundResource(0);
         document_item4_edit.setHint(R.string.hint_chitang_pulaoamount);
         document_item4_arrow.setVisibility(View.GONE);
@@ -385,11 +395,11 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void setJianceprop() {
-        document_item1_label.setText(R.string.label_chitang_jiancedate);
+        document_item1_label.setCusText(R.string.label_chitang_jiancedate);
         document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
-        document_item2_label.setText(R.string.label_chitang_jianceid);
+        document_item2_label.setCusText(R.string.label_chitang_jianceid);
         document_item2_edit.setFocusable(false);
         document_item2_edit.setSelected(false);
         document_item2_edit.setBackgroundResource(0);
@@ -414,11 +424,11 @@ public class DanganAddActivity extends FragmentActivity {
                 }
             }
         });
-        document_item3_label.setText(R.string.label_chitang_jiancexiangmu);
+        document_item3_label.setCusText(R.string.label_chitang_jiancexiangmu);
 //        document_item3_edit.setEnabled(false);
         document_item3_edit.setHint(R.string.hint_chitang_jiancexiangmu);
         document_item3_edit.setBackgroundResource(0);
-        document_item4_label.setText(R.string.label_chitang_jiancejieguo);
+        document_item4_label.setCusText(R.string.label_chitang_jiancejieguo);
         document_item4_edit.setHint(R.string.hint_chitang_jiancejieguo);
         document_item4_edit.setTag("-1");
         document_item4_edit.setBackgroundResource(0);
@@ -461,11 +471,11 @@ public class DanganAddActivity extends FragmentActivity {
     }
 
     private void setFangshuiprop() {
-        document_item1_label.setText(R.string.label_chitang_fangshuidate);
+        document_item1_label.setCusText(R.string.label_chitang_fangshuidate);
         document_item1_edit.setKeyListener(null);
 //        document_item1_edit.setHint("2017.07.13");
         document_item1_edit.setBackgroundResource(0);
-        document_item2_label.setText(R.string.label_chitang_fangshuichi);
+        document_item2_label.setCusText(R.string.label_chitang_fangshuichi);
         document_item2_edit.setBackgroundResource(0);
         document_item2_edit.setHint(R.string.hint_chitang_fangshuichi);
         document_item2_edit.setFocusable(false);
@@ -503,7 +513,7 @@ public class DanganAddActivity extends FragmentActivity {
                     choseview.show(true);
             }
         });
-        document_item3_label.setText(R.string.label_chitang_guanli_touruliang);
+        document_item3_label.setCusText(R.string.label_chitang_guanli_touruliang);
         document_item3_edit.setBackgroundResource(0);
         document_item3_edit.setHint(R.string.hint_chitang_guanli_touruliang);
         document_item3_arrow.setVisibility(View.GONE);

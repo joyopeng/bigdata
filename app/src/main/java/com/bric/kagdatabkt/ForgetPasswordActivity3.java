@@ -30,6 +30,8 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
     private EditText password;
     private Button forgetpassword_3_button;
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
+    private TextView base_toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,11 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("找回密码");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         password = (EditText) findViewById(R.id.forgetpassword_3_newpassword);
         password.setHint(R.string.hint_new_phonenumber);
         password.setBackgroundResource(0);
@@ -76,6 +83,7 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
                                                                            if (arg0.success == 0) {
                                                                                Intent registerintent = new Intent(ForgetPasswordActivity3.this, MainActivity.class);
                                                                                startActivity(registerintent);
+                                                                               ForgetPasswordActivity3.this.finish();
                                                                            } else {
                                                                                showError(arg0.message);
                                                                            }

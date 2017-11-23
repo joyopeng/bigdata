@@ -3,12 +3,14 @@ package com.bric.kagdatabkt;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -29,24 +31,30 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL;
+import static android.widget.NumberPicker.OnScrollListener.SCROLL_STATE_IDLE;
 import static com.bric.kagdatabkt.utils.CommonConstField.JOB_FISHING_ID;
 import static com.bric.kagdatabkt.utils.CommonConstField.JOB_ID;
 import static com.bric.kagdatabkt.utils.CommonConstField.JOB_TYPE_ID_KEY;
 import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
 
-public class QrcodeListActivity extends AppCompatActivity {
+public class QrcodeListActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
 
     private static final String TAG = QrcodeListActivity.class.getSimpleName();
 
     private ImageView base_nav_back;
+    private ImageView base_nav_right;
+    private TextView base_toolbar_title;
     private ListView codelistView;
 
     private ArrayList<QrcodeListResult.SubItem> qrcodelist;
+    private Picasso picasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qrcode_list);
+        picasso = Picasso.with(this);
         initView();
         fetchChitangData();
     }
@@ -59,6 +67,11 @@ public class QrcodeListActivity extends AppCompatActivity {
                 finish();
             }
         });
+        base_nav_right = (ImageView) findViewById(R.id.base_nav_right);
+        base_nav_right.setVisibility(View.GONE);
+        base_toolbar_title = (TextView) findViewById(R.id.base_toolbar_title);
+        base_toolbar_title.setText("申请二维码");
+        base_toolbar_title.setCompoundDrawables(null, null, null, null);
         codelistView = (ListView) findViewById(R.id.qrcode_list);
         codelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,6 +81,7 @@ public class QrcodeListActivity extends AppCompatActivity {
                 startActivity(addintent);
             }
         });
+        codelistView.setOnScrollListener(this);
     }
 
     private void fetchChitangData() {
@@ -94,6 +108,23 @@ public class QrcodeListActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (scrollState == SCROLL_STATE_IDLE || scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+            //如果在暂停或者触摸的情况下完成重置
+            picasso.resumeTag(this);
+        } else {
+            //停止更新
+            picasso.pauseTag(this);
+        }
+    }
+
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
     }
 
 
@@ -167,7 +198,7 @@ public class QrcodeListActivity extends AppCompatActivity {
             holder.qrcode_applystatus.setText((item.has_apply_qrcode_count > 0 ? "已申请" : "未申请"));
             if (StringUtils.isEmpty(item.report))
                 item.report = "http://nmu.yy/files/pics/AqUserInfoReport/15077965457533.png";
-            Picasso.with(QrcodeListActivity.this).load(item.report).into(holder.qrcode_report);
+            Picasso.with(QrcodeListActivity.this).load(item.report).tag(QrcodeListActivity.this).config(Bitmap.Config.RGB_565).resize(64, 64).into(holder.qrcode_report);
             holder.control_date.setText(item.control_date);
             holder.qrcode_product_name.setText(item.product_name);
             holder.qrcode_consumption.setText(item.consumption);
