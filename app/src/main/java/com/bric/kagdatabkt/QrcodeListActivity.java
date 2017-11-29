@@ -46,7 +46,7 @@ public class QrcodeListActivity extends AppCompatActivity implements AbsListView
     private ImageView base_nav_right;
     private TextView base_toolbar_title;
     private ListView codelistView;
-
+    private TextView emperty_tips;
     private ArrayList<QrcodeListResult.SubItem> qrcodelist;
     private Picasso picasso;
 
@@ -73,6 +73,7 @@ public class QrcodeListActivity extends AppCompatActivity implements AbsListView
         base_toolbar_title.setText("申请二维码");
         base_toolbar_title.setCompoundDrawables(null, null, null, null);
         codelistView = (ListView) findViewById(R.id.qrcode_list);
+        emperty_tips = (TextView) findViewById(R.id.emperty_tips);
         codelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -103,7 +104,12 @@ public class QrcodeListActivity extends AppCompatActivity implements AbsListView
                     public void onNext(QrcodeListResult arg0) {
                         if (arg0.success == 0) {
                             qrcodelist = arg0.data.get(0).List;
-                            codelistView.setAdapter(new MyAdspter());
+                            if (qrcodelist.size() > 0) {
+                                codelistView.setAdapter(new MyAdspter());
+                            } else {
+                                codelistView.setVisibility(View.GONE);
+                                emperty_tips.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }

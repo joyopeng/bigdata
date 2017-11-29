@@ -81,9 +81,11 @@ public class ForgetPasswordActivity3 extends AppCompatActivity {
                                                                        @Override
                                                                        public void onNext(ResultEntry arg0) {
                                                                            if (arg0.success == 0) {
+                                                                               SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
                                                                                Intent registerintent = new Intent(ForgetPasswordActivity3.this, MainActivity.class);
+                                                                               registerintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                               registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                                                startActivity(registerintent);
-                                                                               ForgetPasswordActivity3.this.finish();
                                                                            } else {
                                                                                showError(arg0.message);
                                                                            }

@@ -227,9 +227,11 @@
 
     <Button
         android:id="@+id/addqiyexinxi"
-        android:layout_width="match_parent"
+        android:layout_width="180dip"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@color/skyblue"
+        android:textColor="@color/colorWhite"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape"
         android:text="@string/title_add" />
 </LinearLayout>

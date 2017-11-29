@@ -240,6 +240,19 @@ public class DanganAddActivity extends FragmentActivity {
                 pvTime.show(document_item1_edit, true);
             }
         });
+
+        document_item1_edit.setFocusable(false);
+        document_item1_edit.setSelected(false);
+        document_item1_edit.setBackgroundResource(0);
+        document_item1_edit.setClickable(true);
+        document_item1_edit.setCursorVisible(false);
+        document_item1_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                document_item1.performClick();
+            }
+        });
+
         String name = gettypeNameBykey(typekey);
         base_toolbar_title.setText(name);
     }

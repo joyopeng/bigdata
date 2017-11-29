@@ -227,6 +227,7 @@
                 android:id="@+id/addchitang_button"
                 android:layout_width="180dip"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dangan_item_top_big_margin"
                 android:layout_marginBottom="@dimen/dangan_item_top_big_margin"

@@ -121,11 +121,12 @@
 
     <Button
         android:id="@+id/exit"
-        android:layout_width="wrap_content"
+        android:layout_width="180dip"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dangan_item_top_big_margin"
-        android:background="@color/skyblue"
+        android:layout_marginBottom="@dimen/dangan_item_top_big_margin"
+        android:background="@drawable/shape"
         android:text="退出登录"
         android:textColor="@color/colorWhite" />
 </LinearLayout>

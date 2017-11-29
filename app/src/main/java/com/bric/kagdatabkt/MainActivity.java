@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.StringUtils;
 import com.bric.kagdatabkt.utils.CommonConstField;
+import com.bric.kagdatabkt.utils.JNIUtil;
+import com.bric.kagdatabkt.view.dialog.MySurfaceView;
 import com.bric.kagdatabkt.view.fragment.Chitangfragment;
 import com.bric.kagdatabkt.view.fragment.Danganfragment;
 import com.bric.kagdatabkt.view.fragment.HomeFragment;
@@ -31,11 +34,16 @@ public class MainActivity extends FragmentActivity {
     private FragmentManager mFM = null;
 
     private int currentTabid;
+    private MySurfaceView testsurfaceview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        JNIUtil dd = new JNIUtil();
+        dd.loadLibrary();
+        dd.showHelloWord("测试字符串传递测试字符传长度的咖啡机的积分多久放假多久可靠的房间大家分开的饭局递交上快圣诞节疯狂的房间ｄｆ");
+        Log.v("keymatch", "" + dd.testAdd(10, 1));
         initView();
         initActionListener();
         SharedPreferences sharedPreferences = getSharedPreferences(CommonConstField.COMMON_PREFRENCE, 0);
@@ -48,6 +56,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
+        testsurfaceview = (MySurfaceView) findViewById(R.id.testsurfaceview);
         tab_home = (TabLayout) findViewById(R.id.tab_home);
         tab_chitang = (TabLayout) findViewById(R.id.tab_chitang);
         tab_dangan = (TabLayout) findViewById(R.id.tab_dangan);

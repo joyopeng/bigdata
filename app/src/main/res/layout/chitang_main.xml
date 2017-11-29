@@ -23,17 +23,19 @@
                 android:visibility="gone">
 
                 <ImageView
-                    android:id="@+id/chitang_emperty"
+                    android:id="@+id/chitang_emperty_imge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
                     android:src="@drawable/document_emperty" />
 
                 <TextView
                     android:id="@+id/text_chitang_emperty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/chitang_emperty"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/chitang_emperty_imge"
                     android:layout_centerHorizontal="true"
                     android:text="亲,您还没有添加池塘额~" />
 
@@ -41,6 +43,9 @@
                     android:id="@+id/chitang_add_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dangan_right_margin"
+                    android:layout_marginLeft="@dimen/dangan_left_margin"
+                    android:layout_marginTop="70dp"
                     android:layout_below="@id/text_chitang_emperty"
                     android:background="@color/skyblue"
                     android:text="添加" />
@@ -203,7 +208,8 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="marquee"
                             android:marqueeRepeatLimit="marquee_forever"
-                            android:maxLength="12"
+                            android:maxLength="120"
+                            android:maxLines="2"
                             android:text=""
                             android:textSize="@dimen/spx_24" />
                     </LinearLayout>

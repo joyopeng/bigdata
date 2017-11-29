@@ -1,0 +1,4 @@
+# ninja log v5
+10	1809	0	CMakeFiles/native-lib.dir/src/main/jni/tinyplanet.cc.o	9db921d607ccff36
+9	1973	0	CMakeFiles/native-lib.dir/src/main/jni/util.c.o	bf8fc07c99a3b8b6
+10	2191	0	CMakeFiles/native-lib.dir/src/main/jni/jpegutilnative.cpp.o	5a12e50738980846

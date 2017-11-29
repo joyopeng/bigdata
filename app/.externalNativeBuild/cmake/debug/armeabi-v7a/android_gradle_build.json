@@ -1,0 +1,38 @@
+
+{
+	"buildFiles" : [ "/home/joyopeng/project/bigdata/app/CMakeLists.txt" ],
+	"cFileExtensions" : [ "c" ],
+	"cleanCommands" : 
+	[
+		"/home/joyopeng/Android/Sdk/cmake/3.6.4111459/bin/cmake --build /home/joyopeng/project/bigdata/app/.externalNativeBuild/cmake/debug/armeabi-v7a --target clean"
+	],
+	"libraries" : 
+	{
+		"native-lib-Debug-armeabi-v7a" : 
+		{
+			"abi" : "armeabi-v7a",
+			"artifactName" : "native-lib",
+			"buildCommand" : "/home/joyopeng/Android/Sdk/cmake/3.6.4111459/bin/cmake --build /home/joyopeng/project/bigdata/app/.externalNativeBuild/cmake/debug/armeabi-v7a --target native-lib",
+			"buildType" : "debug",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=armv7-none-linux-androideabi --gcc-toolchain=/home/joyopeng/Android/Sdk/ndk-bundle/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64 --sysroot=/home/joyopeng/Android/Sdk/ndk-bundle/sysroot -Dnative_lib_EXPORTS  -isystem /home/joyopeng/Android/Sdk/ndk-bundle/sysroot/usr/include/arm-linux-androideabi -D__ANDROID_API__=17 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -fno-integrated-as -mthumb -Wa,--noexecstack -Wformat -Werror=format-security  -O0 -fno-limit-debug-info  -fPIC      -c ",
+					"src" : "/home/joyopeng/project/bigdata/app/src/main/jni/util.c",
+					"workingDirectory" : "/home/joyopeng/project/bigdata/app/.externalNativeBuild/cmake/debug/armeabi-v7a"
+				}
+			],
+			"output" : "/home/joyopeng/project/bigdata/app/build/intermediates/cmake/debug/obj/armeabi-v7a/libnative-lib.so",
+			"toolchain" : "3432443777443256657"
+		}
+	},
+	"toolchains" : 
+	{
+		"3432443777443256657" : 
+		{
+			"cCompilerExecutable" : "/home/joyopeng/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/home/joyopeng/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
+		}
+	}
+}

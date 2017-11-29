@@ -53,7 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dangan_left_margin"
-            android:background="@color/skyblue"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/blue_shape"
             android:text="点击发送"
             />
     </LinearLayout>
@@ -87,7 +88,7 @@
         android:layout_marginLeft="@dimen/dangan_left_margin"
         android:layout_marginRight="@dimen/dangan_right_margin"
         android:layout_marginTop="15dp"
-        android:background="@color/skyblue"
+        android:background="@drawable/blue_shape"
         android:text="@string/login_page_text_register"
         android:textColor="@color/colorWhite" />
 </LinearLayout>

@@ -63,7 +63,9 @@
         <activity android:name=".DanganAddChoseActivity" />
         <activity
             android:name=".ChitangAddActivity"
-            android:label="@string/title_activity_chitang_add" />
+            android:label="@string/title_activity_chitang_add"
+            android:windowSoftInputMode="adjustPan"
+            />
         <!--
                 <receiver
                     android:name=".PushReceiver"

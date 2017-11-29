@@ -67,12 +67,14 @@ import static com.bric.kagdatabkt.utils.CommonConstField.USER_ID;
 public interface RetrofitHelper {
 
     @POST("Api4Users/getCaptImg")
+    @FormUrlEncoded
     Observable<ResponseBody> doGetQrcode(
             @Field("username") String username,
             @Field("type") String type
     );
 
     @POST("Api4Users/sendMsg")
+    @FormUrlEncoded
     Observable<ResultEntry> doSendMsg(
             @Field("username") String username,
             @Field("Captcha") String Captcha,
@@ -80,6 +82,7 @@ public interface RetrofitHelper {
     );
 
     @POST("Api4Users/register")
+    @FormUrlEncoded
     Observable<RegisterResult> doRegister(
             @Field("username") String username,
             @Field("password") String password,

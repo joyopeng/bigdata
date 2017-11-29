@@ -53,10 +53,6 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by joyopeng on 17-9-13.
- */
-
 public class Chitangfragment extends Fragment implements View.OnClickListener {
     private static final String TAG = Chitangfragment.class.getSimpleName();
 
@@ -182,10 +178,15 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
                     public void onNext(ChitanglistResult arg0) {
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
+                            if (dialog != null && dialog.isShowing())
+                                dialog.dismiss();
                             chitanglist = arg0.data.get(0).AqBreedingGardenList;
                             if (chitanglist.size() > 0) {
+                                chitang_empty.setVisibility(View.GONE);
+                                chitang_content.setVisibility(View.VISIBLE);
                                 getChitangById(chitanglist.get(0).AqBreedingGarden.numid);
                             } else {
+                                base_toolbar_title.setCompoundDrawables(null, null, null, null);
                                 chitang_empty.setVisibility(View.VISIBLE);
                                 chitang_content.setVisibility(View.GONE);
                             }
@@ -212,8 +213,6 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onNext(DanganlistResult arg0) {
-                        if (dialog != null && dialog.isShowing())
-                            dialog.dismiss();
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
                             fillData(arg0.data.get(0));
@@ -240,12 +239,19 @@ public class Chitangfragment extends Fragment implements View.OnClickListener {
         chitang_zuijinbulao.setText(StringUtils.isEmpty(garden.last_fishing) ? "" : garden.last_fishing.substring(0, 10));
 
 
-        DanganlistResult.Job job = item.jobs.get(0);
-        chitang_zuijinzuoye.setText(job.control_date);
-        Map<String, String> typeelement = ResourceUtils.getHashMapResource(getActivity(), R.xml.operate_type);
-        chitang_caozuoleixing.setText(typeelement.get(job.aq_job_type_id));
-        chitang_jiangcedanwei.setText(job.operator);
-        chitang_caozuoneirong.setText(job.remark);
+        if (item.jobs.size() > 0) {
+            DanganlistResult.Job job = item.jobs.get(0);
+            chitang_zuijinzuoye.setText(job.control_date);
+            Map<String, String> typeelement = ResourceUtils.getHashMapResource(getActivity(), R.xml.operate_type);
+            chitang_caozuoleixing.setText(typeelement.get(job.aq_job_type_id));
+            chitang_jiangcedanwei.setText(job.operator);
+            chitang_caozuoneirong.setText(job.remark);
+        } else {
+            chitang_zuijinzuoye.setText("");
+            chitang_caozuoleixing.setText("");
+            chitang_jiangcedanwei.setText("");
+            chitang_caozuoneirong.setText("");
+        }
     }
 
     private void showTopDialog(View v, float v1, int gravityCenter) {

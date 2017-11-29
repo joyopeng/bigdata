@@ -48,7 +48,6 @@
     </style>
 
 
-
     <style name="CustomDialogStyle" parent="@android:style/Theme.Dialog">
         <!-- 边框 -->
         <item name="android:windowFrame">@null</item>
@@ -86,5 +85,11 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="chitang_fragment" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/spx_24</item>
+        <item name="android:textColor">@color/label_color</item>
+        <item name="android:layout_marginTop">@dimen/px_30</item>
     </style>
 </resources>

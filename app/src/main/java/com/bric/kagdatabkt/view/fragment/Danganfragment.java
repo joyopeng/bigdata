@@ -57,9 +57,6 @@ import static com.bric.kagdatabkt.utils.CommonConstField.JOB_TYPE_ID_KEY;
 import static com.bric.kagdatabkt.utils.CommonConstField.NUMID_KEY;
 import static com.bric.kagdatabkt.utils.CommonConstField.NUMNAME_KEY;
 
-/**
- * Created by joyopeng on 17-9-13.
- */
 
 public class Danganfragment extends Fragment implements View.OnClickListener {
 
@@ -88,6 +85,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
     private int currentPage = 1;
     private int currentJobId;
     private Dialog dialog;
+    private Button dangan_add_button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,6 +138,7 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
         hint_emperty_text1 = (TextView) v.findViewById(R.id.hint_emperty_text1);
         footView = getActivity().getLayoutInflater().inflate(R.layout.footview, null);
         lastView = getActivity().getLayoutInflater().inflate(R.layout.lv_last_page_view, null);
+        dangan_add_button = (Button) v.findViewById(R.id.dangan_add_button);
     }
 
     @Override
@@ -178,6 +177,8 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                     public void onNext(ChitanglistResult arg0) {
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
+                            if (dialog != null && dialog.isShowing())
+                                dialog.dismiss();
                             chitanglist = arg0.data.get(0).AqBreedingGardenList;
                             if (chitanglist.size() > 0) {
                                 numid = chitanglist.get(0).AqBreedingGarden.numid;
@@ -186,8 +187,9 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
                             } else {
                                 base_nav_right.setVisibility(View.GONE);
                                 base_toolbar_title.setText("档案管理");
+                                base_toolbar_title.setCompoundDrawables(null, null, null, null);
                             }
-                        }else{
+                        } else {
                             showError(arg0.message);
                         }
                     }
@@ -210,8 +212,6 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void onNext(DanganlistResult arg0) {
-                        if (dialog != null && dialog.isShowing())
-                            dialog.dismiss();
                         if (arg0.success == 0) {
                             Log.v(TAG, arg0.message);
                             fillData(arg0.data.get(0));
@@ -241,8 +241,18 @@ public class Danganfragment extends Fragment implements View.OnClickListener {
             } else {
                 dangan_empty.setVisibility(View.VISIBLE);
                 dangan_content.setVisibility(View.GONE);
-                hint_emperty_text1.setText("亲,您还没有添加档案额~");
+                hint_emperty_text1.setText("亲,您还没有添加数据额~");
                 hint_emperty_text2.setVisibility(View.GONE);
+                dangan_add_button.setVisibility(View.VISIBLE);
+                dangan_add_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent addintent = new Intent(getActivity(), DanganAddChoseActivity.class);
+                        addintent.putExtra(NUMID_KEY, filebag_numid.getText());
+                        addintent.putExtra(NUMNAME_KEY, numName);
+                        startActivityForResult(addintent, 0);
+                    }
+                });
             }
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

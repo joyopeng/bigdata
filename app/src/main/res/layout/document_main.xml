@@ -15,7 +15,8 @@
             android:id="@+id/emperty_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
             android:src="@drawable/document_emperty" />
 
         <TextView
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/emperty_image"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:text="亲,您还没有添加池塘额~" />
 
         <TextView
@@ -33,6 +35,19 @@
             android:layout_below="@id/hint_emperty_text1"
             android:layout_centerHorizontal="true"
             android:text="请去池塘概况添加" />
+
+        <Button
+            android:id="@+id/dangan_add_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hint_emperty_text2"
+            android:layout_marginLeft="@dimen/dangan_left_margin"
+            android:layout_marginRight="@dimen/dangan_right_margin"
+            android:layout_marginTop="70dp"
+            android:background="@color/skyblue"
+            android:text="添加"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <LinearLayout
@@ -45,7 +60,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:paddingBottom="15dip"
+            android:paddingTop="15dip">
 
             <TextView
                 android:id="@+id/filebag_numid_label"
@@ -79,6 +97,7 @@
             android:id="@+id/dangan_jobs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dip"
             android:divider="@android:color/transparent"
             android:dividerHeight="@dimen/dangan_item_top_big_margin">
 

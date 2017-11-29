@@ -209,7 +209,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                                                        Intent registerintent = new Intent(ForgetPasswordActivity.this, ForgetPasswordActivity2.class);
                                                                        registerintent.putExtra(USER_NAME, phonenumber.getText().toString());
                                                                        startActivity(registerintent);
-                                                                       ForgetPasswordActivity.this.finish();
                                                                    } else {
                                                                        showError(arg0.message);
                                                                    }

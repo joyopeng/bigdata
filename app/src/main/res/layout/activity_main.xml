@@ -6,13 +6,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
         <!--内容容器-->
         <FrameLayout
             android:id="@+id/base_content"
             android:layout_width="match_parent"
-            android:layout_height="577dp" />
+            android:layout_height="577dp"
+            />
 
         <LinearLayout
             android:id="@+id/tab_container"
@@ -60,5 +62,14 @@
                 android:focusableInTouchMode="true" />
         </LinearLayout>
     </RelativeLayout>
+
+    <com.bric.kagdatabkt.view.dialog.MySurfaceView
+        android:id="@+id/testsurfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+
+    </com.bric.kagdatabkt.view.dialog.MySurfaceView>
 </LinearLayout>
 

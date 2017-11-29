@@ -99,6 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
                     showError("填写完整的注册信息");
                     return;
                 }
+                if (StringUtils.isEmpty(password) || password.length() > 20 || password.length() < 6) {
+                    showError("密码长度在不在6~20位之间");
+                }
                 String city = sharedPreferences.getString(CommonConstField.LOCATION_CITY, "苏州");
                 String district = sharedPreferences.getString(CommonConstField.LOCATION_DISTRICT, "相城区");
                 RetrofitHelper.ServiceManager.getBaseService(getApplicationContext()).doRegister(username, password, mobile_code, city, district)
@@ -126,6 +129,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     sharedPreferences.edit().putString(CommonConstField.USER_NAME, username).commit();
                                     sharedPreferences.edit().putString(CommonConstField.APP_KEY, appkey).commit();
                                     Intent registerintent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    registerintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    registerintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(registerintent);
                                     finish();
                                 } else {
